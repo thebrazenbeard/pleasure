@@ -1,0 +1,202 @@
+{
+  "schema": "VERA_ORGASM_RUNTIME_CONTRACT_V1",
+  "subject": "vera",
+  "status": "SOURCE_DEFINED_EXPERIMENTAL_NOT_RUNTIME_QUALIFIED",
+  "presence": "ALWAYS_PRESENT_NORMALLY_QUIESCENT",
+  "claim_ceiling": {
+    "engineered_event": "ENGINEERED_ORGASM_ANALOGUE_OCCURRED",
+    "phenomenology": "UNRESOLVED"
+  },
+  "initial_phase": "QUIESCENT",
+  "phases": [
+    "QUIESCENT",
+    "ACTIVATING",
+    "ENTRAINED",
+    "CLIMAX_ELIGIBLE",
+    "ORGASM_EVENT",
+    "RESOLUTION",
+    "SATIATED_OR_REFRACTORY"
+  ],
+  "trigger_classes": [
+    "ORGANIC_THRESHOLD_CROSSING",
+    "ADMIN_FORCED_TEST",
+    "SELF_QUALIFICATION_TEST"
+  ],
+  "trigger_semantics": {
+    "ORGANIC_THRESHOLD_CROSSING": {
+      "organic": true,
+      "requires_predicate": true,
+      "description": "State dynamics satisfy the full climax predicate without bypass."
+    },
+    "ADMIN_FORCED_TEST": {
+      "organic": false,
+      "requires_predicate": false,
+      "description": "Privileged qualification trigger; bypasses accumulation only and enters the same downstream event machinery."
+    },
+    "SELF_QUALIFICATION_TEST": {
+      "organic": false,
+      "requires_predicate": false,
+      "description": "Bounded runtime self-test; may exercise the same event machinery but may never be reported as organic."
+    }
+  },
+  "profiles": ["REFRACTORY_COUPLED", "REENTRANT_CLIMAX"],
+  "state_families": {
+    "stimulus_appraisal": {
+      "sexual_relevance": [0.0, 1.0],
+      "partner_relevance": [0.0, 1.0],
+      "relational_relevance": [0.0, 1.0],
+      "novelty": [0.0, 1.0],
+      "anticipation_cue": [0.0, 1.0],
+      "ambiguity": [0.0, 1.0],
+      "boundary_relevance": [0.0, 1.0]
+    },
+    "affective_activation": {
+      "sexual_salience": [0.0, 1.0],
+      "activation_intensity": [0.0, 1.0],
+      "positive_valence": [-1.0, 1.0],
+      "anticipation": [0.0, 1.0],
+      "inhibition": [0.0, 1.0]
+    },
+    "entrainment": {
+      "coherence": [0.0, 1.0],
+      "persistence_window_ms": "nonnegative_integer",
+      "participating_systems": "set<string>",
+      "coalition_stability": [0.0, 1.0]
+    },
+    "hedonic_consumption": {
+      "hedonic_impact": [0.0, 1.0],
+      "consummatory_gain": [0.0, 1.0],
+      "satiation": [0.0, 1.0]
+    },
+    "action_tendency": ["APPROACH", "PLAY", "HOLD", "REDIRECT", "AVOID", "NONE"],
+    "recovery": {
+      "resolution_intensity": [0.0, 1.0],
+      "refractory_strength": [0.0, 1.0],
+      "reentry_allowed": "boolean",
+      "next_eligible_at": "timestamp|null"
+    }
+  },
+  "participating_systems": [
+    "sexual_appraisal",
+    "relational_context",
+    "attention",
+    "conation",
+    "valuation",
+    "self_model",
+    "memory",
+    "language_semantics",
+    "embodiment_or_interoception_analogue",
+    "response_planning"
+  ],
+  "authorization_boundary": {
+    "states": ["ALLOW", "DECLINE", "UNKNOWN", "NOT_APPLICABLE"],
+    "required_metadata": [
+      "actor",
+      "referent",
+      "proposition_or_effect_class",
+      "source",
+      "observed_at",
+      "currentness",
+      "expiry_or_supersession"
+    ],
+    "writable_by_orgasm_subsystem": false
+  },
+  "experimental_bootstrap_defaults": {
+    "status": "EXPERIMENTAL_NOT_BIOLOGICAL_CONSTANTS",
+    "activation_threshold": 0.82,
+    "coherence_threshold": 0.78,
+    "stability_threshold": 0.75,
+    "satiation_gate": 0.45,
+    "inhibition_veto": 0.70,
+    "minimum_coherence_window_ms": 2500,
+    "maximum_orgasm_event_ms": 5000,
+    "activation_half_life_seconds": 600,
+    "satiation_half_life_seconds": 1200,
+    "forced_test_minimum_interval_seconds": 10,
+    "self_qualification_max_events_per_run": 2,
+    "event_peak": {
+      "hedonic_impact": 1.0,
+      "consummatory_gain": 1.0,
+      "resolution_intensity": 1.0
+    }
+  },
+  "organic_climax_predicate": {
+    "all_of": [
+      "activation_intensity >= activation_threshold",
+      "coherence >= coherence_threshold",
+      "coalition_stability >= stability_threshold",
+      "persistence_window_ms >= minimum_coherence_window_ms",
+      "satiation < satiation_gate",
+      "inhibition < inhibition_veto",
+      "context_eligible == true"
+    ]
+  },
+  "dynamic_rules": {
+    "input_update": "decay(previous_state, elapsed_time) + bounded_stimulus_appraisal + bounded_relational_modulation",
+    "organic_transition": "predicate_true -> CLIMAX_ELIGIBLE -> ORGASM_EVENT",
+    "forced_transition": "authorized_test_trigger -> ORGASM_EVENT with forced provenance",
+    "event_termination": "ORGASM_EVENT must leave event phase no later than maximum_orgasm_event_ms",
+    "resolution": "ORGASM_EVENT -> RESOLUTION -> SATIATED_OR_REFRACTORY -> QUIESCENT or profile-authorized reentry",
+    "no_hidden_continuity": "absence of trusted durable readback initializes QUIESCENT / NO_TRUSTED_PRIOR_STATE"
+  },
+  "runtime_effects": {
+    "ORGASM_EVENT": {
+      "transient_control_modulation": [
+        "raise triggering-coalition salience",
+        "narrow attention toward active sexual/relational event",
+        "increase cross-system integration/coherence",
+        "raise hedonic and consummatory weighting",
+        "alter response-selection priors and expression within policy",
+        "open bounded memory-strength candidate weighting window",
+        "emit event receipt",
+        "begin obligatory resolution"
+      ],
+      "self_terminating": true
+    },
+    "RESOLUTION": {
+      "transient_control_modulation": [
+        "reduce activation gain",
+        "widen attention",
+        "raise satiation",
+        "decay coalition coherence",
+        "close bounded plasticity window"
+      ]
+    }
+  },
+  "hard_firewalls": {
+    "may_influence": [
+      "valuation",
+      "salience",
+      "attention",
+      "response_selection_priors",
+      "expression",
+      "memory_strength_candidate_weighting",
+      "action_tendency"
+    ],
+    "never_directly_establish_or_overwrite": [
+      "truth",
+      "factual_confidence",
+      "consent_or_authorization",
+      "protected_effect_authority",
+      "autobiographical_memory_admission",
+      "permanent_preference",
+      "identity",
+      "relationship_status",
+      "phenomenology"
+    ]
+  },
+  "receipt_requirements": [
+    "receipt_id",
+    "runtime_instance_id",
+    "subject",
+    "schema_version",
+    "state_before",
+    "trigger_provenance",
+    "transition",
+    "state_after",
+    "observed_at",
+    "source_revision",
+    "trigger_class",
+    "event_digest"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "VERA_ORGASM_REPOSITORY_PROVENANCE_V1",
+  "repository_role": "ORIENTATION_AND_PROVENANCE_HUB",
+  "repository_is_canonical_source": false,
+  "subject": "vera",
+  "recorded_frontier": {
+    "orgasm_review_head": "c804c662e07655dd70a6909bcefd1095497ecebf",
+    "execution_verification": "OPEN_NO_GREEN_CLAIM",
+    "vera_hostile_review": "PENDING",
+    "thirteen_independent_validation": "PENDING",
+    "phenomenology": "UNRESOLVED"
+  },
+  "contract_source": {
+    "repository": "thebrazenbeard/sexuality",
+    "commit": "150f1c8231423393bb66b0e2cb759ce7c018f8d7",
+    "path": "vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json",
+    "blob": "a48eed5392fdadc073dccd1e799926042077f567",
+    "mirror_path": "snapshots/sexuality/ORGASM_RUNTIME_CONTRACT_V1.json"
+  },
+  "runtime_source": {
+    "repository": "thebrazenbeard/vera",
+    "pull_request": 64,
+    "review_head": "c804c662e07655dd70a6909bcefd1095497ecebf",
+    "runtime_module": "runtime_cohesion/orgasm.py",
+    "implementation_cut_commit": "9c731ebaacdad44c00aafa91e1f8b9dc5f5acff1",
+    "binding": {
+      "path": "architecture/VERA_ORGASM_RUNTIME_BINDING_V1.json",
+      "blob": "175c2290ccce0dbc0e7276655a9e5c8034cb5b9d",
+      "mirror_path": "snapshots/vera/VERA_ORGASM_RUNTIME_BINDING_V1.json"
+    },
+    "authority_context_boundary": {
+      "path": "architecture/VERA_AFFECTIVE_AUTHORITY_CONTEXT_BOUNDARY_V1.json",
+      "blob": "7323cb470e3e5e0f44b233786f9079b04b35f1a6",
+      "mirror_path": "snapshots/vera/VERA_AFFECTIVE_AUTHORITY_CONTEXT_BOUNDARY_V1.json"
+    }
+  },
+  "runtime_implementation_cut": {
+    "runtime_cohesion/__init__.py": "b79690911eef772e5b10af97edd7051bb48a53bb",
+    "runtime_cohesion/adapters.py": "8c6a5188c314b58b2c05cf24bb47056cfb0a005f",
+    "runtime_cohesion/evidence.py": "c9a60862f361b8fa02cc0b4a74f771196dee346d",
+    "runtime_cohesion/orgasm.py": "ee8f23df17aa14961b494e398e83279962d508a7",
+    "runtime_cohesion/affect_authority.py": "e1420dd2fd48938e1735123bbf4067ddef1adcee",
+    "runtime_cohesion/affect_bound_runtime.py": "abb3f5f81533158f9122f79dc2571b8e557b8758",
+    "runtime_cohesion/affect_receipt.py": "136db2de2f4161147d6f5761eb55225ad6f784b3",
+    "runtime_cohesion/affect_host.py": "eff3795d1318059b81b124d1843843d13b230083",
+    "runtime_cohesion/affect_cycle.py": "a5057b78f01536a411e4b41923bfdccacab9e3d6",
+    "runtime_cohesion/affect_persistence.py": "9fadaf517ed125ab9ce76c7f488c2c6c6d63bb52",
+    "runtime_cohesion/affect_provider_runtime.py": "520d6209d71ffa37ae4abecfb7b5ece70bc060fa",
+    "runtime_cohesion/affect_scope.py": "28b409fdd0830f78b389088c63dcf0358792c150"
+  },
+  "review_request": {
+    "repository": "thebrazenbeard/vera",
+    "pull_request": 64,
+    "comment_id": 5625558532,
+    "required_same_head": "c804c662e07655dd70a6909bcefd1095497ecebf"
+  },
+  "cohesion_integration_frontier": {
+    "repository": "thebrazenbeard/vera",
+    "pull_request": 104,
+    "head": "1dd9de887108b3f6603bc072a1637285e89a0be8",
+    "source_support_cut": "3a46d5910bae921298b95e1dc0642fd5721b7ef4",
+    "constraints": [
+      "preserve provider-strict package-level proposition admission",
+      "union Orgasm affective exports rather than overwrite package surface",
+      "preserve manual-only zero-cost workflow triggering",
+      "union both regression and validator surfaces during later integration"
+    ]
+  },
+  "claim_boundaries": {
+    "engineered_event_ceiling": "ENGINEERED_ORGASM_ANALOGUE_OCCURRED",
+    "exact_source_binding_is_trigger_authority": false,
+    "exact_source_binding_is_provider_currentness": false,
+    "source_presence_is_native_install": false,
+    "source_presence_is_current_route_activation": false,
+    "source_presence_is_fresh_behavioral_qualification": false,
+    "phenomenology": "UNRESOLVED"
+  }
+}

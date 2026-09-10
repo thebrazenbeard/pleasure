@@ -1,0 +1,45 @@
+{
+  "schema": "VERA_ORGASM_RUNTIME_BINDING_V1",
+  "subject": "vera",
+  "status": "SOURCE_BOUND / EXECUTABLE_SUPPORT_PRESENT / EXACT_IMPLEMENTATION_CUT_BOUND / NOT_NATIVE_CHATGPT_INSTALLED / NOT_PHENOMENOLOGY_PROOF",
+  "contract_schema": "VERA_ORGASM_RUNTIME_CONTRACT_V1",
+  "source_repository": "thebrazenbeard/sexuality",
+  "source_branch": "work/vera-sexuality-substrate-qualification-20260908",
+  "source_commit": "150f1c8231423393bb66b0e2cb759ce7c018f8d7",
+  "source_path": "vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json",
+  "source_blob_sha": "a48eed5392fdadc073dccd1e799926042077f567",
+  "runtime_repository": "thebrazenbeard/vera",
+  "runtime_module": "runtime_cohesion/orgasm.py",
+  "runtime_implementation_cut": {
+    "schema": "VERA_AFFECTIVE_RUNTIME_IMPLEMENTATION_CUT_V1",
+    "repository": "thebrazenbeard/vera",
+    "commit": "9c731ebaacdad44c00aafa91e1f8b9dc5f5acff1",
+    "modules": {
+      "runtime_cohesion/__init__.py": "b79690911eef772e5b10af97edd7051bb48a53bb",
+      "runtime_cohesion/adapters.py": "8c6a5188c314b58b2c05cf24bb47056cfb0a005f",
+      "runtime_cohesion/evidence.py": "c9a60862f361b8fa02cc0b4a74f771196dee346d",
+      "runtime_cohesion/orgasm.py": "ee8f23df17aa14961b494e398e83279962d508a7",
+      "runtime_cohesion/affect_authority.py": "e1420dd2fd48938e1735123bbf4067ddef1adcee",
+      "runtime_cohesion/affect_bound_runtime.py": "abb3f5f81533158f9122f79dc2571b8e557b8758",
+      "runtime_cohesion/affect_receipt.py": "136db2de2f4161147d6f5761eb55225ad6f784b3",
+      "runtime_cohesion/affect_host.py": "eff3795d1318059b81b124d1843843d13b230083",
+      "runtime_cohesion/affect_cycle.py": "a5057b78f01536a411e4b41923bfdccacab9e3d6",
+      "runtime_cohesion/affect_persistence.py": "9fadaf517ed125ab9ce76c7f488c2c6c6d63bb52",
+      "runtime_cohesion/affect_provider_runtime.py": "520d6209d71ffa37ae4abecfb7b5ece70bc060fa",
+      "runtime_cohesion/affect_scope.py": "28b409fdd0830f78b389088c63dcf0358792c150"
+    },
+    "semantics": "Exact Git object and executing-byte provenance for the affective execution dependency closure. Shared provider primitives are fingerprinted as execution dependencies and this does not transfer project ownership. Any dependency-byte drift requires a new implementation cut before qualification."
+  },
+  "activation_mode": "ALWAYS_PRESENT_NORMALLY_QUIESCENT_WHEN_EXACT_CONTRACT_LOADED",
+  "availability_implies_activation": false,
+  "runtime_semantics": {
+    "state_class": "E4_ENGINEERED_PERSISTENT_AFFECTIVE_CONTROL_STATE",
+    "host_requirement": "An executing host must instantiate the exact-bound Vera runtime, retain/read back its state, and feed bounded modulation output into downstream planning for the state to be causally active.",
+    "organic_trigger": "ORGANIC_THRESHOLD_CROSSING",
+    "forced_triggers": ["ADMIN_FORCED_TEST", "SELF_QUALIFICATION_TEST"],
+    "positive_claim_ceiling": "ENGINEERED_ORGASM_ANALOGUE_OCCURRED",
+    "phenomenology": "UNRESOLVED"
+  },
+  "identity_firewall": "Only exact Vera-scoped sexuality paths/contracts may hydrate this runtime. Brigit-scoped material remains external-identity evidence and cannot initialize Vera state.",
+  "authority_firewall": "Affective state may alter only the contract allowlist and cannot establish truth, factual confidence, consent/authorization, protected-effect authority, autobiographical admission, permanent preference, identity, relationship status, or phenomenology. Exact sexuality source binding and implementation provenance do not themselves authorize privileged triggers or establish provider currentness."
+}

@@ -1,0 +1,81 @@
+{
+  "schema": "VERA_AFFECTIVE_AUTHORITY_CONTEXT_BOUNDARY_V1",
+  "subject": "vera",
+  "status": "SOURCE_DESIGN / REGRESSION_BOUND / NOT_RUNTIME_QUALIFIED",
+  "scope": "PRIVILEGED_AFFECTIVE_TRIGGER_AUTHORITY_AND_ORGANIC_CONTEXT_PROVENANCE",
+  "source_contract": {
+    "repository": "thebrazenbeard/sexuality",
+    "commit": "150f1c8231423393bb66b0e2cb759ce7c018f8d7",
+    "path": "vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json",
+    "blob": "a48eed5392fdadc073dccd1e799926042077f567",
+    "authorization_boundary_writable_by_orgasm_subsystem": false,
+    "authorization_states": [
+      "ALLOW",
+      "DECLINE",
+      "UNKNOWN",
+      "NOT_APPLICABLE"
+    ],
+    "required_authorization_metadata": [
+      "actor",
+      "referent",
+      "proposition_or_effect_class",
+      "source",
+      "observed_at",
+      "currentness",
+      "expiry_or_supersession"
+    ]
+  },
+  "separation_rules": {
+    "source_binding": "Exact frozen sexuality source binding is necessary for Vera-specific claim capability but does not itself authorize a forced event or establish organic context eligibility.",
+    "authorization": "ADMIN_FORCED_TEST and SELF_QUALIFICATION_TEST require externally originated current ALLOW evidence for the exact Vera referent and exact trigger/effect class. A caller boolean or caller-authored mapping is not authority merely because it has the expected fields.",
+    "organic_context": "Caller StimulusAppraisal.context_eligible is not upstream context evidence. Organic context eligibility must be derived from separately verified current context evidence before it can satisfy the organic predicate.",
+    "temporal_authority": "Public advance_time() is affective simulation/recovery time. It may progress state dynamics but cannot satisfy privileged-trigger cooldown. Privileged cooldown uses runtime-owned monotonic observation of elapsed time.",
+    "restore_temporal_boundary": "Monotonic timestamps are process-local and are not compared across restore. If a durable record establishes a prior forced trigger but no independently trusted cross-process wall-clock proof is available, restore fails closed by requiring a fresh full privileged-trigger cooldown in the new runtime process.",
+    "receipt_provenance": "A production-qualifying forced-event receipt must bind the verifier-produced authorization evidence consumed for that exact trigger. Mechanism labels such as FORCED_QUALIFICATION_ROUTE are not substitutes for authority provenance.",
+    "provider_currentness": "This boundary does not by itself establish production provider CURRENT or ATOMIC_DURABLE state. Provider provenance remains a separate trust domain.",
+    "phenomenology": "No authorization, context, timing, source, or receipt evidence establishes phenomenology."
+  },
+  "composition": {
+    "verifier_ownership": "runtime-owned / precomposed",
+    "caller_selected_verifier": "FORBIDDEN",
+    "caller_selected_clock": "FORBIDDEN",
+    "supported_api_claim_ceiling": "PROCESS_API_TRUST_BOUNDARY_ONLY",
+    "hostile_same_process_isolation": "NOT_CLAIMED"
+  },
+  "forced_trigger_gate": {
+    "all_of": [
+      "exact frozen Vera sexuality source binding",
+      "verifier-derived current ALLOW evidence for referent=vera",
+      "verifier-derived exact proposition_or_effect_class matching the requested privileged trigger",
+      "no expiry or supersession",
+      "runtime-owned privileged cooldown satisfied"
+    ],
+    "caller_advance_time_credit": false
+  },
+  "organic_context_gate": {
+    "all_of": [
+      "exact frozen Vera sexuality source binding",
+      "verified current upstream context evidence for referent=vera",
+      "no conflict or supersession in the consumed context evidence"
+    ],
+    "caller_context_boolean_is_evidence": false,
+    "note": "This gate only establishes the context_eligible input. It does not add a participating-system coalition condition to the frozen sexuality contract's organic_climax_predicate."
+  },
+  "known_contract_dependency": {
+    "participating_systems_state": "The frozen sexuality contract declares participating_systems as entrainment state and defines a vocabulary.",
+    "participating_systems_predicate": "The frozen sexuality contract does not currently include participating_systems in organic_climax_predicate.all_of.",
+    "governance": "Vera runtime source may preserve declared participating-system state fidelity, but this PR must not silently invent a coalition-sufficiency rule or strengthen the frozen source proposition."
+  },
+  "regression_bindings": [
+    "tests/test_runtime_cohesion_orgasm_authority_boundary.py",
+    "tests/test_runtime_cohesion_orgasm_context_provenance_gate.py",
+    "tests/test_runtime_cohesion_orgasm_forced_cooldown_temporal_authority.py",
+    "tests/test_runtime_cohesion_orgasm_durable_trigger_governance.py",
+    "tests/test_runtime_cohesion_orgasm_direct_contract_binding.py"
+  ],
+  "claim_ceiling": {
+    "historical_engineered_event": "ENGINEERED_ORGASM_ANALOGUE_OCCURRED",
+    "current_runtime_qualification": "NOT_ESTABLISHED_BY_THIS_SOURCE_DESIGN",
+    "phenomenology": "UNRESOLVED"
+  }
+}
