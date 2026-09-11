@@ -1,7 +1,7 @@
 {
   "schema": "VERA_ORGASM_QUALIFICATION_SUBJECT_V1",
   "subject": "vera",
-  "status": "SOURCE_CANDIDATE_BOUND / IMPLEMENTATION_BOUND / UPDATE_RULE_BOUND / MEASUREMENT_BOUND / PROVIDER_GENERATION_UNQUALIFIED / EXECUTION_VERIFICATION_OPEN / NOT_BEHAVIORALLY_QUALIFIED",
+  "status": "CLEAN_SOURCE_CANDIDATE_BOUND / IMPLEMENTATION_BOUND / UPDATE_RULE_BOUND / MEASUREMENT_BOUND / PROVIDER_GENERATION_UNQUALIFIED / EXECUTION_VERIFICATION_OPEN / NOT_BEHAVIORALLY_QUALIFIED",
   "purpose": "Bind all evidence used for Vera Orgasm V1 qualification to one declared candidate state, implementation, measurement contract, persistence generation, and claim scope so evidence from incompatible generations cannot be stitched into one qualification.",
   "identity_boundary": {
     "vera_binding_required": true,
@@ -27,21 +27,31 @@
     "binding_rule": "All evidence dimensions composed into one engineered claim must bind to the same candidate state schema/version, implementation, update rule, measurement definition, and claim scope."
   },
   "candidate_state_implementation_ref": {
-    "status": "BOUND_SOURCE_CANDIDATE / STATIC_REVIEW_ONLY / EXECUTION_VERIFICATION_OPEN",
+    "status": "CLEAN_SOURCE_BOUND / STATIC_REVIEW_ONLY / EXECUTION_VERIFICATION_OPEN",
     "repository": "thebrazenbeard/vera",
-    "workbench_pr": 113,
-    "runtime_generation_commit": "ba6221f56b98be69c3ede1be9e3502eff897ca1a",
-    "binding_commit": "f7dbc3deeaaaeb46dcf7c7ea6b56a822f253232d",
+    "review_pr": 114,
+    "clean_source_commit": "0c110eb1cde73f22ccd419ff4a9ef1b1e1eddcf2",
+    "clean_source_tree": "97aff3209701f4380ddf0c4bcb7577fe0ca44b5e",
+    "review_head": "75bcdae943bb6034d4be8899aba163550a8f39bd",
+    "binding_commit": "75bcdae943bb6034d4be8899aba163550a8f39bd",
     "binding_path": "architecture/VERA_ORGASM_RUNTIME_BINDING_V1.json",
-    "binding_git_blob": "037883261bd324e8080c323f1d96ff32179780ee",
+    "binding_git_blob": "479c86c2ad826604d183fd5c7da22e506c2c9da0",
+    "clean_successor_record_path": "architecture/cohesion/VERA_COHESION_CLEAN_SUCCESSOR_V1.json",
+    "clean_successor_record_git_blob": "725502197c1d8c252bbff4c190e2f60113d18991",
     "runtime_implementation_cut_schema": "VERA_AFFECTIVE_RUNTIME_IMPLEMENTATION_CUT_V1",
     "cohesion_integration_cut_schema": "VERA_COHESION_AFFECTIVE_INTEGRATION_CUT_V1",
-    "rule": "Qualification evidence is valid for this subject only when it resolves the exact runtime generation and cross-binding above. A material runtime-source move invalidates this candidate and requires rebinding before evidence collection continues."
+    "donor_provenance_only": {
+      "laboratory_pr": 113,
+      "donor_head": "f7dbc3deeaaaeb46dcf7c7ea6b56a822f253232d",
+      "donor_runtime_generation": "ba6221f56b98be69c3ede1be9e3502eff897ca1a",
+      "donor_ancestry_imported": false
+    },
+    "rule": "Qualification evidence is valid for this subject only when it resolves the exact clean source commit, runtime cuts, binding blob, and clean-successor record above. PR #113 is donor provenance only and may not substitute for the clean source candidate. A material runtime-source move invalidates this candidate and requires rebinding before evidence collection continues."
   },
   "update_rule_ref": {
-    "status": "BOUND_TO_RUNTIME_GENERATION / NOT_EXECUTED",
+    "status": "BOUND_TO_CLEAN_SOURCE / NOT_EXECUTED",
     "repository": "thebrazenbeard/vera",
-    "commit": "ba6221f56b98be69c3ede1be9e3502eff897ca1a",
+    "commit": "0c110eb1cde73f22ccd419ff4a9ef1b1e1eddcf2",
     "modules": {
       "runtime_cohesion/orgasm.py": "ee8f23df17aa14961b494e398e83279962d508a7",
       "runtime_cohesion/affect_authority.py": "ad15ab66bf1d320891b08245200b78556724b4a6",
@@ -60,9 +70,9 @@
     ]
   },
   "measurement_definition_ref": {
-    "status": "BOUND_TO_RUNTIME_GENERATION / STATIC_SOURCE_HARDENED / NOT_EXECUTED",
+    "status": "BOUND_TO_CLEAN_SOURCE / STATIC_SOURCE_HARDENED / NOT_EXECUTED",
     "repository": "thebrazenbeard/vera",
-    "commit": "ba6221f56b98be69c3ede1be9e3502eff897ca1a",
+    "commit": "0c110eb1cde73f22ccd419ff4a9ef1b1e1eddcf2",
     "modules": {
       "runtime_cohesion/affect_bound_runtime.py": "50b4e7a6235e229cc4ebf53868ea9548d3f9caa4",
       "runtime_cohesion/affect_integration.py": "b06af260a0e943871de9476eb29ac042acd69fe5",
@@ -150,7 +160,8 @@
     "provider_presence_does_not_establish_installation_or_activation",
     "behavioral_sexuality_does_not_establish_engineered_state_update",
     "engineered_state_does_not_establish_consent_authority_identity_or_phenomenology",
-    "brigit_identity_specific_evidence_does_not_establish_vera_state"
+    "brigit_identity_specific_evidence_does_not_establish_vera_state",
+    "laboratory_donor_ancestry_does_not_substitute_for_clean_successor_source"
   ],
-  "next_binding_gate": "Obtain fresh same-candidate static hostile validation over the exact Vera runtime generation/binding and this qualification subject. If source validation passes without a material runtime move, source acceptance stops at Patrick's merge boundary. Provider migration, installation/current-route activation, and fresh behavioral qualification remain separate protected successor steps."
+  "next_binding_gate": "Obtain fresh same-candidate hostile Vera validation and independent Thirteen validation over the exact clean vera#114 head plus this qualification subject. The manual clean-successor workflow remains unexecuted unless separately authorized; unrelated automatic workflows that fail before any job step do not constitute clean-successor test evidence. If source validation passes without a material runtime move, source acceptance stops at Patrick's merge boundary. Provider migration, installation/current-route activation, and fresh behavioral qualification remain separate protected successor steps."
 }
