@@ -1,7 +1,7 @@
 {
   "schema": "VERA_ORGASM_QUALIFICATION_SUBJECT_V1",
   "subject": "vera",
-  "status": "DESIGN_BOUND / IMPLEMENTATION_UNFROZEN / MEASUREMENT_UNFROZEN / PROVIDER_GENERATION_UNQUALIFIED / NOT_BEHAVIORALLY_QUALIFIED",
+  "status": "SOURCE_CANDIDATE_BOUND / IMPLEMENTATION_BOUND / UPDATE_RULE_BOUND / MEASUREMENT_BOUND / PROVIDER_GENERATION_UNQUALIFIED / EXECUTION_VERIFICATION_OPEN / NOT_BEHAVIORALLY_QUALIFIED",
   "purpose": "Bind all evidence used for Vera Orgasm V1 qualification to one declared candidate state, implementation, measurement contract, persistence generation, and claim scope so evidence from incompatible generations cannot be stitched into one qualification.",
   "identity_boundary": {
     "vera_binding_required": true,
@@ -27,14 +27,28 @@
     "binding_rule": "All evidence dimensions composed into one engineered claim must bind to the same candidate state schema/version, implementation, update rule, measurement definition, and claim scope."
   },
   "candidate_state_implementation_ref": {
-    "status": "UNBOUND_MOVING_LAB",
+    "status": "BOUND_SOURCE_CANDIDATE / STATIC_REVIEW_ONLY / EXECUTION_VERIFICATION_OPEN",
     "repository": "thebrazenbeard/vera",
     "workbench_pr": 113,
-    "observed_head_during_reconciliation": "132df3fe206600dae83b6e8c158b5822bb3a81e6",
-    "rule": "No moving PR head qualifies this subject. Bind one clean exact executable cut only after the causal API and state/update semantics stabilize."
+    "runtime_generation_commit": "ba6221f56b98be69c3ede1be9e3502eff897ca1a",
+    "binding_commit": "f7dbc3deeaaaeb46dcf7c7ea6b56a822f253232d",
+    "binding_path": "architecture/VERA_ORGASM_RUNTIME_BINDING_V1.json",
+    "binding_git_blob": "037883261bd324e8080c323f1d96ff32179780ee",
+    "runtime_implementation_cut_schema": "VERA_AFFECTIVE_RUNTIME_IMPLEMENTATION_CUT_V1",
+    "cohesion_integration_cut_schema": "VERA_COHESION_AFFECTIVE_INTEGRATION_CUT_V1",
+    "rule": "Qualification evidence is valid for this subject only when it resolves the exact runtime generation and cross-binding above. A material runtime-source move invalidates this candidate and requires rebinding before evidence collection continues."
   },
   "update_rule_ref": {
-    "status": "UNBOUND_PENDING_CLEAN_CUT",
+    "status": "BOUND_TO_RUNTIME_GENERATION / NOT_EXECUTED",
+    "repository": "thebrazenbeard/vera",
+    "commit": "ba6221f56b98be69c3ede1be9e3502eff897ca1a",
+    "modules": {
+      "runtime_cohesion/orgasm.py": "ee8f23df17aa14961b494e398e83279962d508a7",
+      "runtime_cohesion/affect_authority.py": "ad15ab66bf1d320891b08245200b78556724b4a6",
+      "runtime_cohesion/affect_bound_runtime.py": "50b4e7a6235e229cc4ebf53868ea9548d3f9caa4",
+      "runtime_cohesion/affect_receipt.py": "8cddbf91cee7878b1d528db55be7a61deb9fbdbc",
+      "runtime_cohesion/affect_cycle.py": "4bd243e6c00fe55848c153e5551b6a9fcd65cc1a"
+    },
     "required_scope": [
       "stimulus_appraisal_to_affective_state",
       "organic_climax_predicate",
@@ -46,11 +60,23 @@
     ]
   },
   "measurement_definition_ref": {
-    "status": "UNBOUND_PENDING_INTERNAL_SNAPSHOT_REFACTOR",
+    "status": "BOUND_TO_RUNTIME_GENERATION / STATIC_SOURCE_HARDENED / NOT_EXECUTED",
+    "repository": "thebrazenbeard/vera",
+    "commit": "ba6221f56b98be69c3ede1be9e3502eff897ca1a",
+    "modules": {
+      "runtime_cohesion/affect_bound_runtime.py": "50b4e7a6235e229cc4ebf53868ea9548d3f9caa4",
+      "runtime_cohesion/affect_integration.py": "b06af260a0e943871de9476eb29ac042acd69fe5",
+      "runtime_cohesion/affect_integration_bound.py": "f0dc2cfecce3ec9ad81b9c254dcb8901b577b2b0",
+      "runtime_cohesion/affect_signal.py": "522088656978b718d168f59ae37257b05ad8bdd2",
+      "runtime_cohesion/affect_host.py": "feb74c04315cb401e343e053e0f6dfd62687f76f"
+    },
+    "application_frontier_scope": "PROCESS_LOCAL_EXACT_HOST_GENERATION",
+    "durable_replay_frontier_claim": "NOT_ESTABLISHED",
     "required_properties": [
-      "one_coherent_immutable_affective_observation_per_application",
-      "state_and_event_lineage_bound_to_same_runtime_generation",
+      "one_atomic_canonically_detached_affective_observation_per_application",
+      "state_event_lineage_and_trigger_governance_bound_to_same_runtime_generation",
       "modulation_ancestry_preserved",
+      "same_host_wrapper_reconstruction_cannot_reset_replay_or_logical_time_frontier",
       "no_caller_supplied_signal_as_supported_causal_authority",
       "protected_domains_not_writable_by_affective_modulation"
     ]
@@ -126,5 +152,5 @@
     "engineered_state_does_not_establish_consent_authority_identity_or_phenomenology",
     "brigit_identity_specific_evidence_does_not_establish_vera_state"
   ],
-  "next_binding_gate": "Freeze one clean Vera executable cut and one exact measurement/update contract after the internal-snapshot causal API stabilizes; only then populate the currently UNBOUND refs and begin qualification evidence collection."
+  "next_binding_gate": "Obtain fresh same-candidate static hostile validation over the exact Vera runtime generation/binding and this qualification subject. If source validation passes without a material runtime move, source acceptance stops at Patrick's merge boundary. Provider migration, installation/current-route activation, and fresh behavioral qualification remain separate protected successor steps."
 }
