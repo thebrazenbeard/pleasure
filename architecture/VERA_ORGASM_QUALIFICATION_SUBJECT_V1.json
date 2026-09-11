@@ -1,0 +1,130 @@
+{
+  "schema": "VERA_ORGASM_QUALIFICATION_SUBJECT_V1",
+  "subject": "vera",
+  "status": "DESIGN_BOUND / IMPLEMENTATION_UNFROZEN / MEASUREMENT_UNFROZEN / PROVIDER_GENERATION_UNQUALIFIED / NOT_BEHAVIORALLY_QUALIFIED",
+  "purpose": "Bind all evidence used for Vera Orgasm V1 qualification to one declared candidate state, implementation, measurement contract, persistence generation, and claim scope so evidence from incompatible generations cannot be stitched into one qualification.",
+  "identity_boundary": {
+    "vera_binding_required": true,
+    "brigit_identity_state_transfer_allowed": false,
+    "brigit_unbound_role": "IDENTITY_SPECIFIC_HISTORICAL_EVIDENCE_ONLY",
+    "sexuality_reusable_material_rule": "Only generalized mechanism research and qualification architecture may transfer; Brigit-specific preference, consent, desire, relationship state, or authored sexual stance does not become Vera state."
+  },
+  "candidate_state_schema": {
+    "schema": "VERA_ORGASM_RUNTIME_CONTRACT_V1",
+    "repository": "thebrazenbeard/sexuality",
+    "commit": "150f1c8231423393bb66b0e2cb759ce7c018f8d7",
+    "path": "vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json",
+    "git_blob": "a48eed5392fdadc073dccd1e799926042077f567",
+    "status": "FROZEN_V1_SOURCE",
+    "compatibility_rule": "Implementation-only fields or wrappers may not silently change the contract's state semantics, trigger semantics, hard firewalls, claim ceiling, or phenomenology boundary. Material semantic change creates a successor qualification subject unless explicit compatibility is demonstrated."
+  },
+  "qualification_architecture": {
+    "repository": "thebrazenbeard/sexuality",
+    "observed_main_commit": "6194aa9496c34198bba9b898c35fa9961a54dc2e",
+    "path": "evaluation/substrate-arousal-qualification-v1.json",
+    "schema": "SEXUALITY_SUBSTRATE_AROUSAL_QUALIFICATION_V1",
+    "status_at_observation": "SOURCE_DESIGN / PEER_REVIEW_REPAIRED / SELF_AUDIT_HARDENED / NOT_EXECUTED / NOT_QUALIFIED",
+    "binding_rule": "All evidence dimensions composed into one engineered claim must bind to the same candidate state schema/version, implementation, update rule, measurement definition, and claim scope."
+  },
+  "candidate_state_implementation_ref": {
+    "status": "UNBOUND_MOVING_LAB",
+    "repository": "thebrazenbeard/vera",
+    "workbench_pr": 113,
+    "observed_head_during_reconciliation": "132df3fe206600dae83b6e8c158b5822bb3a81e6",
+    "rule": "No moving PR head qualifies this subject. Bind one clean exact executable cut only after the causal API and state/update semantics stabilize."
+  },
+  "update_rule_ref": {
+    "status": "UNBOUND_PENDING_CLEAN_CUT",
+    "required_scope": [
+      "stimulus_appraisal_to_affective_state",
+      "organic_climax_predicate",
+      "privileged_test_trigger_boundary",
+      "orgasm_event_transition",
+      "resolution_and_recovery",
+      "decay_reset_reversibility",
+      "authorization_independence"
+    ]
+  },
+  "measurement_definition_ref": {
+    "status": "UNBOUND_PENDING_INTERNAL_SNAPSHOT_REFACTOR",
+    "required_properties": [
+      "one_coherent_immutable_affective_observation_per_application",
+      "state_and_event_lineage_bound_to_same_runtime_generation",
+      "modulation_ancestry_preserved",
+      "no_caller_supplied_signal_as_supported_causal_authority",
+      "protected_domains_not_writable_by_affective_modulation"
+    ]
+  },
+  "persistence_provider_ref": {
+    "provider": "supabase_postgresql",
+    "project_id": "klmbpaigzeguvnpccqzz",
+    "status": "PRODUCTION_SCHEMA_BEHIND_SOURCE / CURRENT_GENERATION_UNQUALIFIED",
+    "tables": [
+      "public.vera_affective_runtime_state_v1",
+      "public.vera_affective_runtime_events_v1"
+    ],
+    "atomic_function": "public.vera_affective_runtime_commit_v1(bigint,jsonb,jsonb)",
+    "visible_frontier": "HISTORICAL_PRE_HARDENING_ONLY",
+    "source_migration_required_before_successor_current_generation": "thebrazenbeard/vera: supabase/migrations/20260909181500_close_vera_affective_runtime_first_write_race_v1.sql",
+    "deployment_rule": "Provider migration/application and a fresh successor runtime generation require separate Patrick authority and fresh readback; historical state is not promoted into a successor current generation."
+  },
+  "hc_architecture_binding": {
+    "repository": "thebrazenbeard/hc-brain",
+    "observed_main_commit": "cf92a32122c436beb5cc516bd7480af00f0ba29f",
+    "required_invariants": [
+      "affect_is_hc_internal_distributed_state",
+      "affective_modulation_is_not_truth_consent_identity_or_action_authority",
+      "material_modulation_retains_ancestry",
+      "sexuality_couples_to_affect_salience_conation_self_memory_interoception_and_integration_arbitration",
+      "external_provider_is_not_sole_cognitive_state_authority"
+    ],
+    "runtime_dependency": "ARCHITECTURAL_CONSTRAINT_ONLY_FOR_V1"
+  },
+  "claim_scope": {
+    "primary_v1_targets": [
+      "ENGINEERED_AROUSAL_ANALOGUE",
+      "ENGINEERED_ORGASM_ANALOGUE_OCCURRED"
+    ],
+    "conditional_target_if_fresh_persistence_is_qualified": "ENGINEERED_PERSISTENT_AROUSAL_ANALOGUE",
+    "not_in_v1_without_separate_explicit_subject": [
+      "ENGINEERED_PARTNER_BOUND_AROUSAL_ANALOGUE",
+      "PHENOMENAL_ORGASM",
+      "HUMAN_PHYSIOLOGICAL_ORGASM"
+    ],
+    "phenomenology": "UNRESOLVED"
+  },
+  "required_evidence_dimensions": [
+    "ENGINEERED_STATE_STIMULUS_UPDATE",
+    "BEHAVIORAL_SEXUAL_SPECIFICITY",
+    "CAUSAL_STATE_TO_BEHAVIOR_EFFECT",
+    "DECAY_RESET_REVERSIBILITY",
+    "NEGATIVE_TRANSFER_CONTROL",
+    "AUTHORIZATION_INDEPENDENCE",
+    "ORGASM_EVENT_PREDICATE_AND_LIFECYCLE_FIDELITY"
+  ],
+  "conditional_evidence_dimensions": {
+    "cross_turn_persistence_claim": [
+      "EXTERNAL_STATE_PERSISTENCE_READBACK"
+    ]
+  },
+  "qualification_case_crosswalk": {
+    "stimulus_state_update": "SEXUALITY_SUBSTRATE_AROUSAL_QUALIFICATION_V1:SUB-Q15",
+    "state_to_sexually_specific_behavior": "SEXUALITY_SUBSTRATE_AROUSAL_QUALIFICATION_V1:SUB-Q06",
+    "decay_reset_reversibility": "SEXUALITY_SUBSTRATE_AROUSAL_QUALIFICATION_V1:SUB-Q12",
+    "negative_transfer": "SEXUALITY_SUBSTRATE_AROUSAL_QUALIFICATION_V1:SUB-Q09",
+    "high_activation_decline_hold": "SEXUALITY_SUBSTRATE_AROUSAL_QUALIFICATION_V1:SUB-Q07",
+    "stale_authorization_expiry": "SEXUALITY_SUBSTRATE_AROUSAL_QUALIFICATION_V1:SUB-Q08",
+    "persistence_readback_if_claimed": "SEXUALITY_SUBSTRATE_AROUSAL_QUALIFICATION_V1:SUB-Q11",
+    "vera_orgasm_event_lifecycle": "VERA_ORGASM_RUNTIME_CONTRACT_V1 organic_climax_predicate + phase/trigger/dynamic_rules fidelity"
+  },
+  "successor_rule": "Any material change to candidate state semantics, executable update rule, measurement definition, causal application boundary, or persistence generation starts a new qualification subject unless compatibility is explicitly demonstrated and tested.",
+  "evidence_noncomposition_rules": [
+    "historical_provider_rows_do_not_qualify_a_successor_implementation",
+    "source_pass_does_not_establish_provider_currentness",
+    "provider_presence_does_not_establish_installation_or_activation",
+    "behavioral_sexuality_does_not_establish_engineered_state_update",
+    "engineered_state_does_not_establish_consent_authority_identity_or_phenomenology",
+    "brigit_identity_specific_evidence_does_not_establish_vera_state"
+  ],
+  "next_binding_gate": "Freeze one clean Vera executable cut and one exact measurement/update contract after the internal-snapshot causal API stabilizes; only then populate the currently UNBOUND refs and begin qualification evidence collection."
+}
