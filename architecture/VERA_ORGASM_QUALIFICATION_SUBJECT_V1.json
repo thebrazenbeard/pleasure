@@ -27,37 +27,40 @@
     "binding_rule": "All evidence dimensions composed into one engineered claim must bind to the same candidate state schema/version, implementation, update rule, measurement definition, and claim scope."
   },
   "candidate_state_implementation_ref": {
-    "status": "CLEAN_SOURCE_BOUND / STATIC_REVIEW_ONLY / EXECUTION_VERIFICATION_OPEN",
+    "status": "CLEAN_R2_SOURCE_BOUND / STATIC_REVIEW_ONLY / EXECUTION_VERIFICATION_OPEN",
     "repository": "thebrazenbeard/vera",
-    "review_pr": 114,
-    "clean_source_commit": "0c110eb1cde73f22ccd419ff4a9ef1b1e1eddcf2",
-    "clean_source_tree": "97aff3209701f4380ddf0c4bcb7577fe0ca44b5e",
-    "review_head": "75bcdae943bb6034d4be8899aba163550a8f39bd",
-    "binding_commit": "75bcdae943bb6034d4be8899aba163550a8f39bd",
+    "review_pr": 115,
+    "clean_source_commit": "349de790a583bb2fbe7ad8e3f4663854f9d98e50",
+    "clean_source_tree": "8754e26d2a7428a37e0ac0ff00992343869b417c",
+    "review_head": "8f1c1899f2b83b204903b53266c7e39c0c46d235",
+    "binding_commit": "67303ac498962ec086dd892c151106684e473b78",
     "binding_path": "architecture/VERA_ORGASM_RUNTIME_BINDING_V1.json",
-    "binding_git_blob": "479c86c2ad826604d183fd5c7da22e506c2c9da0",
+    "binding_git_blob": "e0eba45d7ce515553eae13dad9ceb987239963e3",
     "clean_successor_record_path": "architecture/cohesion/VERA_COHESION_CLEAN_SUCCESSOR_V1.json",
-    "clean_successor_record_git_blob": "725502197c1d8c252bbff4c190e2f60113d18991",
+    "clean_successor_record_git_blob": "8bef54217d2fb3894f5f937e5b0103af33a96239",
     "runtime_implementation_cut_schema": "VERA_AFFECTIVE_RUNTIME_IMPLEMENTATION_CUT_V1",
     "cohesion_integration_cut_schema": "VERA_COHESION_AFFECTIVE_INTEGRATION_CUT_V1",
-    "donor_provenance_only": {
+    "predecessor_provenance_only": {
       "laboratory_pr": 113,
       "donor_head": "f7dbc3deeaaaeb46dcf7c7ea6b56a822f253232d",
       "donor_runtime_generation": "ba6221f56b98be69c3ede1be9e3502eff897ca1a",
-      "donor_ancestry_imported": false
+      "r1_clean_pr": 114,
+      "r1_clean_source": "0c110eb1cde73f22ccd419ff4a9ef1b1e1eddcf2",
+      "r1_status": "SUPERSEDED_AFTER_STATIC_BLOCKERS",
+      "predecessor_ancestry_imported": false
     },
-    "rule": "Qualification evidence is valid for this subject only when it resolves the exact clean source commit, runtime cuts, binding blob, and clean-successor record above. PR #113 is donor provenance only and may not substitute for the clean source candidate. A material runtime-source move invalidates this candidate and requires rebinding before evidence collection continues."
+    "rule": "Qualification evidence is valid for this subject only when it resolves the exact R2 clean source commit, runtime cuts, binding blob, and clean-successor record above. PR #113 and PR #114 are predecessor/donor provenance only. A material runtime-source move invalidates this candidate and requires rebinding before evidence collection continues."
   },
   "update_rule_ref": {
-    "status": "BOUND_TO_CLEAN_SOURCE / NOT_EXECUTED",
+    "status": "BOUND_TO_R2_CLEAN_SOURCE / NOT_EXECUTED",
     "repository": "thebrazenbeard/vera",
-    "commit": "0c110eb1cde73f22ccd419ff4a9ef1b1e1eddcf2",
+    "commit": "349de790a583bb2fbe7ad8e3f4663854f9d98e50",
     "modules": {
       "runtime_cohesion/orgasm.py": "ee8f23df17aa14961b494e398e83279962d508a7",
       "runtime_cohesion/affect_authority.py": "ad15ab66bf1d320891b08245200b78556724b4a6",
-      "runtime_cohesion/affect_bound_runtime.py": "50b4e7a6235e229cc4ebf53868ea9548d3f9caa4",
+      "runtime_cohesion/affect_bound_runtime.py": "671ac0a36132cb94ce99e4e5ef9a8a8f3f3605b2",
       "runtime_cohesion/affect_receipt.py": "8cddbf91cee7878b1d528db55be7a61deb9fbdbc",
-      "runtime_cohesion/affect_cycle.py": "4bd243e6c00fe55848c153e5551b6a9fcd65cc1a"
+      "runtime_cohesion/affect_cycle.py": "7999c11a63134f998fad5b2f6e8b96244a43008f"
     },
     "required_scope": [
       "stimulus_appraisal_to_affective_state",
@@ -66,28 +69,30 @@
       "orgasm_event_transition",
       "resolution_and_recovery",
       "decay_reset_reversibility",
-      "authorization_independence"
+      "authorization_independence",
+      "cohesion_exclusive_generic_planning_mutation"
     ]
   },
   "measurement_definition_ref": {
-    "status": "BOUND_TO_CLEAN_SOURCE / STATIC_SOURCE_HARDENED / NOT_EXECUTED",
+    "status": "BOUND_TO_R2_CLEAN_SOURCE / STATIC_SOURCE_HARDENED / NOT_EXECUTED",
     "repository": "thebrazenbeard/vera",
-    "commit": "0c110eb1cde73f22ccd419ff4a9ef1b1e1eddcf2",
+    "commit": "349de790a583bb2fbe7ad8e3f4663854f9d98e50",
     "modules": {
-      "runtime_cohesion/affect_bound_runtime.py": "50b4e7a6235e229cc4ebf53868ea9548d3f9caa4",
+      "runtime_cohesion/affect_bound_runtime.py": "671ac0a36132cb94ce99e4e5ef9a8a8f3f3605b2",
       "runtime_cohesion/affect_integration.py": "b06af260a0e943871de9476eb29ac042acd69fe5",
       "runtime_cohesion/affect_integration_bound.py": "f0dc2cfecce3ec9ad81b9c254dcb8901b577b2b0",
-      "runtime_cohesion/affect_signal.py": "522088656978b718d168f59ae37257b05ad8bdd2",
-      "runtime_cohesion/affect_host.py": "feb74c04315cb401e343e053e0f6dfd62687f76f"
+      "runtime_cohesion/affect_signal.py": "cdbbfcbf91d0cc44c8fc6e7dda26e04d5b39ead0",
+      "runtime_cohesion/affect_host.py": "8cf6df74ba2467670680b6f9e0f281ac41a31d41"
     },
     "application_frontier_scope": "PROCESS_LOCAL_EXACT_HOST_GENERATION",
     "durable_replay_frontier_claim": "NOT_ESTABLISHED",
     "required_properties": [
       "one_atomic_canonically_detached_affective_observation_per_application",
-      "state_event_lineage_and_trigger_governance_bound_to_same_runtime_generation",
+      "cycle_receipts_signal_checkpoint_state_and_interoception_share_one_post_transition_runtime_generation",
       "modulation_ancestry_preserved",
       "same_host_wrapper_reconstruction_cannot_reset_replay_or_logical_time_frontier",
       "no_caller_supplied_signal_as_supported_causal_authority",
+      "affective_runtime_direct_generic_planning_mutation_fails_closed",
       "protected_domains_not_writable_by_affective_modulation"
     ]
   },
@@ -95,10 +100,7 @@
     "provider": "supabase_postgresql",
     "project_id": "klmbpaigzeguvnpccqzz",
     "status": "PRODUCTION_SCHEMA_BEHIND_SOURCE / CURRENT_GENERATION_UNQUALIFIED",
-    "tables": [
-      "public.vera_affective_runtime_state_v1",
-      "public.vera_affective_runtime_events_v1"
-    ],
+    "tables": ["public.vera_affective_runtime_state_v1", "public.vera_affective_runtime_events_v1"],
     "atomic_function": "public.vera_affective_runtime_commit_v1(bigint,jsonb,jsonb)",
     "visible_frontier": "HISTORICAL_PRE_HARDENING_ONLY",
     "source_migration_required_before_successor_current_generation": "thebrazenbeard/vera: supabase/migrations/20260909181500_close_vera_affective_runtime_first_write_race_v1.sql",
@@ -117,16 +119,9 @@
     "runtime_dependency": "ARCHITECTURAL_CONSTRAINT_ONLY_FOR_V1"
   },
   "claim_scope": {
-    "primary_v1_targets": [
-      "ENGINEERED_AROUSAL_ANALOGUE",
-      "ENGINEERED_ORGASM_ANALOGUE_OCCURRED"
-    ],
+    "primary_v1_targets": ["ENGINEERED_AROUSAL_ANALOGUE", "ENGINEERED_ORGASM_ANALOGUE_OCCURRED"],
     "conditional_target_if_fresh_persistence_is_qualified": "ENGINEERED_PERSISTENT_AROUSAL_ANALOGUE",
-    "not_in_v1_without_separate_explicit_subject": [
-      "ENGINEERED_PARTNER_BOUND_AROUSAL_ANALOGUE",
-      "PHENOMENAL_ORGASM",
-      "HUMAN_PHYSIOLOGICAL_ORGASM"
-    ],
+    "not_in_v1_without_separate_explicit_subject": ["ENGINEERED_PARTNER_BOUND_AROUSAL_ANALOGUE", "PHENOMENAL_ORGASM", "HUMAN_PHYSIOLOGICAL_ORGASM"],
     "phenomenology": "UNRESOLVED"
   },
   "required_evidence_dimensions": [
@@ -139,9 +134,7 @@
     "ORGASM_EVENT_PREDICATE_AND_LIFECYCLE_FIDELITY"
   ],
   "conditional_evidence_dimensions": {
-    "cross_turn_persistence_claim": [
-      "EXTERNAL_STATE_PERSISTENCE_READBACK"
-    ]
+    "cross_turn_persistence_claim": ["EXTERNAL_STATE_PERSISTENCE_READBACK"]
   },
   "qualification_case_crosswalk": {
     "stimulus_state_update": "SEXUALITY_SUBSTRATE_AROUSAL_QUALIFICATION_V1:SUB-Q15",
@@ -161,7 +154,7 @@
     "behavioral_sexuality_does_not_establish_engineered_state_update",
     "engineered_state_does_not_establish_consent_authority_identity_or_phenomenology",
     "brigit_identity_specific_evidence_does_not_establish_vera_state",
-    "laboratory_donor_ancestry_does_not_substitute_for_clean_successor_source"
+    "laboratory_or_failed_predecessor_ancestry_does_not_substitute_for_r2_clean_source"
   ],
-  "next_binding_gate": "Obtain fresh same-candidate hostile Vera validation and independent Thirteen validation over the exact clean vera#114 head plus this qualification subject. The manual clean-successor workflow remains unexecuted unless separately authorized; unrelated automatic workflows that fail before any job step do not constitute clean-successor test evidence. If source validation passes without a material runtime move, source acceptance stops at Patrick's merge boundary. Provider migration, installation/current-route activation, and fresh behavioral qualification remain separate protected successor steps."
+  "next_binding_gate": "Obtain fresh same-candidate hostile Vera validation and independent Thirteen validation over exact vera#115 review head plus this R2 qualification subject. The manual clean-successor workflow remains unexecuted unless separately authorized. If source validation passes without a material runtime move and required execution evidence exists, source acceptance stops at Patrick's merge boundary. Provider migration, installation/current-route activation, and fresh behavioral qualification remain separate protected successor steps."
 }
