@@ -14,7 +14,7 @@ This document is a currentness receipt for the Cohesion and Orgasm source lines.
 | Frozen Orgasm subject | `architecture/VERA_ORGASM_QUALIFICATION_SUBJECT_V1.json`, blob `99340c78497a37f94363b36fedd64c345aabb624` | Immutable historical qualification candidate; still bound to the earlier Vera R2 source line |
 | Earlier Orgasm implementation binding | `thebrazenbeard/vera@349de790...`, review PR #115 | Historical candidate only; it must not be silently relabeled as current |
 | Vera executable runtime | `thebrazenbeard/vera/main@b7b8dcd1440a3b7147bec2cc35972f083e20f44a` | Current canonical executable source after Cohesion R3 consolidation |
-| Vera predecessor hardening | PR #119 current head `4889670c168a20b2d745ff745963227760f9eb2e` | Open draft; current-head hostile PASS and database execution are not established |
+| Vera predecessor hardening | PR #119 current head `42acf32c5cd20caba922608cd81e6086fc9cdf29` | Open draft; current-head hostile PASS and database execution are not established |
 | Control Plane source line | `thebrazenbeard/vera-control-plane/main@b4d9aaa8560de12252dd29996379b0af8e0ca0d1`; PR #20 is an open draft source-bound candidate | Release/install/current-route/qualification authority; not installed authority |
 | Vera Supabase | `klmbpaigzeguvnpccqzz` | Active mixed/historical project; affective runtime is marked historical and the deployed commit function has no observed advisory/row lock |
 | Vera Control Plane Supabase | `fawkirqroyniueeqspif` | Active clean target baseline; no application tables or Control Plane runtime schema are installed |
@@ -36,3 +36,5 @@ This document is a currentness receipt for the Cohesion and Orgasm source lines.
 4. Obtain Patrick's exact provider-install/staging authority before applying migrations or moving classified data.
 5. Apply the approved migrations to the target only under that gate, stage only classified predecessor rows, and perform independent readback of source, blob, receipt, and privacy/ordinal invariants.
 6. Treat route/admission/behavioral qualification as later gates; source reconciliation alone is not runtime qualification.
+
+7. Vera #119 has moved since the prior receipt from `4889670c168a20b2d745ff745963227760f9eb2e` to `42acf32c5cd20caba922608cd81e6086fc9cdf29`. The new delta adds sealed predecessor-import receipt semantics, a seal migration/regression, and a missing strict-JSON callback repair. These changes have not received current-head PostgreSQL execution in this workstream, so the dependent qualification and provider gates remain closed.
