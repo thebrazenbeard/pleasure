@@ -50,7 +50,7 @@ The old Vera affective tables/function are external evidence only. The deployed 
 
 ## Required sequence
 
-1. Complete fresh hostile review and PostgreSQL execution at the exact accepted Vera source head.
+1. Complete fresh hostile review at the exact accepted Vera source head; preserve the recorded PostgreSQL execution evidence.
 2. Issue a successor Orgasm qualification subject or an explicit reviewed rebind to that exact source tuple.
 3. Regenerate Control Plane manifests and runbooks from the reviewed source cut.
 4. Obtain Patrick's exact provider-install/staging authority.
