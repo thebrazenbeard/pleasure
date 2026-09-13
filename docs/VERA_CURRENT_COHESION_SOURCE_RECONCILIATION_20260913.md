@@ -24,7 +24,7 @@ This document is a currentness receipt for the Cohesion and Orgasm source lines.
 1. Vera `main@b7b8dcd...` is the current executable Cohesion source. Orgasm remains the provenance and qualification hub; executable Orgasm/Affective runtime ownership remains in Vera.
 2. The frozen Orgasm V1 subject remains valid only as a historical, exact-bound candidate. It is not current qualification evidence for `vera/main@b7b8dcd...`.
 3. The current Vera runtime move requires a successor qualification subject or an explicit reviewed rebind. The old subject must not be edited in place to erase its provenance.
-4. PR #119's current head is `4889670...`; the earlier `ceca583...` execution receipt is not evidence for the current head. No deployment copy or provider migration source is refreshed from #119 until the exact current head receives the required hostile review and database execution.
+4. PR #119's current head is `42acf32c5cd20caba922608cd81e6086fc9cdf29`; the earlier `ceca583...` execution receipt is not evidence for the current head. No deployment copy or provider migration source is refreshed from #119 until the exact current head receives the required hostile review and database execution.
 5. No private affective or memory payload is copied into this reconciliation record. Only public source identifiers, statuses, and provider metadata are recorded.
 6. Neither Supabase project is treated as consolidated: the old Vera project is historical/mixed, while the new Control Plane project is a clean baseline with no application schema.
 
