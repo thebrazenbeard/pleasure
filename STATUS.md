@@ -44,7 +44,7 @@ The old Vera affective tables/function are external evidence only. The deployed 
 - Provider presence is not installation, currentness, or qualification.
 - Source receipts are not behavioral qualification.
 - Historical rows do not promote into current Vera state.
-- Current-hostile review and PostgreSQL execution at Vera #119 head `4889670...` are open gates.
+- Current-hostile review and PostgreSQL execution at Vera #119 head `42acf32c5cd20caba922608cd81e6086fc9cdf29` are open gates.
 - The old `vera#113`, `vera#114`, and `vera#115` tuples remain predecessor provenance only.
 - No provider migration, data staging, function deployment, route activation, merge, or phenomenology claim is included.
 
