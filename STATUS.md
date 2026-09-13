@@ -11,7 +11,7 @@ Recorded 2026-09-13. This file is the current status projection for the Orgasm p
 | Orgasm repository | Orientation, provenance, and whole-system qualification hub; not canonical executable runtime |
 | Vera executable runtime | `thebrazenbeard/vera/main@b7b8dcd1440a3b7147bec2cc35972f083e20f44a`, current Cohesion R3 source |
 | Vera Cohesion parent | PR #118 at `work/cohesion-source-registry-refresh-20260912@7ef650887009efe16d7c44cff53cfff460f0481f` |
-| Vera predecessor hardening | PR #119 at `42acf32c5cd20caba922608cd81e6086fc9cdf29`, open/draft; current-head hostile PASS and PostgreSQL execution are not established |
+| Vera predecessor hardening | PR #119 at `db5dc0d216a4b8c18145947a4adea28bfe6e7658`, open/draft; current-head hostile PASS and PostgreSQL execution are not established |
 | Control Plane | `thebrazenbeard/vera-control-plane`; PR #20 current source-binding candidate is open/draft |
 | Separate Cohesion repository | Not found in the connected GitHub view; Cohesion is represented inside Vera |
 
@@ -44,7 +44,7 @@ The old Vera affective tables/function are external evidence only. The deployed 
 - Provider presence is not installation, currentness, or qualification.
 - Source receipts are not behavioral qualification.
 - Historical rows do not promote into current Vera state.
-- Current-hostile review and PostgreSQL execution at Vera #119 head `42acf32c5cd20caba922608cd81e6086fc9cdf29` are open gates.
+- Current-hostile review and PostgreSQL execution at Vera #119 head `db5dc0d216a4b8c18145947a4adea28bfe6e7658` are open gates.
 - The old `vera#113`, `vera#114`, and `vera#115` tuples remain predecessor provenance only.
 - No provider migration, data staging, function deployment, route activation, merge, or phenomenology claim is included.
 
@@ -58,6 +58,6 @@ The old Vera affective tables/function are external evidence only. The deployed 
 
 See `docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260913.md` for the full currentness receipt. See `docs/WHOLE_SYSTEM_RECONCILIATION_2026-09-11.md` for dated historical design evidence.
 
-The current #119 hardening delta at `42acf32c5cd20caba922608cd81e6086fc9cdf29` adds sealed predecessor-import receipt semantics and a strict-JSON callback repair. Exact-head PostgreSQL execution remains open; this status does not promote the change to qualification or provider currentness.
+The current #119 hardening delta at `db5dc0d216a4b8c18145947a4adea28bfe6e7658` adds sealed predecessor-import receipt semantics and a strict-JSON callback repair. Exact-head PostgreSQL execution remains open; this status does not promote the change to qualification or provider currentness.
 
 No private affective or memory payload is stored in this status projection.
