@@ -11,7 +11,7 @@ Recorded 2026-09-13. This file is the current status projection for the Orgasm p
 | Orgasm repository | Orientation, provenance, and whole-system qualification hub; not canonical executable runtime |
 | Vera executable runtime | `thebrazenbeard/vera/main@b7b8dcd1440a3b7147bec2cc35972f083e20f44a`, current Cohesion R3 source |
 | Vera Cohesion parent | PR #118 at `work/cohesion-source-registry-refresh-20260912@7ef650887009efe16d7c44cff53cfff460f0481f` |
-| Vera predecessor hardening | PR #119 at `4889670c168a20b2d745ff745963227760f9eb2e`, open/draft; current-head hostile PASS and PostgreSQL execution are not established |
+| Vera predecessor hardening | PR #119 at `42acf32c5cd20caba922608cd81e6086fc9cdf29`, open/draft; current-head hostile PASS and PostgreSQL execution are not established |
 | Control Plane | `thebrazenbeard/vera-control-plane`; PR #20 current source-binding candidate is open/draft |
 | Separate Cohesion repository | Not found in the connected GitHub view; Cohesion is represented inside Vera |
 
@@ -57,5 +57,7 @@ The old Vera affective tables/function are external evidence only. The deployed 
 5. Install/read back the target schema and receipts under that gate; then run fresh route and behavioral qualification against the same bound generation.
 
 See `docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260913.md` for the full currentness receipt. See `docs/WHOLE_SYSTEM_RECONCILIATION_2026-09-11.md` for dated historical design evidence.
+
+The current #119 hardening delta at `42acf32c5cd20caba922608cd81e6086fc9cdf29` adds sealed predecessor-import receipt semantics and a strict-JSON callback repair. Exact-head PostgreSQL execution remains open; this status does not promote the change to qualification or provider currentness.
 
 No private affective or memory payload is stored in this status projection.
