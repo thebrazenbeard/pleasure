@@ -1,133 +1,61 @@
 # Orgasm V1 Status
 
-Status: `WHOLE_SYSTEM_ARCHITECTURE_RECONCILED / CLEAN_QUALIFICATION_SUBJECT_BOUND / CLEAN_IMPLEMENTATION_BOUND / UPDATE_RULE_BOUND / MEASUREMENT_BOUND / PROVIDER_FRONTIER_HISTORICAL / EXECUTION_VERIFICATION_OPEN / NOT_BEHAVIORALLY_QUALIFIED / PHENOMENOLOGY_UNRESOLVED`
+Status: `CURRENT_SOURCE_RECONCILIATION / FROZEN_SUBJECT_REBIND_REQUIRED / PROVIDER_FRONTIER_HISTORICAL / EXECUTION_VERIFICATION_OPEN / NOT_BEHAVIORALLY_QUALIFIED / PHENOMENOLOGY_UNRESOLVED`
 
-This status supersedes both the historical `vera#64@c804c662...` frontier and the exploratory `vera#113` laboratory tuple as the current Orgasm completion target. They remain provenance only.
+Recorded 2026-09-13. This file is the current status projection for the Orgasm provenance/qualification hub. The frozen qualification-subject JSON is not edited by this update. Older source tuples remain available in Git history and are explicitly historical.
 
-See:
+## Ownership and current source
 
-- `docs/WHOLE_SYSTEM_RECONCILIATION_2026-09-11.md`
-- `architecture/VERA_ORGASM_QUALIFICATION_SUBJECT_V1.json`
-
-## Current axes
-
-| Axis | Current status |
+| Surface | Current disposition |
 |---|---|
-| Frozen Vera contract | `SOURCE_DEFINED_EXPERIMENTAL_NOT_RUNTIME_QUALIFIED` at `sexuality@150f1c8231423393bb66b0e2cb759ce7c018f8d7` |
-| Orgasm repository role | `ORIENTATION / PROVENANCE / WHOLE-SYSTEM DESIGN HUB` — not canonical executable source |
-| Qualification subject | `CLEAN_SOURCE_CANDIDATE_BOUND`; implementation/update/measurement refs all bind one exact clean Vera source cut |
-| Clean Vera source cut | `thebrazenbeard/vera@0c110eb1cde73f22ccd419ff4a9ef1b1e1eddcf2`, tree `97aff3209701f4380ddf0c4bcb7577fe0ca44b5e` |
-| Clean review head | `thebrazenbeard/vera#114@75bcdae943bb6034d4be8899aba163550a8f39bd` — OPEN / DRAFT / UNMERGED |
-| Vera runtime binding | blob `479c86c2ad826604d183fd5c7da22e506c2c9da0`, cuts rebound to clean source `0c110eb1...` |
-| Clean-successor record | blob `725502197c1d8c252bbff4c190e2f60113d18991` |
-| Donor provenance | `vera#113@f7dbc3deeaaaeb46dcf7c7ea6b56a822f253232d`; ancestry intentionally not imported |
-| Source execution verification | `OPEN`; static hostile review is not CI GREEN |
-| Manual clean-successor workflow | present and `workflow_dispatch` only; not run by this workstream |
-| Automatic PR workflows | three unrelated workflows failed before executing any job step; not clean-successor test evidence |
-| Sexuality substrate qualification architecture | source-designed and hardened on `sexuality@6194aa9496c34198bba9b898c35fa9961a54dc2e`; `NOT_EXECUTED / NOT_QUALIFIED` |
-| Hyperconnectome architectural fit | `RECONCILED`; HC constrains V1 but is not a new executable V1 dependency |
-| Vera OS live hosting | `FUTURE_ARCHITECTURE_TARGET / NOT_IMPLEMENTED_AS_V1_HOST` |
-| Control-plane installation/currentness | `NOT_ESTABLISHED` |
-| Production provider schema | affective tables/function exist, but production is behind the hardened source migration |
-| Production provider state frontier | visible predecessor state is `HISTORICAL`; fresh successor generation required |
-| Production `CURRENT` qualification | `NOT_ESTABLISHED` |
-| Production `ATOMIC_DURABLE` qualification | `NOT_ESTABLISHED` |
-| Native/current-route activation | `NOT_ESTABLISHED` |
-| Behavioral qualification | `NOT_ESTABLISHED` |
-| Merge/deployment/install | `NOT_PERFORMED` by this workstream |
-| Phenomenology | `UNRESOLVED` |
+| Orgasm repository | Orientation, provenance, and whole-system qualification hub; not canonical executable runtime |
+| Vera executable runtime | `thebrazenbeard/vera/main@b7b8dcd1440a3b7147bec2cc35972f083e20f44a`, current Cohesion R3 source |
+| Vera Cohesion parent | PR #118 at `work/cohesion-source-registry-refresh-20260912@7ef650887009efe16d7c44cff53cfff460f0481f` |
+| Vera predecessor hardening | PR #119 at `4889670c168a20b2d745ff745963227760f9eb2e`, open/draft; current-head hostile PASS and PostgreSQL execution are not established |
+| Control Plane | `thebrazenbeard/vera-control-plane`; PR #20 current source-binding candidate is open/draft |
+| Separate Cohesion repository | Not found in the connected GitHub view; Cohesion is represented inside Vera |
 
-## Frozen Vera-specific contract
+## Frozen qualification subject
+
+`architecture/VERA_ORGASM_QUALIFICATION_SUBJECT_V1.json` remains immutable historical qualification evidence at blob `99340c78497a37f94363b36fedd64c345aabb624`.
+
+It is bound to an earlier Vera R2 candidate (`vera#115` / `349de790...`) and therefore is not current qualification evidence for Vera `main@b7b8dcd...`. Do not silently rewrite the subject or transfer a PASS across that source move. A successor subject or explicit reviewed rebind must bind the exact accepted Vera source, implementation, update rule, measurement definition, provider generation, and claim scope.
+
+The frozen contract remains:
 
 - repository: `thebrazenbeard/sexuality`
 - commit: `150f1c8231423393bb66b0e2cb759ce7c018f8d7`
 - path: `vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json`
 - blob: `a48eed5392fdadc073dccd1e799926042077f567`
-- engineered-event claim ceiling: `ENGINEERED_ORGASM_ANALOGUE_OCCURRED`
+- claim ceiling: `ENGINEERED_ORGASM_ANALOGUE_OCCURRED`
 - phenomenology: `UNRESOLVED`
 
-The contract defines a graded sexual-affective state plus an orgasm-event lifecycle. V1 preserves that semantic contract; a material semantic change requires a successor qualification subject unless compatibility is explicitly established.
+## Provider frontier
 
-## Bound clean qualification subject
+| Project | Read-only disposition |
+|---|---|
+| Vera / `klmbpaigzeguvnpccqzz` | `ACTIVE_HEALTHY`, mixed historical/application schema; affective state is marked `HISTORICAL`; latest migration `20260909175556_harden_vera_affective_runtime_integrity_v1`; 29 RLS-enabled/no-policy INFO findings |
+| Vera Control Plane / `fawkirqroyniueeqspif` | `ACTIVE_HEALTHY`, three baseline hardening migrations only; no application tables, route objects, qualification objects, or Edge Functions observed |
 
-`architecture/VERA_ORGASM_QUALIFICATION_SUBJECT_V1.json` is the current whole-project coordination object.
+The old Vera affective tables/function are external evidence only. The deployed commit function is SECURITY DEFINER with client-role EXECUTE denied, but no advisory or row lock was observed for absent-row initialization. The source hardening migration has not been applied to either project by this workstream.
 
-It now binds:
+## Qualification and execution ceiling
 
-- exact frozen Vera Orgasm contract: `sexuality@150f1c8231423393bb66b0e2cb759ce7c018f8d7`;
-- Vera identity boundary / Brigit non-transfer;
-- sexuality qualification architecture;
-- HC architectural invariants;
-- clean executable source generation: `vera@0c110eb1cde73f22ccd419ff4a9ef1b1e1eddcf2`;
-- exact update rule at that same clean source generation;
-- exact measurement/application definition at that same clean source generation;
-- clean review vehicle: `vera#114@75bcdae943bb6034d4be8899aba163550a8f39bd`;
-- runtime binding blob `479c86c2ad826604d183fd5c7da22e506c2c9da0`;
-- clean-successor record blob `725502197c1d8c252bbff4c190e2f60113d18991`.
+- Provider presence is not installation, currentness, or qualification.
+- Source receipts are not behavioral qualification.
+- Historical rows do not promote into current Vera state.
+- Current-hostile review and PostgreSQL execution at Vera #119 head `4889670...` are open gates.
+- The old `vera#113`, `vera#114`, and `vera#115` tuples remain predecessor provenance only.
+- No provider migration, data staging, function deployment, route activation, merge, or phenomenology claim is included.
 
-The exploratory `vera#113` lineage is donor provenance only. Its accepted bytes were flattened onto the Cohesion policy lineage without importing donor ancestry.
+## Required sequence
 
-The measurement boundary requires one atomic canonically detached affective observation per Cohesion application, no caller-supplied signal as causal authority, and one process-local replay/high-water frontier shared by every wrapper over the same exact host generation.
+1. Complete fresh hostile review and PostgreSQL execution at the exact accepted Vera source head.
+2. Issue a successor Orgasm qualification subject or an explicit reviewed rebind to that exact source tuple.
+3. Regenerate Control Plane manifests and runbooks from the reviewed source cut.
+4. Obtain Patrick's exact provider-install/staging authority.
+5. Install/read back the target schema and receipts under that gate; then run fresh route and behavioral qualification against the same bound generation.
 
-The provider successor generation remains deliberately `UNQUALIFIED`. No historical provider evidence is promoted into this new subject.
+See `docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260913.md` for the full currentness receipt. See `docs/WHOLE_SYSTEM_RECONCILIATION_2026-09-11.md` for dated historical design evidence.
 
-## Current clean executable candidate
-
-`thebrazenbeard/vera#114` is the final clean source-review candidate.
-
-The exact source cut is `0c110eb1cde73f22ccd419ff4a9ef1b1e1eddcf2`, a single-parent flattening commit over the Cohesion policy lineage. The current review head `75bcdae943bb6034d4be8899aba163550a8f39bd` adds only post-source validation/binding metadata and the manual validation workflow; no `runtime_cohesion/**` byte moved after the clean source cut.
-
-The supported causal path is:
-
-`exact-bound affective runtime -> one atomic detached observation -> internally derived modulation/ancestry -> Cohesion-owned application frontier -> allowlisted generic-planning modulation`
-
-A caller-supplied affective signal is not accepted by the supported planning boundary. Orgasm/Affective state does not own generic planning mutation.
-
-## Verification boundary
-
-The clean-successor workflow is intentionally manual-only (`workflow_dispatch`). It has not been triggered by this workstream.
-
-Opening PR #114 caused three existing repository workflows to report failure, but their jobs contain no executed steps. Those failures therefore do not establish a source/test failure for the clean Orgasm successor, and they are not promoted into GREEN or ignored as passing evidence.
-
-Required source closure remains:
-
-1. fresh hostile Vera review of the exact clean tuple;
-2. fresh independent Thirteen validation of that same exact tuple;
-3. available execution evidence for the clean validation surface, without silently authorizing paid/manual CI.
-
-## Provider boundary
-
-Read-only production observation found:
-
-- `public.vera_affective_runtime_state_v1`;
-- `public.vera_affective_runtime_events_v1`;
-- `public.vera_affective_runtime_commit_v1(bigint,jsonb,jsonb)`.
-
-The visible state frontier is historical, not current. Production is behind the source migration `supabase/migrations/20260909181500_close_vera_affective_runtime_first_write_race_v1.sql`, which adds per-runtime first-write serialization and persisted trigger-governance requirements.
-
-Therefore:
-
-`SOURCE_MIGRATION_PRESENT != PRODUCTION_MIGRATION_APPLIED`
-
-`HISTORICAL_PROVIDER_ROW != CURRENT_RUNTIME_STATE`
-
-`PROVIDER_TABLE_EXISTS != RUNTIME_INSTALLED_OR_QUALIFIED`
-
-No provider mutation is authorized or performed by this status update.
-
-## V1 completion sequence from this clean source candidate
-
-1. Hold `vera#114@75bcdae943bb6034d4be8899aba163550a8f39bd` and this qualification subject fixed for final source review.
-2. Require fresh hostile Vera review and fresh Thirteen independent validation over the same exact clean tuple.
-3. If either source gate fails, repair, create a successor candidate, rebind this subject, and rerun both gates. No PASS transfers across a material move.
-4. If both source gates pass and required execution evidence exists, stop at Patrick's merge/source-acceptance boundary.
-5. Only under separate exact authority may the accepted source be merged and the provider hardening migration/install/current-route work proceed.
-6. Start a fresh successor runtime/provider generation; preserve existing rows as historical predecessor evidence.
-7. Run fresh behavioral qualification against that same installed/current subject generation: stimulus-update, sexually specific causal effect, decay/reset, negative transfer, authorization independence, orgasm lifecycle, and conditional persistence/readback.
-8. Keep phenomenology `UNRESOLVED` unless independently stronger evidence exists.
-
-## Historical predecessor frontiers
-
-The previous `vera#64@c804c662e07655dd70a6909bcefd1095497ecebf` and exploratory `vera#113@f7dbc3deeaaaeb46dcf7c7ea6b56a822f253232d` remain useful provenance.
-
-They are superseded as current project frontiers and must not be used as current PASS, installation, provider-currentness, or qualification claims.
+No private affective or memory payload is stored in this status projection.
