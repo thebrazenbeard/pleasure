@@ -1,3 +1,5 @@
+> **Currentness notice added 2026-09-13:** This dated 2026-09-11 document is retained as historical design evidence. Its embedded Vera/Orgasm tuples and its `QUALIFICATION_SUBJECT_NOT_YET_BOUND` ceiling are not the current source frontier. Use `docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260913.md` and `STATUS.md` for current status. The frozen qualification subject remains unchanged; this notice does not promote any source, provider, or qualification state.
+
 # Vera Orgasm — whole-system reconciliation — 2026-09-11
 
 Status: `DESIGN_RECONCILIATION / NO_PROTECTED_EFFECT / SOURCE_AND_PROVIDER_FRONTIERS_SEPARATED`
