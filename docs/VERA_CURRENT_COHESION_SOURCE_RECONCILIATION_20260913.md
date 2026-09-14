@@ -10,7 +10,7 @@ This document is a currentness receipt for the Cohesion and Orgasm source lines.
 | Surface | Exact observation | Meaning |
 |---|---|---|
 | Orgasm default branch | `thebrazenbeard/orgasm/main@494432873dd8bcf96b8f59d26a4f4687cd66d635` | Provenance/orientation hub; not the executable runtime owner |
-| Orgasm PR #2 | `work/whole-system-reconciliation-20260911` | Open draft candidate; exact head is recorded in PR metadata and the WIP receipt |
+| Orgasm PR #2 | `work/whole-system-reconciliation-20260911` | Open draft candidate at exact head `24471f5c90c81dd4e1a2df3e9bb2e0bde0a71f5b`; this branch remains mutable |
 | Frozen Orgasm subject | `architecture/VERA_ORGASM_QUALIFICATION_SUBJECT_V1.json`, blob `99340c78497a37f94363b36fedd64c345aabb624` | Immutable historical qualification candidate; still bound to the earlier Vera R2 source line |
 | Earlier Orgasm implementation binding | `thebrazenbeard/vera@349de790...`, review PR #115 | Historical candidate only; it must not be silently relabeled as current |
 | Vera executable runtime | `thebrazenbeard/vera/main@b7b8dcd1440a3b7147bec2cc35972f083e20f44a` | Current canonical executable source after Cohesion R3 consolidation |
@@ -37,4 +37,4 @@ This document is a currentness receipt for the Cohesion and Orgasm source lines.
 5. Apply the approved migrations to the target only under that gate, stage only classified predecessor rows, and perform independent readback of source, blob, receipt, and privacy/ordinal invariants.
 6. Treat route/admission/behavioral qualification as later gates; source reconciliation alone is not runtime qualification.
 
-7. Vera #119 has moved since the prior receipt from `4889670c168a20b2d745ff745963227760f9eb2e` through `db5dc0d216a4b8c18145947a4adea28bfe6e7658` to `15bd36e30ef5a05a28b12572434837a0fe9b51c7`. The new delta adds sealed predecessor-import receipt semantics, a seal migration/regression, and a missing strict-JSON callback repair. Exact-head PostgreSQL execution is reported green (27/27 bounded tests plus 10/10 race/seal repetitions), while fresh hostile review remains open; dependent qualification and provider gates remain closed.
+7. Vera #119 has moved since the prior receipt from `4889670c168a20b2d745ff745963227760f9eb2e` through `15bd36e30ef5a05a28b12572434837a0fe9b51c7` to `15bd36e30ef5a05a28b12572434837a0fe9b51c7`. The new delta adds sealed predecessor-import receipt semantics, a seal migration/regression, and a missing strict-JSON callback repair. Exact-head PostgreSQL execution is reported green (27/27 bounded tests plus 10/10 race/seal repetitions), while fresh hostile review remains open; dependent qualification and provider gates remain closed.
