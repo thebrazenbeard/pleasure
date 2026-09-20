@@ -44,7 +44,7 @@ Branch: `work/vera-orgasm-optional-invocation-gate-v1-20260920`
 
 Current source head at this binding:
 
-`94afd36a3cc2a6e6de9fea930f4acf1b20f1d94c`
+`f0e37ae92778b63df163761ea62bc2c06dbc58ec`
 
 Module:
 
@@ -52,7 +52,7 @@ Module:
 
 Git blob:
 
-`0a2bbb83fb6d0ad62b28a80ad18131e23342115d`
+`65105b7aa5fb4615e1ddbd846896c60d795082b4`
 
 Tests:
 
@@ -148,3 +148,14 @@ The adapter binds an accepted optional invocation to the existing exact-bound af
 It refuses `QUALIFIED` execution and rejects any test-only downstream event carrying a production engineered-event claim. This prevents an in-process/nonqualifying authority path from being relabeled as qualified behavior.
 
 A real `AVAILABLE_QUALIFIED` partner route therefore requires a separately rooted production successor. That is a distinct qualification/authority problem, not a metadata rename.
+
+
+## Live negative-route hardening
+
+Vera now uses conjunctive availability semantics where an authoritative negative execution prerequisite beats unrelated unknown axes; `CONFLICT` remains `UNKNOWN`.
+
+- route gate blob: `65105b7aa5fb4615e1ddbd846896c60d795082b4`
+- known-negative route regression: `tests/test_runtime_cohesion_optional_invocation_route_negative.py`
+- regression blob: `ed54a7e48bea6637f3aa907cd10eb5eda48e81a0`
+
+This permits a live readback with an unknown native Project-install axis but a known missing adapter / unverified runtime-consumption axis to resolve to `UNAVAILABLE`, rather than pretending the absence is merely unknown.
