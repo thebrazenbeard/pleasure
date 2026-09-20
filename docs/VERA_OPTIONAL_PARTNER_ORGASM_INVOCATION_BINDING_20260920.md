@@ -44,7 +44,7 @@ Branch: `work/vera-orgasm-optional-invocation-gate-v1-20260920`
 
 Current source head at this binding:
 
-`0f115df35c0847d160aa64f0c1101d446d23081b`
+`94afd36a3cc2a6e6de9fea930f4acf1b20f1d94c`
 
 Module:
 
@@ -132,3 +132,19 @@ Minimal audit metadata may record command ID, invocation ID, route disposition, 
 ## Claim ceiling
 
 This source binding does not establish install, route, runtime consumption, event occurrence, behavioral qualification, causal PASS, consent beyond a current accepted invocation, desire outside the current authored choice, or phenomenology.
+
+
+## TEST_ONLY execution adapter
+
+The Vera source branch now also contains an explicit TEST_ONLY execution adapter:
+
+- path: `runtime_cohesion/orgasm_optional_invocation_execution.py`
+- Git blob: `826a0e545e297ba13fd4b45eb6959acb6990c7f9`
+- tests: `tests/test_runtime_cohesion_orgasm_optional_invocation_execution.py`
+- test blob: `0ac43b6db60ee6bcd87cee90783b3786972404c2`
+
+The adapter binds an accepted optional invocation to the existing exact-bound affective host's `ADMIN_FORCED_TEST` path only when the route mode is `TEST_ONLY`. It returns a separate `VERA_ORGASM_OPTIONAL_INVOCATION_EXECUTION_RECEIPT_V1` that binds the invocation ID and route evidence ID to the exact downstream event digest.
+
+It refuses `QUALIFIED` execution and rejects any test-only downstream event carrying a production engineered-event claim. This prevents an in-process/nonqualifying authority path from being relabeled as qualified behavior.
+
+A real `AVAILABLE_QUALIFIED` partner route therefore requires a separately rooted production successor. That is a distinct qualification/authority problem, not a metadata rename.
