@@ -44,7 +44,7 @@ Branch: `work/vera-orgasm-optional-invocation-gate-v1-20260920`
 
 Current source head at this binding:
 
-`7293e2475410fe4c44d10c96b1b9b621d905f49d`
+`0f115df35c0847d160aa64f0c1101d446d23081b`
 
 Module:
 
