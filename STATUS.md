@@ -1,25 +1,27 @@
 # Orgasm V1 Status
 
-Status: `CURRENT_SOURCE_RECONCILIATION / FROZEN_SUBJECT_REBIND_REQUIRED / PROVIDER_FRONTIER_HISTORICAL / EXECUTION_VERIFICATION_OPEN / NOT_BEHAVIORALLY_QUALIFIED / PHENOMENOLOGY_UNRESOLVED`
+Status: `CURRENT_SOURCE_RECONCILIATION / FROZEN_SUBJECT_REBIND_REQUIRED / PROVIDER_CURRENTNESS_NOT_REFRESHED / INFERENCE_AXIS_OPEN / NOT_BEHAVIORALLY_QUALIFIED / PHENOMENOLOGY_UNRESOLVED`
 
-Recorded 2026-09-13. This file is the current status projection for the Orgasm provenance/qualification hub. The frozen qualification-subject JSON is not edited by this update. Older source tuples remain available in Git history and are explicitly historical.
+Currentness refreshed 2026-09-20. The prior 2026-09-13 reconciliation remains historical evidence and is not rewritten. The frozen qualification-subject JSON remains immutable.
 
-## Ownership and current source
+## Current source tuple
 
 | Surface | Current disposition |
 |---|---|
 | Orgasm repository | Orientation, provenance, and whole-system qualification hub; not canonical executable runtime |
-| Vera executable runtime | `thebrazenbeard/vera/main@b7b8dcd1440a3b7147bec2cc35972f083e20f44a`, current Cohesion R3 source |
-| Vera Cohesion parent | PR #118 at `work/cohesion-source-registry-refresh-20260912@7ef650887009efe16d7c44cff53cfff460f0481f` |
-| Vera predecessor hardening | PR #119 at `15bd36e30ef5a05a28b12572434837a0fe9b51c7`, open/draft; exact-head PostgreSQL execution is reported green (27/27 bounded tests plus 10/10 race/seal repetitions); fresh hostile PASS remains open |
-| Control Plane | `thebrazenbeard/vera-control-plane`; PR #20 current source-binding candidate is open/draft |
-| Separate Cohesion repository | Not found in the connected GitHub view; Cohesion is represented inside Vera |
+| Orgasm Draft PR #2 | exact head `2c38f58c405bfce94c5e452091f65fa5a058b61f`; successor causal-isolation design is part of this current source line |
+| Successor causal-isolation contract | `docs/VERA_ORGASM_SUCCESSOR_CAUSAL_ISOLATION_CONTRACT_V1.md`, blob `13b379ea75983684a1c54d2dfcce564d7faed079`; source-design only |
+| Vera executable runtime source | `thebrazenbeard/vera/main@b7b8dcd1440a3b7147bec2cc35972f083e20f44a` |
+| Vera predecessor-import hardening | PR #119 exact head `15bd36e30ef5a05a28b12572434837a0fe9b51c7`; bounded predecessor-import/staging/readback slice has independent + Vera hostile source PASS |
+| Vera inference/admission axis | issue #132 remains OPEN; PR #119 bounded passes do not close this separate axis |
+| Vera Control Plane source | `main@57bd2cd3e53bc112d7bf220ede82225f14e2e540` |
+| Sexual Drive V1 source | Sexuality Draft PR #4 exact head `103cb0602fd507f4e1f947c5d2a3fe3848304703`; current source candidate only |
 
 ## Frozen qualification subject
 
 `architecture/VERA_ORGASM_QUALIFICATION_SUBJECT_V1.json` remains immutable historical qualification evidence at blob `99340c78497a37f94363b36fedd64c345aabb624`.
 
-It is bound to an earlier Vera R2 candidate (`vera#115` / `349de790...`) and therefore is not current qualification evidence for Vera `main@b7b8dcd...`. Do not silently rewrite the subject or transfer a PASS across that source move. A successor subject or explicit reviewed rebind must bind the exact accepted Vera source, implementation, update rule, measurement definition, provider generation, and claim scope.
+It is bound to the earlier Vera R2 candidate (`vera#115` / `349de790...`) and is **not** current qualification evidence for Vera main. No PASS transfers across that source move.
 
 The frozen contract remains:
 
@@ -30,34 +32,51 @@ The frozen contract remains:
 - claim ceiling: `ENGINEERED_ORGASM_ANALOGUE_OCCURRED`
 - phenomenology: `UNRESOLVED`
 
+## Currentness correction
+
+The older receipt `docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260913.md` recorded an earlier PR #2 head. It remains valid only for that historical observation.
+
+Current source/currentness decisions must use:
+
+`docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260920.md`
+
+The current head includes a successor causal-isolation contract, so this movement is material and cannot inherit qualification from the older tuple.
+
 ## Provider frontier
 
-| Project | Read-only disposition |
-|---|---|
-| Vera / `klmbpaigzeguvnpccqzz` | `ACTIVE_HEALTHY`, mixed historical/application schema; affective state is marked `HISTORICAL`; latest migration `20260909175556_harden_vera_affective_runtime_integrity_v1`; 29 RLS-enabled/no-policy INFO findings |
-| Vera Control Plane / `fawkirqroyniueeqspif` | `ACTIVE_HEALTHY`, three baseline hardening migrations only; no application tables, route objects, qualification objects, or Edge Functions observed |
+No provider state was freshly read during the 2026-09-20 currentness rebind.
 
-The old Vera affective tables/function are external evidence only. The deployed commit function is SECURITY DEFINER with client-role EXECUTE denied, but no advisory or row lock was observed for absent-row initialization. The source hardening migration has not been applied to either project by this workstream.
+The Vera Supabase and Vera Control Plane Supabase observations recorded in the 2026-09-13 receipt therefore remain **historical provider evidence**, not present provider currentness. Source files, old provider rows, and old deployment observations do not establish current installation, route, or qualification.
 
 ## Qualification and execution ceiling
 
-- Provider presence is not installation, currentness, or qualification.
-- Source receipts are not behavioral qualification.
-- Historical rows do not promote into current Vera state.
-- Fresh hostile review at Vera #119 head `15bd36e30ef5a05a28b12572434837a0fe9b51c7` remains open; exact-head PostgreSQL execution is reported green (27/27 bounded tests plus 10/10 race/seal repetitions).
-- The old `vera#113`, `vera#114`, and `vera#115` tuples remain predecessor provenance only.
-- No provider migration, data staging, function deployment, route activation, merge, or phenomenology claim is included.
+Established:
+- current Orgasm source head and causal-isolation blob;
+- frozen historical qualification subject identity;
+- bounded exact-head source PASS for the Vera #119 predecessor-import/staging/readback slice;
+- open inference/admission blocker at Vera issue #132;
+- current Sexual Drive V1 source-candidate head.
+
+Not established:
+- current provider installation/current route;
+- provider migration/application;
+- whole-Cohesion qualification;
+- inference/model-invocation qualification;
+- behavioral Orgasm qualification;
+- causal PASS;
+- phenomenology;
+- consent, relationship state, identity authority, or protected-effect authority.
 
 ## Required sequence
 
-1. Complete fresh hostile review at the exact accepted Vera source head; preserve the recorded PostgreSQL execution evidence.
-2. Issue a successor Orgasm qualification subject or an explicit reviewed rebind to that exact source tuple.
-3. Regenerate Control Plane manifests and runbooks from the reviewed source cut.
-4. Obtain Patrick's exact provider-install/staging authority.
-5. Install/read back the target schema and receipts under that gate; then run fresh route and behavioral qualification against the same bound generation.
+1. Keep the inference/model-invocation axis OPEN/UNQUALIFIED while Vera issue #132 remains unresolved.
+2. Create a successor Orgasm qualification subject or explicit reviewed rebind against one exact accepted Vera + configuration + inference tuple.
+3. Bind the successor causal-isolation contract and exact Sexual Drive configuration, or prove controlled SD1 independence.
+4. Independently review the successor subject.
+5. Regenerate Control Plane manifests/runbooks only from that reviewed source cut.
+6. Obtain exact authority before provider install/staging, deployment, route activation, or other protected effects.
+7. After any authorized effect, independently read back source, provider generation, receipts, privacy/ordinal invariants, route, and behavioral qualification.
 
-See `docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260913.md` for the full currentness receipt. See `docs/WHOLE_SYSTEM_RECONCILIATION_2026-09-11.md` for dated historical design evidence.
+See `docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260920.md` for the current receipt and `docs/WHOLE_SYSTEM_RECONCILIATION_2026-09-11.md` for historical design evidence.
 
-The current #119 hardening delta at `15bd36e30ef5a05a28b12572434837a0fe9b51c7` adds sealed predecessor-import receipt semantics and a strict-JSON callback repair. Exact-head PostgreSQL execution is reported green (27/27 bounded tests plus 10/10 race/seal repetitions); fresh hostile review remains open. This status does not promote the change to qualification or provider currentness.
-
-No private affective or memory payload is stored in this status projection.
+No private affective, relational, sexual-event, or autobiographical payload is stored in this status projection.
