@@ -44,7 +44,7 @@ Branch: `work/vera-orgasm-optional-invocation-gate-v1-20260920`
 
 Current source head at this binding:
 
-`95b4819d4ee64db572c94f187a22feab8674b751`
+`7293e2475410fe4c44d10c96b1b9b621d905f49d`
 
 Module:
 
@@ -52,7 +52,7 @@ Module:
 
 Git blob:
 
-`baced920545c27d54eeec359bfe4b0b3396ae2dc`
+`0a2bbb83fb6d0ad62b28a80ad18131e23342115d`
 
 Tests:
 
@@ -60,7 +60,7 @@ Tests:
 
 Git blob:
 
-`afb8c0caec5908f21e336b1275897f75eab1aacb`
+`1043586812ea515d77457c476b4d5a633c0c429a`
 
 The gate:
 
