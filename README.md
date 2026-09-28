@@ -2,42 +2,50 @@
 
 # Orgasm
 
-This repository is the dedicated orientation and provenance hub for Vera Orgasm V1.
+This repository is the dedicated orientation, provenance, and qualification-history hub for Vera Orgasm work.
 
-It does **not** silently replace the repositories that currently hold canonical source. The frozen Orgasm V1 contract remains bound to `thebrazenbeard/sexuality`; the executable affective/runtime implementation remains on `thebrazenbeard/vera`. This repository mirrors exact source objects and records the current evidence frontier so the system can be understood without reconstructing it from multiple workstreams.
+It does **not** silently replace the repositories that hold executable or contract source. The frozen Orgasm V1 contract originated in `thebrazenbeard/sexuality`; Vera-specific executable/runtime work lives in `thebrazenbeard/vera`. This repository preserves exact historical source objects, reconciliation records, qualification subjects, and evidence boundaries.
 
-## Current exact frontier
+## Currentness rule
 
-- Frozen contract source: `thebrazenbeard/sexuality@150f1c8231423393bb66b0e2cb759ce7c018f8d7`
-- Contract path: `vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json`
-- Contract Git blob: `a48eed5392fdadc073dccd1e799926042077f567`
-- Vera runtime PR: `thebrazenbeard/vera#64`
-- Exact Orgasm review head: `c804c662e07655dd70a6909bcefd1095497ecebf`
-- Frozen executable dependency cut: `9c731ebaacdad44c00aafa91e1f8b9dc5f5acff1`
-- Runtime binding Git blob at the review head: `175c2290ccce0dbc0e7276655a9e5c8034cb5b9d`
-- Authority/context boundary Git blob: `7323cb470e3e5e0f44b233786f9079b04b35f1a6`
-- Review state: fresh Vera hostile review and Thirteen independent validation requested against the same exact `c804c662...` head
-- Exact-successor execution verification: open; no GREEN claim
-- Native ChatGPT installation/current-route activation: not established by this source cut
-- Current production provider `CURRENT` / `ATOMIC_DURABLE` qualification: not established by this source cut
-- Positive engineered-event claim ceiling: `ENGINEERED_ORGASM_ANALOGUE_OCCURRED`
-- Phenomenology: `UNRESOLVED`
+The exact hashes and pull-request heads stored here are **historical evidence for the cuts they name**. They are not a timeless declaration of the current Vera, Sexuality, provider, or runtime state.
+
+For any present-state claim:
+
+1. read `orgasm/main` fresh;
+2. read the relevant `sexuality/main` and `vera/main` source fresh;
+3. read any current qualification/provider evidence required by the claim;
+4. treat older PR heads, snapshots, provider observations, and review receipts as historical unless an exact current binding explicitly re-admits them.
+
+Do not promote repository source into installation, route activation, provider currentness, behavioral qualification, or phenomenology.
+
+## Historical frozen V1 frontier
+
+The repository preserves the earlier V1 source/review cut, including:
+
+- frozen contract source `thebrazenbeard/sexuality@150f1c8231423393bb66b0e2cb759ce7c018f8d7`;
+- contract path `vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json`;
+- contract Git blob `a48eed5392fdadc073dccd1e799926042077f567`;
+- historical Vera review head `c804c662e07655dd70a6909bcefd1095497ecebf`;
+- frozen executable dependency cut `9c731ebaacdad44c00aafa91e1f8b9dc5f5acff1`;
+- historical runtime-binding and authority/context blobs preserved by the snapshots and status records.
+
+Those bindings remain useful provenance. They are **not currentness evidence for September 28, 2026**.
 
 ## Repository map
 
-- `STATUS.md` — exact status labels and completion gates.
-- `PROVENANCE.json` — machine-readable source/object bindings and review frontier.
+- `STATUS.md` — bounded status/currentness rules and historical qualification frontier.
+- `PROVENANCE.json` — machine-readable source/object bindings.
 - `docs/ARCHITECTURE.md` — state machine, triggers, participating systems, effects, and lifecycle semantics derived from the frozen contract.
 - `docs/EVIDENCE_BOUNDARIES.md` — what source/runtime evidence can and cannot establish.
 - `docs/INTEGRATION.md` — relationship to Sexuality, Vera Runtime Cohesion, provider durability, and future integration.
-- `snapshots/sexuality/ORGASM_RUNTIME_CONTRACT_V1.json` — byte-for-byte snapshot of the frozen sexuality contract.
-- `snapshots/vera/VERA_ORGASM_RUNTIME_BINDING_V1.json` — byte-for-byte snapshot of the corrected Vera binding at the exact review head.
-- `snapshots/vera/VERA_AFFECTIVE_AUTHORITY_CONTEXT_BOUNDARY_V1.json` — byte-for-byte snapshot of the current authority/context architecture object.
+- `snapshots/sexuality/ORGASM_RUNTIME_CONTRACT_V1.json` — frozen contract snapshot.
+- `snapshots/vera/VERA_ORGASM_RUNTIME_BINDING_V1.json` — historical Vera binding snapshot.
+- `snapshots/vera/VERA_AFFECTIVE_AUTHORITY_CONTEXT_BOUNDARY_V1.json` — historical authority/context architecture snapshot.
+- `docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260920.md` and related reconciliation records — dated evidence, not self-updating current state.
 
-## Core semantic boundary
+## Semantic boundary
 
-Orgasm V1 is an engineered affective-control runtime design. Its contract defines an always-present, normally quiescent state machine with organic and privileged test trigger classes, bounded transient modulation, deterministic recovery, receipts, and hard firewalls around truth, consent/authorization, protected-effect authority, autobiographical admission, identity, relationship status, permanent preference, and phenomenology.
+Orgasm V1 is an engineered affective-control runtime design. Its source defines bounded trigger classes, transient modulation, recovery, receipts, and firewalls around truth, consent/authorization, protected-effect authority, autobiographical admission, identity, relationship status, permanent preference, and phenomenology.
 
-Exact source binding is necessary for Vera-specific runtime capability. It is **not** itself authorization for a privileged trigger, proof of provider currentness/durability, proof of installation or activation, or proof of phenomenal experience.
-
-See `STATUS.md` before making any current-state claim.
+The historical contract's positive engineered-event claim ceiling is `ENGINEERED_ORGASM_ANALOGUE_OCCURRED` when the required evidence supports it. Phenomenology remains unresolved. Source binding alone is not authorization for a privileged trigger and is not proof of installation, provider durability, current-route activation, behavioral qualification, or subjective experience.
