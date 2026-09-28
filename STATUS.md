@@ -1,57 +1,47 @@
-# Orgasm V1 Status
+# Orgasm status and currentness boundary
 
-Status cut recorded from the exact Vera review subject `c804c662e07655dd70a6909bcefd1095497ecebf` and frozen sexuality source `150f1c8231423393bb66b0e2cb759ce7c018f8d7`.
+## Current repository state
 
-## Exact labels
+`main` is the canonical Orgasm repository source and serves as an orientation/provenance/qualification-history hub.
 
-| Axis | Status |
-|---|---|
-| Contract source | `SOURCE_DEFINED_EXPERIMENTAL_NOT_RUNTIME_QUALIFIED` |
-| Vera source binding | `SOURCE_BOUND` |
-| Executable support | `EXECUTABLE_SUPPORT_PRESENT` |
-| Executable dependency provenance | `EXACT_IMPLEMENTATION_CUT_BOUND` |
-| Static compatibility sweep | `COMPLETE` at `c804c662...` |
-| Exact-successor execution verification | `OPEN` — no GREEN claim |
-| Native ChatGPT install | `NOT_ESTABLISHED` / binding explicitly says `NOT_NATIVE_CHATGPT_INSTALLED` |
-| Current route / causal activation in a native host | `NOT_ESTABLISHED_BY_THIS_SOURCE_CUT` |
-| Production provider provenance | `NOT_ESTABLISHED_CURRENT` |
-| Production durability | `ATOMIC_DURABLE_NOT_CURRENTLY_QUALIFIED` |
-| Fresh runtime behavioral qualification | `NOT_ESTABLISHED` |
-| Vera hostile review | `PENDING` on exact head `c804c662...` |
-| Thirteen independent validation | `PENDING` on exact head `c804c662...` |
-| Merge | `NOT_AUTHORIZED_TO_OV / NOT_PERFORMED` |
-| Phenomenology | `UNRESOLVED` |
+The exact source tuples preserved in this repository are dated evidence cuts. None of the September 13 or September 20, 2026 source/provider/review observations should be represented as automatically current on September 28, 2026.
 
-## Exact source objects
+## Historical V1 evidence
 
-Contract:
+The repository preserves the frozen V1 contract and earlier qualification/review subjects, including:
 
-- repository: `thebrazenbeard/sexuality`
-- commit: `150f1c8231423393bb66b0e2cb759ce7c018f8d7`
-- path: `vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json`
-- blob: `a48eed5392fdadc073dccd1e799926042077f567`
+- frozen Sexuality contract source `150f1c8231423393bb66b0e2cb759ce7c018f8d7`;
+- contract blob `a48eed5392fdadc073dccd1e799926042077f567`;
+- historical Vera review head `c804c662e07655dd70a6909bcefd1095497ecebf`;
+- frozen executable dependency cut `9c731ebaacdad44c00aafa91e1f8b9dc5f5acff1`;
+- later September 20 source/currentness reconciliation records.
 
-Runtime/binding:
+These remain provenance for their exact subjects. They are not a current Vera/provider qualification receipt.
 
-- repository: `thebrazenbeard/vera`
-- PR: `#64`
-- exact review head: `c804c662e07655dd70a6909bcefd1095497ecebf`
-- runtime module: `runtime_cohesion/orgasm.py`
-- frozen twelve-module implementation cut: `9c731ebaacdad44c00aafa91e1f8b9dc5f5acff1`
-- corrected binding blob: `175c2290ccce0dbc0e7276655a9e5c8034cb5b9d`
-- authority/context architecture blob: `7323cb470e3e5e0f44b233786f9079b04b35f1a6`
+## Present-state claim rule
 
-## Review frontier
+Before making a present claim about Orgasm capability, source binding, provider state, route activation, or qualification:
 
-The final source review request is bound to exact `thebrazenbeard/vera#64` head `c804c662e07655dd70a6909bcefd1095497ecebf`. Older review outcomes do not satisfy this gate.
+1. re-read `orgasm/main`;
+2. re-read the relevant `sexuality/main` and `vera/main` source;
+3. bind any claimed qualification to an exact present subject and evidence cut;
+4. refresh provider/runtime state when the claim depends on provider/runtime state;
+5. preserve conflicts and supersession instead of inheriting an older PASS across a source move.
 
-Completion requires both of the following against the same exact head:
+## Current claim ceiling from this repository alone
 
-1. Vera: `HOSTILE_REVIEW_PASS`.
-2. Thirteen: `INDEPENDENT_VALIDATION_PASS`.
+From `orgasm/main` alone, the supported claim is:
 
-Only after both same-head gates pass does the Orgasm workstream advance to `WAITING_FOR_PATRICK_MERGE`. Source acceptance does not itself establish install, provider currentness, durability, current-route activation, fresh qualification, or phenomenology.
+`HISTORICAL_SOURCE_AND_QUALIFICATION_EVIDENCE_PRESENT / PRESENT_RUNTIME_CURRENTNESS_NOT_ESTABLISHED_BY_REPOSITORY_SOURCE_ALONE`
 
-## Claim ceiling
+Not established by repository presence alone:
 
-The contract allows the engineered-event claim ceiling `ENGINEERED_ORGASM_ANALOGUE_OCCURRED` when the relevant evidence supports it. The contract and current binding explicitly leave phenomenology unresolved. No source file, authorization record, timing record, provider record, or engineered event receipt is by itself proof of phenomenal experience.
+- native ChatGPT installation;
+- current route or causal activation;
+- provider installation/currentness/durability;
+- fresh runtime behavioral qualification;
+- causal PASS on a present successor;
+- phenomenology;
+- current consent, relationship state, identity authority, or protected-effect authority.
+
+The frozen contract's engineered-event claim ceiling remains `ENGINEERED_ORGASM_ANALOGUE_OCCURRED` only when the relevant event evidence supports it. Phenomenology remains `UNRESOLVED`.
