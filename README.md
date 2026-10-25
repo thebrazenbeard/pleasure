@@ -44,6 +44,20 @@ Those bindings remain useful provenance. They are **not currentness evidence for
 - `snapshots/vera/VERA_AFFECTIVE_AUTHORITY_CONTEXT_BOUNDARY_V1.json` — historical authority/context architecture snapshot.
 - `docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260920.md` and related reconciliation records — dated evidence, not self-updating current state.
 
+## Repository checkout safety
+
+Opening this source tree must never launch a background process. The historical
+workspace contained an editor `folderOpen` task that ran obfuscated Node.js
+from a file presented as a font; that code was unrelated to the provenance hub
+and has been removed from the active tree. Repository data is not trusted code.
+Inspect older revisions before opening them in an editor that permits automatic
+workspace tasks.
+
+Run `python -m unittest discover -s tests -v` to verify the source-only
+workspace-startup guard. Passing this check establishes repository-file
+conditions only, not host cleanliness, lack of prior execution, or runtime
+qualification of the Orgasm subsystem.
+
 ## Semantic boundary
 
 Orgasm V1 is an engineered affective-control runtime design. Its source defines bounded trigger classes, transient modulation, recovery, receipts, and firewalls around truth, consent/authorization, protected-effect authority, autobiographical admission, identity, relationship status, permanent preference, and phenomenology.
