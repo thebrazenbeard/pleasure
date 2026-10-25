@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class WorkspaceStartupSafetyTests(unittest.TestCase):
     def test_workspace_does_not_enable_automatic_tasks(self) -> None:
         settings = json.loads((ROOT / ".vscode/settings.json").read_text(encoding="utf-8"))
-        self.assertIs(settings.get("task.allowAutomaticTasks"), False)
+        self.assertEqual(settings.get("task.allowAutomaticTasks"), "off")
         self.assertNotIn("tasks", settings)
 
     def test_no_folder_open_shell_or_process_tasks(self) -> None:
