@@ -1,0 +1,21 @@
+name: Workspace Startup Safety
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  editor-autostart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Reject hidden workspace autostart
+        run: python -B -m unittest discover -s tests -v
