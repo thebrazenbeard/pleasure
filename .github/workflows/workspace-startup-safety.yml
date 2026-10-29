@@ -17,5 +17,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Require generic contract regression suite
+        run: python -c "from pathlib import Path; assert Path('tests/test_generic_model_boundary.py').is_file()"
       - name: Reject hidden workspace autostart
         run: python -B -m unittest discover -s tests -v

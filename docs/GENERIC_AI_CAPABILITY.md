@@ -11,3 +11,5 @@ A model may propose a signal, never grant itself permission to execute an effect
 Retain historical `Orgasm V1`, `VERA_ORGASM_*`, source hashes, and `vera/orgasm/` paths as immutable provenance. They are optional historical integration profiles, not canonical authority for other AI models. Public GitHub visibility and a source-level PASS are not proof of an active host route, provider state, consciousness or subjective pleasure.
 
 **Executable claim ceiling today: NONE.** This proposal does not install a plugin, authorize an invocation, create any memory, or modify an existing runtime.
+
+**Required host contract for any future implementation:** an authenticated authorization issuer must bind domain, operation, subject, model and adapter revisions, contract digest, purpose, session, audience, expiry and revocation epoch. Missing fields or use across domains/models are denied; revision changes require new authorization and qualification. No model-generated phrase or historical record can supply this grant. This is proposed policy, not yet executable enforcement.
