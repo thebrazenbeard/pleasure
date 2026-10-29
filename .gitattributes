@@ -1,0 +1,2 @@
+# Frozen historical snapshots must retain Git-object bytes on Windows and POSIX.
+snapshots/** -text

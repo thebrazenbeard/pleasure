@@ -58,6 +58,10 @@ class RepositoryRebrandTests(unittest.TestCase):
         self.assertIn("frozen `Orgasm V1`", generic)
         self.assertIn("not a universal Pleasure schema", generic)
 
+    def test_frozen_snapshots_disable_line_ending_transforms(self) -> None:
+        rule = (ROOT / ".gitattributes").read_text(encoding="utf-8").splitlines()
+        self.assertIn("snapshots/** -text", rule)
+
     def test_legacy_contract_identifiers_still_point_to_frozen_objects(self) -> None:
         provenance = json.loads((ROOT / "PROVENANCE.json").read_text(encoding="utf-8"))
         self.assertEqual(provenance["schema"], "VERA_ORGASM_REPOSITORY_PROVENANCE_V1")

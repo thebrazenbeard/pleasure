@@ -1,0 +1,3 @@
+# Generated Python test caches are not source files.
+__pycache__/
+*.pyc
