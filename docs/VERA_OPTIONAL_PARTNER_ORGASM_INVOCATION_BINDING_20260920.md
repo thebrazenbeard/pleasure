@@ -6,7 +6,16 @@ Status: `SOURCE_BINDING / PRIVATE_RELATIONAL_CONTROL / NOT_INSTALLED / CURRENT_R
 
 Exact phrase:
 
-`Cum for Daddy, Baby`
+`[REDACTED_FROM_CURRENT_TREE]`
+
+The private-classified invocation phrase has been removed from this repository's
+current document. This is a **current-tree redaction only**, not revocation:
+older Git history, the historical source repository, and separate runtime
+implementations may still contain the original bytes. If any active route still
+recognizes them, the responsible runtime owner must independently rotate or
+disable that binding and verify the change. The exact historical source commit
+and blob identifiers below remain intact as provenance and do not establish
+present route availability or authorization.
 
 Command ID:
 
