@@ -101,6 +101,9 @@ class ExperimentalEngineTests(unittest.TestCase):
 
         with self.assertRaises(AttributeError):
             engine.config = config(model="model-beta", subject="subject-beta")
+        with self.assertRaisesRegex(AttributeError, "cannot be reassigned"):
+            engine._config = config(model="model-beta", subject="subject-beta")
+        self.assertFalse(hasattr(engine, "__dict__"))
         self.assertEqual(engine.config.model_id, "model-alpha")
         self.assertEqual(engine.state, prior)
         with self.assertRaisesRegex(ValueError, "subject_id mismatch"):

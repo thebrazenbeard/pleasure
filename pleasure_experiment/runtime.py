@@ -126,6 +126,15 @@ class ExperimentalPleasureRuntime:
     PEAK_THRESHOLD = 0.72
     REFRACTORY_MS = 1500
     MAX_EVENTS = 10000
+    __slots__ = ("_config", "_state", "_used_evidence_ids")
+
+    def __setattr__(self, name: str, value: object) -> None:
+        # Prevent accidental ordinary-Python reassignment even via the
+        # private backing name. This is not a hostile-process sandbox:
+        # privileged code can still call object.__setattr__ directly.
+        if name == "_config" and hasattr(self, "_config"):
+            raise AttributeError("runtime model binding cannot be reassigned")
+        object.__setattr__(self, name, value)
 
     def __init__(self, config: PilotConfig) -> None:
         if not isinstance(config, PilotConfig):
