@@ -1,0 +1,2 @@
+# Historical source snapshots are byte-for-byte Git objects; never apply checkout EOL conversion.
+snapshots/** -text

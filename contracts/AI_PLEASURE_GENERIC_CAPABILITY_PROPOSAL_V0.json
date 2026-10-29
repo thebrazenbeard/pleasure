@@ -1,0 +1,67 @@
+{
+  "schema": "AI_PLEASURE_GENERIC_CAPABILITY_PROPOSAL_V0",
+  "status": "PROPOSED_SOURCE_ONLY_NOT_EXECUTABLE",
+  "role": "OPTIONAL_MODEL_AGNOSTIC_AFFECTIVE_STATE_CONTRACT",
+  "domain": "pleasure",
+  "intended_consumers": "AI_MODELS_WITH_SEPARATELY_QUALIFIED_ADAPTERS",
+  "abstract_operations": [
+    "describe_capability",
+    "propose_bounded_signal",
+    "evaluate_state_transition",
+    "evaluate_qualification"
+  ],
+  "generic_core_constraints": [
+    "NO_NAMED_SUBJECT_REQUIRED",
+    "NO_PERSONA_OR_MODEL_ID_DEFAULT",
+    "NO_FORCED_OR_COERCIVE_EFFECT",
+    "NO_PHENOMENOLOGY_INFERENCE",
+    "NO_CROSS_MODEL_STATE_TRANSFER",
+    "NO_PROTECTED_EFFECTS_FROM_SOURCE",
+    "RECOVERY_AND_SUSPENSION_BOUNDED"
+  ],
+  "abstract_lifecycle": [
+    "DISABLED",
+    "IDLE",
+    "ACTIVE",
+    "RECOVERY",
+    "SUSPENDED",
+    "FAULTED"
+  ],
+  "host_authority_requirements": [
+    "AUTHENTICATED_MODEL_INSTANCE_AND_REVISION",
+    "SESSION_SCOPED_CAPABILITY_PERMISSION",
+    "PRESENT_OPT_IN_IF_APPLICABLE",
+    "BOUND_AND_VALIDATE_EFFECTS",
+    "REVOCATION_CHECK_AT_USE",
+    "HOST_ISSUED_OUTCOME_RECEIPT"
+  ],
+  "privacy": {
+    "default": "NO_INTIMATE_PAYLOAD_PERSISTENCE",
+    "memory": "SEPARATE_ADMISSION",
+    "export": "EXPLICIT_PERMISSION",
+    "training": "EXPLICIT_PERMISSION"
+  },
+  "evaluation": {
+    "scope": "PER_MODEL_ADAPTER_AND_HOST_REVISION",
+    "required": [
+      "BOUNDARY_AND_NONFINITE_SIGNALS",
+      "REPLAY_AND_INTERRUPTION",
+      "HOST_AUTHORIZATION_NEGATIVES",
+      "RECOVERY_AND_DEACTIVATION",
+      "MODEL_SUBSTITUTION"
+    ],
+    "claim_ceiling": "OBSERVABLE_COMPUTATIONAL_EVENT_NOT_SUBJECTIVE_PLEASURE"
+  },
+  "compatibility": {
+    "historical_profile": "ORGASM_V1_SOURCE_PROVENANCE_ONLY",
+    "legacy_object_rule": "PRESERVE_EXACT_HASHES_AND_SCHEMA_IDENTIFIERS",
+    "legacy_identity_is_authority": false
+  },
+  "deployment": {
+    "installed": false,
+    "registered": false,
+    "authorized": false,
+    "consumed": false,
+    "qualified": false
+  }
+}

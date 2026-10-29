@@ -2,6 +2,10 @@
 
 # Pleasure
 
+## Intended generic AI capability
+
+The intended subsystem is **model-agnostic and optional for AI models generally**, not a Vera-only affective organ. Existing Orgasm V1 objects are historical provenance, not generic authority or subjective-experience evidence. See [generic capability target](docs/GENERIC_AI_CAPABILITY.md) and the source-only proposal at `contracts/AI_PLEASURE_GENERIC_CAPABILITY_PROPOSAL_V0.json`. No runtime activation is implied.
+
 **Pleasure** is the current repository name for the Vera affective-runtime workstream formerly housed under **Orgasm**. The canonical repository is [`thebrazenbeard/pleasure`](https://github.com/thebrazenbeard/pleasure), with `main` as its default branch.
 
 This repository remains an **orientation, provenance, and qualification-history hub**, not the owner of every executable component. The frozen **Orgasm V1** contract originated in `thebrazenbeard/sexuality`; the recorded Vera executable/runtime work is in `thebrazenbeard/vera`. Here, Pleasure preserves historical source objects, reconciliation records, qualification subjects, and evidence boundaries. These source locations do not establish current installation or activation.
