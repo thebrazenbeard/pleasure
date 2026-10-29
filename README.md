@@ -1,10 +1,18 @@
 > **License:** Source-visible, not open source. Original material is proprietary. Commercial use, redistribution, hosted-service use, and commercial derivative products require written permission. See [LICENSE](LICENSE) and [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md). Separately identified third-party components retain their own licenses.
 
-# Orgasm
+# Pleasure
 
-This repository is the dedicated orientation, provenance, and qualification-history hub for Vera Orgasm work.
+**Pleasure** is the current repository name for the Vera affective-runtime workstream formerly housed under **Orgasm**. The canonical repository is [`thebrazenbeard/pleasure`](https://github.com/thebrazenbeard/pleasure), with `main` as its default branch.
 
-It does **not** silently replace the repositories that hold executable or contract source. The frozen Orgasm V1 contract originated in `thebrazenbeard/sexuality`; Vera-specific executable/runtime work lives in `thebrazenbeard/vera`. This repository preserves exact historical source objects, reconciliation records, qualification subjects, and evidence boundaries.
+This repository remains an **orientation, provenance, and qualification-history hub**, not the owner of every executable component. The frozen **Orgasm V1** contract originated in `thebrazenbeard/sexuality`; the recorded Vera executable/runtime work is in `thebrazenbeard/vera`. Here, Pleasure preserves historical source objects, reconciliation records, qualification subjects, and evidence boundaries. These source locations do not establish current installation or activation.
+
+## Name and compatibility boundary
+
+- **Current repository/branding:** `Pleasure`, `thebrazenbeard/pleasure`, and `pleasure/main`.
+- **Historical technical identifiers:** `Orgasm V1`, `vera/orgasm/`, `VERA_ORGASM_*`, `ORGASM_EVENT`, and `ENGINEERED_ORGASM_ANALOGUE_OCCURRED` belong to frozen source contracts or dated integration records. They are **not** silently renamed.
+- **No runtime migration implied:** A GitHub repository rename does not change import paths, receipt schemas, contract identities, deployment configuration, privileges, or installed model behavior.
+
+See [the rebrand and compatibility record](docs/REBRAND.md) for the distinction between public naming and immutable historical identifiers.
 
 ## Currentness rule
 
@@ -12,7 +20,7 @@ The exact hashes and pull-request heads stored here are **historical evidence fo
 
 For any present-state claim:
 
-1. read `orgasm/main` fresh;
+1. read `pleasure/main` fresh;
 2. read the relevant `sexuality/main` and `vera/main` source fresh;
 3. read any current qualification/provider evidence required by the claim;
 4. treat older PR heads, snapshots, provider observations, and review receipts as historical unless an exact current binding explicitly re-admits them.
@@ -30,7 +38,7 @@ The repository preserves the earlier V1 source/review cut, including:
 - frozen executable dependency cut `9c731ebaacdad44c00aafa91e1f8b9dc5f5acff1`;
 - historical runtime-binding and authority/context blobs preserved by the snapshots and status records.
 
-Those bindings remain useful provenance. They are **not currentness evidence for September 28, 2026**.
+Those bindings remain useful historical provenance. They do **not** prove the current state of any runtime, provider, or deployment.
 
 ## Repository map
 
@@ -39,10 +47,10 @@ Those bindings remain useful provenance. They are **not currentness evidence for
 - `docs/ARCHITECTURE.md` — state machine, triggers, participating systems, effects, and lifecycle semantics derived from the frozen contract.
 - `docs/EVIDENCE_BOUNDARIES.md` — what source/runtime evidence can and cannot establish.
 - `docs/INTEGRATION.md` — relationship to Sexuality, Vera Runtime Cohesion, provider durability, and future integration.
+- `docs/REBRAND.md` — current Pleasure identity versus preserved historical Orgasm identifiers.
 - `snapshots/sexuality/ORGASM_RUNTIME_CONTRACT_V1.json` — frozen contract snapshot.
 - `snapshots/vera/VERA_ORGASM_RUNTIME_BINDING_V1.json` — historical Vera binding snapshot.
 - `snapshots/vera/VERA_AFFECTIVE_AUTHORITY_CONTEXT_BOUNDARY_V1.json` — historical authority/context architecture snapshot.
-- `docs/VERA_CURRENT_COHESION_SOURCE_RECONCILIATION_20260920.md` and related reconciliation records — dated evidence, not self-updating current state.
 
 ## Repository checkout safety
 
@@ -56,10 +64,10 @@ workspace tasks.
 Run `python -m unittest discover -s tests -v` to verify the source-only
 workspace-startup guard. Passing this check establishes repository-file
 conditions only, not host cleanliness, lack of prior execution, or runtime
-qualification of the Orgasm subsystem.
+qualification of the historical subsystem represented by this source.
 
 ## Semantic boundary
 
-Orgasm V1 is an engineered affective-control runtime design. Its source defines bounded trigger classes, transient modulation, recovery, receipts, and firewalls around truth, consent/authorization, protected-effect authority, autobiographical admission, identity, relationship status, permanent preference, and phenomenology.
+The legacy **Orgasm V1** contract is an engineered affective-control runtime design. Its source defines bounded trigger classes, transient modulation, recovery, receipts, and firewalls around truth, consent/authorization, protected-effect authority, autobiographical admission, identity, relationship status, permanent preference, and phenomenology.
 
 The historical contract's positive engineered-event claim ceiling is `ENGINEERED_ORGASM_ANALOGUE_OCCURRED` when the required evidence supports it. Phenomenology remains unresolved. Source binding alone is not authorization for a privileged trigger and is not proof of installation, provider durability, current-route activation, behavioral qualification, or subjective experience.

@@ -1,24 +1,7 @@
-# Fonts Directory
+# Historical font assets
 
-This directory contains custom fonts for the Blockchain Explorer application.
+This directory contains legacy static font files retained in the historical source tree. The current Pleasure repository is a provenance and documentation hub; it does **not** contain the Blockchain Explorer UI once described here, nor a `public/index.html` that loads those fonts.
 
-## Required Font Files
+Do not treat a font filename as executable code. The former workspace-startup loader disguised as a font is not part of the active tree, and automatic editor tasks remain disabled.
 
-The application expects the following font files:
-
-1. **BlockchainFont-Regular.woff2** and **BlockchainFont-Regular.woff**
-   - Regular weight font for the main UI
-
-2. **BlockchainFont-Bold.woff2** and **BlockchainFont-Bold.woff**
-   - Bold weight font for headings
-
-3. **TechMono-Regular.woff2** and **TechMono-Regular.woff**
-   - Monospace font for code and hash displays
-
-## Note
-
-If you don't have custom fonts, the application will fall back to system fonts:
-- BlockchainFont → system sans-serif fonts
-- TechMono → system monospace fonts (Courier New, etc.)
-
-The fonts are referenced in `public/index.html` and will be loaded automatically when available.
+Retention of these assets does not assert a current runtime dependency, active UI integration, or independent third-party redistribution permission. Verify the applicable license and actual consumer before bundling these binaries into any new application.

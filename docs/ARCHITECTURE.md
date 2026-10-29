@@ -1,4 +1,4 @@
-# Orgasm V1 Architecture
+# Pleasure architecture — historical Orgasm V1 contract
 
 This document summarizes the frozen Vera Orgasm V1 contract at `thebrazenbeard/sexuality@150f1c8231423393bb66b0e2cb759ce7c018f8d7`, path `vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json`, Git blob `a48eed5392fdadc073dccd1e799926042077f567`.
 

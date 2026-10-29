@@ -1,6 +1,6 @@
 # Evidence and Claim Boundaries
 
-Orgasm V1 deliberately separates source, implementation, execution, provider durability, activation, qualification, and phenomenology. These are not interchangeable labels.
+Pleasure preserves the **Orgasm V1** evidence model, which deliberately separates source, implementation, execution, provider durability, activation, qualification, and phenomenology. These are not interchangeable labels.
 
 ## Source
 

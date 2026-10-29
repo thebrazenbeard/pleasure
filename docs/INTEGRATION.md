@@ -1,10 +1,10 @@
 # Integration Map
 
-Orgasm V1 currently spans distinct repositories and trust domains. This file records the separation so future integration does not collapse them accidentally.
+Pleasure is the current repository name for this workstream. The historically named **Orgasm V1** contract spans distinct repositories and trust domains; this file records their separation so a rename does not collapse them accidentally.
 
 ## Sexuality repository
 
-`thebrazenbeard/sexuality` owns the frozen Vera Orgasm V1 contract object used by the current runtime line:
+`thebrazenbeard/sexuality` owns the frozen Vera Orgasm V1 contract object used by the **recorded historical** runtime line:
 
 - commit `150f1c8231423393bb66b0e2cb759ce7c018f8d7`
 - path `vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json`
@@ -12,13 +12,13 @@ Orgasm V1 currently spans distinct repositories and trust domains. This file rec
 
 That object defines the state model, trigger classes, predicate, experimental defaults, runtime effects, firewalls, receipt requirements, and claim ceiling.
 
-## Vera repository / Orgasm workstream
+## Vera repository / legacy Orgasm V1 workstream
 
-`thebrazenbeard/vera#64` carries the executable affective/runtime source and its persistence/provider support.
+Historical `thebrazenbeard/vera#64` reviewed the executable affective/runtime source and its persistence/provider support. It is not a fresh qualification of today's Vera runtime.
 
 Recorded exact review head: `c804c662e07655dd70a6909bcefd1095497ecebf`.
 
-The implementation dependency closure is frozen to twelve exact Git blobs at commit `9c731ebaacdad44c00aafa91e1f8b9dc5f5acff1`. The binding object on the review head records those blobs and preserves the distinction between executable support and native installation/current provider qualification.
+The implementation dependency closure was frozen to twelve exact Git blobs at commit `9c731ebaacdad44c00aafa91e1f8b9dc5f5acff1`. The binding object on the historical review head records those blobs and preserves the distinction between executable support and native installation/current provider qualification.
 
 ## Vera Runtime Cohesion
 
@@ -45,6 +45,6 @@ Source may contain machinery for those effects without proving that the correspo
 
 ## This repository
 
-`thebrazenbeard/orgasm` is presently an orientation/provenance hub. It mirrors exact contract and architecture objects and explains the cross-repository frontier. It does not become canonical merely because copies are easier to find here.
+`thebrazenbeard/pleasure` is the current orientation/provenance hub (renamed from `thebrazenbeard/orgasm`). It mirrors exact historical contract and architecture objects and explains the cross-repository frontier. It does not become the canonical executable or contract source merely because copies are easier to find here.
 
 If authority is later intentionally transferred here, that transfer should be explicit, versioned, and cross-bound to the predecessor objects rather than inferred from repository naming.
