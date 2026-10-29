@@ -128,6 +128,9 @@ class GenericModelBoundaryTests(unittest.TestCase):
             with self.subTest(field=field),self.assertRaises(AssertionError):self.validate(d)
         d=copy.deepcopy(self.contract);d["domain"]="pleasure" if REPOSITORY_DOMAIN=="sexuality" else "sexuality"
         with self.assertRaises(AssertionError):self.validate(d)
+        d=copy.deepcopy(self.contract);d["role"]="NOT_MODEL_AGNOSTIC"
+        with self.assertRaises(AssertionError):self.validate(d)
+        with self.assertRaises(ValueError):json.loads('{"compatibility":{"legacy":"a","legacy":"b"}}',object_pairs_hook=reject_duplicate_keys)
         with self.assertRaises(ValueError):json.loads('{"schema":"a","schema":"b"}',object_pairs_hook=reject_duplicate_keys)
 
     def test_reject_historical_default_promotion(self):

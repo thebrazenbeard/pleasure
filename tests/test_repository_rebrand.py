@@ -21,7 +21,23 @@ class RepositoryRebrandTests(unittest.TestCase):
     def test_generic_contract_suite_is_present(self):
         path = ROOT / "tests/test_generic_model_boundary.py"
         self.assertTrue(path.is_file())
-        self.assertIn("def test_full_source_contract", path.read_text(encoding="utf-8"))
+        import ast
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        classes = [node for node in tree.body if isinstance(node, ast.ClassDef)
+                   and node.name == "GenericModelBoundaryTests"]
+        self.assertEqual(len(classes), 1)
+        methods = [node.name for node in classes[0].body
+                   if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))]
+        self.assertIn("test_full_source_contract", methods)
+        suite = unittest.defaultTestLoader.discover(
+            start_dir=str(ROOT / "tests"), pattern="test_generic_model_boundary.py",
+            top_level_dir=str(ROOT / "tests"))
+        self.assertGreaterEqual(suite.countTestCases(), 7)
+        result = unittest.TestResult()
+        suite.run(result)
+        self.assertGreaterEqual(result.testsRun, 7)
+        self.assertEqual(result.skipped, [])
+        self.assertTrue(result.wasSuccessful(), repr(result.errors + result.failures))
 
     def test_readme_repository_map_does_not_link_to_missing_local_files(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
