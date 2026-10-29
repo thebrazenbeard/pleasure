@@ -103,6 +103,8 @@ class ExperimentalEngineTests(unittest.TestCase):
             engine.config = config(model="model-beta", subject="subject-beta")
         with self.assertRaisesRegex(AttributeError, "cannot be reassigned"):
             engine._config = config(model="model-beta", subject="subject-beta")
+        with self.assertRaisesRegex(AttributeError, "cannot be deleted"):
+            del engine._config
         self.assertFalse(hasattr(engine, "__dict__"))
         self.assertEqual(engine.config.model_id, "model-alpha")
         self.assertEqual(engine.state, prior)

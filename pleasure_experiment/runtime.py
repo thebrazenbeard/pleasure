@@ -136,6 +136,12 @@ class ExperimentalPleasureRuntime:
             raise AttributeError("runtime model binding cannot be reassigned")
         object.__setattr__(self, name, value)
 
+    def __delattr__(self, name: str) -> None:
+        # Deleting the binding before assigning a new one is also rebinding.
+        if name == "_config":
+            raise AttributeError("runtime model binding cannot be deleted")
+        object.__delattr__(self, name)
+
     def __init__(self, config: PilotConfig) -> None:
         if not isinstance(config, PilotConfig):
             raise TypeError("config must be PilotConfig")
