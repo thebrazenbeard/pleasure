@@ -93,6 +93,27 @@ class ExperimentalEngineTests(unittest.TestCase):
         with self.assertRaises(AttributeError):
             engine.state = engine.state
 
+    def test_model_binding_cannot_be_reassigned_to_relabel_existing_state(self):
+        engine = ExperimentalPleasureRuntime(config(model="model-alpha", subject="subject-alpha"))
+        first = engine.step(observation("source-A", reward=1), 100)
+        self.assertGreater(first.state_after.liking_proxy, 0.0)
+        prior = engine.state
+
+        with self.assertRaises(AttributeError):
+            engine.config = config(model="model-beta", subject="subject-beta")
+        self.assertEqual(engine.config.model_id, "model-alpha")
+        self.assertEqual(engine.state, prior)
+        with self.assertRaisesRegex(ValueError, "subject_id mismatch"):
+            engine.step(observation("source-B", subject="subject-beta", reward=1), 100)
+        self.assertEqual(engine.state, prior)
+
+        # A second model starts from an independent, empty T0 sidecar.
+        second = ExperimentalPleasureRuntime(config(model="model-beta", subject="subject-beta"))
+        result = second.step(observation("source-B", subject="subject-beta", reward=0), 100)
+        self.assertEqual(result.state_before.sequence, 0)
+        self.assertEqual(result.state_before.liking_proxy, 0.0)
+        self.assertEqual(result.model_id, "model-beta")
+
     def test_refractory_enforces_recovery_even_with_maximum_reward(self):
         engine = ExperimentalPleasureRuntime(config())
         first = engine.step(observation("e1", reward=1), 100)

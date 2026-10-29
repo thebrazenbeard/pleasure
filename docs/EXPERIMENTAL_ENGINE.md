@@ -25,7 +25,7 @@ This is not an AI agent and cannot cause a connected model to seek pleasure. An 
 
 **Sustained-input caveat (exploratory):** continuous maximum-reward observations can repeatedly produce `POSITIVE_PEAK_ANALOGUE` after refractory intervals; neutral recovery is not guaranteed while stimulation continues. Novelty alone can saturate `wanting_proxy` without increasing `liking_proxy`. Neither property qualifies a stable, benefit-seeking policy objective. Before any T1 adapter, preregister prolonged-stimulation, noisy-novelty, reward-withdrawal, and learning-progress negative controls and require externally verified outcomes.
 
-The `state` property is read-only by ordinary assignment and yields an immutable dataclass snapshot, but Python callers with process-level access can still modify private runtime internals. This is an API hygiene measure, not isolation from a hostile host or trusted enforcement of the reward channel.
+The `state` and `config` properties are read-only by ordinary assignment, and each holds an immutable dataclass snapshot. A different model, revision, runtime instance or subject requires a **new** `ExperimentalPleasureRuntime`; rebinding its public `config` after observations is rejected so accrued state cannot accidentally be relabeled for another model. Python callers with process-level access can still modify private runtime internals. This is an API hygiene measure, not isolation from a hostile host or trusted enforcement of the reward channel.
 
 ## Reproduce without external services
 

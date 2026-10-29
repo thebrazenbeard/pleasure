@@ -130,9 +130,17 @@ class ExperimentalPleasureRuntime:
     def __init__(self, config: PilotConfig) -> None:
         if not isinstance(config, PilotConfig):
             raise TypeError("config must be PilotConfig")
-        self.config = config
+        # Bind one immutable identity for the lifetime of this state machine.
+        # Replacing a public config after events have accumulated would leak
+        # one model/subject's local affective state into another receipt.
+        self._config = config
         self._state = AffectiveState()
         self._used_evidence_ids: set[str] = set()
+
+    @property
+    def config(self) -> PilotConfig:
+        """Read-only source identity; a new identity needs a fresh runtime."""
+        return self._config
 
     @property
     def state(self) -> AffectiveState:
