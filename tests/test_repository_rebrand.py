@@ -18,6 +18,11 @@ def git_blob_sha(path: Path) -> str:
 
 
 class RepositoryRebrandTests(unittest.TestCase):
+    def test_generic_contract_suite_is_present(self):
+        path = ROOT / "tests/test_generic_model_boundary.py"
+        self.assertTrue(path.is_file())
+        self.assertIn("def test_full_source_contract", path.read_text(encoding="utf-8"))
+
     def test_readme_repository_map_does_not_link_to_missing_local_files(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         referenced = re.findall(r"^- `((?:docs|snapshots)/[^`]+)`", readme, re.MULTILINE)

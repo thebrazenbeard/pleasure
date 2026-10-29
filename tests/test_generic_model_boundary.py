@@ -77,9 +77,14 @@ class GenericModelBoundaryTests(unittest.TestCase):
         self.assertEqual(d["privacy"]["default"],s["default"])
         for key in ("export","training"): self.assertEqual(d["privacy"][key],"EXPLICIT_PERMISSION")
         self.assertEqual(d["privacy"]["memory"],"SEPARATE_ADMISSION")
+        self.assertIs(type(d["evaluation"]),dict)
+        self.assertEqual(set(d["evaluation"]),{"scope","required","claim_ceiling"})
         self.assertEqual(d["evaluation"]["scope"],"PER_MODEL_ADAPTER_AND_HOST_REVISION")
         self.exact_list(d["evaluation"]["required"],s["evaluation"])
         self.assertEqual(d["evaluation"]["claim_ceiling"],s["claim"])
+        self.assertIs(type(d["compatibility"]),dict)
+        self.assertEqual(set(d["compatibility"]),{"historical_profile","legacy_object_rule","legacy_identity_is_authority"})
+        self.assertEqual(d["compatibility"]["historical_profile"],"ORGASM_V1_SOURCE_PROVENANCE_ONLY")
         self.assertIs(d["compatibility"]["legacy_identity_is_authority"],False)
         self.assertEqual(d["compatibility"]["legacy_object_rule"],"PRESERVE_EXACT_HASHES_AND_SCHEMA_IDENTIFIERS")
         self.assertEqual(set(d["deployment"]),DEPLOYMENT)
@@ -124,6 +129,14 @@ class GenericModelBoundaryTests(unittest.TestCase):
         d=copy.deepcopy(self.contract);d["domain"]="pleasure" if REPOSITORY_DOMAIN=="sexuality" else "sexuality"
         with self.assertRaises(AssertionError):self.validate(d)
         with self.assertRaises(ValueError):json.loads('{"schema":"a","schema":"b"}',object_pairs_hook=reject_duplicate_keys)
+
+    def test_reject_historical_default_promotion(self):
+        d=copy.deepcopy(self.contract);d["compatibility"]["historical_profile"]="GENERIC_DEFAULT"
+        with self.assertRaises(AssertionError):self.validate(d)
+        d=copy.deepcopy(self.contract);d["compatibility"]["unexpected_grant"]="ALLOW"
+        with self.assertRaises(AssertionError):self.validate(d)
+        d=copy.deepcopy(self.contract);d["evaluation"]["permission"]="ALLOW"
+        with self.assertRaises(AssertionError):self.validate(d)
 
     def test_reject_privacy_and_legacy_reinterpretation(self):
         d=copy.deepcopy(self.contract);d["privacy"]["default"]="PUBLIC_EVERYTHING"
