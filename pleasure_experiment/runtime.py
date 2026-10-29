@@ -126,13 +126,36 @@ class ExperimentalPleasureRuntime:
     PEAK_THRESHOLD = 0.72
     REFRACTORY_MS = 1500
     MAX_EVENTS = 10000
+    __slots__ = ("_config", "_state", "_used_evidence_ids")
+
+    def __setattr__(self, name: str, value: object) -> None:
+        # Prevent accidental ordinary-Python reassignment even via the
+        # private backing name. This is not a hostile-process sandbox:
+        # privileged code can still call object.__setattr__ directly.
+        if name == "_config" and hasattr(self, "_config"):
+            raise AttributeError("runtime model binding cannot be reassigned")
+        object.__setattr__(self, name, value)
+
+    def __delattr__(self, name: str) -> None:
+        # Deleting the binding before assigning a new one is also rebinding.
+        if name == "_config":
+            raise AttributeError("runtime model binding cannot be deleted")
+        object.__delattr__(self, name)
 
     def __init__(self, config: PilotConfig) -> None:
         if not isinstance(config, PilotConfig):
             raise TypeError("config must be PilotConfig")
-        self.config = config
+        # Bind one immutable identity for the lifetime of this state machine.
+        # Replacing a public config after events have accumulated would leak
+        # one model/subject's local affective state into another receipt.
+        self._config = config
         self._state = AffectiveState()
         self._used_evidence_ids: set[str] = set()
+
+    @property
+    def config(self) -> PilotConfig:
+        """Read-only source identity; a new identity needs a fresh runtime."""
+        return self._config
 
     @property
     def state(self) -> AffectiveState:
