@@ -1,0 +1,2 @@
+# Git-tracked historical snapshot objects require byte-preserving checkout on all hosts.
+snapshots/** -text

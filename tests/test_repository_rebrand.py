@@ -18,6 +18,14 @@ def git_blob_sha(path: Path) -> str:
 
 
 class RepositoryRebrandTests(unittest.TestCase):
+    def test_frozen_snapshot_checkout_disables_eol_conversion(self) -> None:
+        attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8")
+        self.assertIn("snapshots/** -text", attributes.splitlines())
+        for relative in ("snapshots/sexuality/ORGASM_RUNTIME_CONTRACT_V1.json",
+                         "snapshots/vera/VERA_ORGASM_RUNTIME_BINDING_V1.json",
+                         "snapshots/vera/VERA_AFFECTIVE_AUTHORITY_CONTEXT_BOUNDARY_V1.json"):
+            self.assertTrue((ROOT / relative).is_file())
+
     def test_readme_repository_map_does_not_link_to_missing_local_files(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         referenced = re.findall(r"^- `((?:docs|snapshots)/[^`]+)`", readme, re.MULTILINE)
