@@ -1,6 +1,8 @@
 # Evidence and Claim Boundaries
 
-Pleasure preserves the **Orgasm V1** evidence model, which deliberately separates source, implementation, execution, provider durability, activation, qualification, and phenomenology. These are not interchangeable labels.
+Pleasure is a **model-agnostic project**. This document preserves the **historical Vera Orgasm V1** evidence model, which deliberately separates source, implementation, execution, provider durability, activation, qualification, and phenomenology. The archived Vera-specific implementation and claim ceiling do **not** become a qualification or authority statement for other AI models. The prospective generic integration contract is outlined separately in [MODEL_AGNOSTIC_ARCHITECTURE.md](MODEL_AGNOSTIC_ARCHITECTURE.md).
+
+For each future consumer, establish its own exact model/host identity, adapter version, consent/authorization verifier, evidence/receipt provenance, durable-state policy, and independently reviewed runtime qualification. A PASS against one model or a simulated host cannot be transferred to another merely because they share a generic interface. Sources or tests may establish engineered response behavior but do not settle phenomenology.
 
 ## Source
 

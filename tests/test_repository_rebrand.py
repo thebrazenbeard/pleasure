@@ -39,6 +39,25 @@ class RepositoryRebrandTests(unittest.TestCase):
         for text in (readme, status, integration):
             self.assertNotIn("`orgasm/main`", text)
 
+    def test_generic_scope_is_not_legacy_identity_specific(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        generic = (ROOT / "docs/MODEL_AGNOSTIC_ARCHITECTURE.md").read_text(encoding="utf-8")
+        integration = (ROOT / "docs/INTEGRATION.md").read_text(encoding="utf-8")
+        self.assertIn("**model-agnostic**", readme)
+        self.assertIn("not owned by or restricted to Vera, Brigit", readme)
+        self.assertIn("not a deployed cross-model cognitive runtime", readme)
+        self.assertIn("experimental T0, model-neutral positive-valence simulator", readme)
+        self.assertIn("not connected to any model's inference", readme)
+        self.assertIn("**optionally composable and independently usable**", generic)
+        self.assertIn("Pleasure-only use without Sexuality installed", generic)
+        self.assertIn("is optional", integration)
+        self.assertIn("fail closed", generic)
+
+    def test_generic_architecture_does_not_rewrite_frozen_contract(self) -> None:
+        generic = (ROOT / "docs/MODEL_AGNOSTIC_ARCHITECTURE.md").read_text(encoding="utf-8")
+        self.assertIn("frozen `Orgasm V1`", generic)
+        self.assertIn("not a universal Pleasure schema", generic)
+
     def test_legacy_contract_identifiers_still_point_to_frozen_objects(self) -> None:
         provenance = json.loads((ROOT / "PROVENANCE.json").read_text(encoding="utf-8"))
         self.assertEqual(provenance["schema"], "VERA_ORGASM_REPOSITORY_PROVENANCE_V1")

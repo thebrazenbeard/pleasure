@@ -2,6 +2,8 @@
 
 The current repository is **`thebrazenbeard/pleasure`**, default branch **`main`**. It was formerly named **`thebrazenbeard/orgasm`**. The repository rename is a naming change, not an assertion that the historical runtime design is installed, activated, or qualified.
 
+**Scope correction:** Pleasure's project identity is model-agnostic. The original Vera/Orgasm implementation and Brigit-adjacent history, where referenced, are case studies rather than a limitation on future consumers. The generic design is documented separately from the immutable legacy contract in [MODEL_AGNOSTIC_ARCHITECTURE.md](MODEL_AGNOSTIC_ARCHITECTURE.md).
+
 ## What changes now
 
 | Surface | Current identity |
