@@ -1,4 +1,4 @@
-"""Guard the source-only Orgasm hub against editor-triggered execution.
+"""Guard the source-only Pleasure hub against editor-triggered execution.
 
 These checks inspect repository files; they never execute workspace tasks.
 """
@@ -38,6 +38,11 @@ class WorkspaceStartupSafetyTests(unittest.TestCase):
 
     def test_disguised_node_payload_is_not_tracked_as_a_font(self) -> None:
         self.assertFalse((ROOT / "public/fonts/fa-solid.lkf").exists())
+
+    def test_no_stale_executable_debug_launch_configuration(self) -> None:
+        launch = json.loads((ROOT / ".vscode/launch.json").read_text(encoding="utf-8"))
+        self.assertEqual(launch.get("configurations"), [],
+                         "This source-only hub must not expose unrelated executable debug profiles")
 
 
 if __name__ == "__main__":
