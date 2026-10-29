@@ -1,16 +1,18 @@
 # Integration Map
 
-Pleasure is the current repository name for this workstream. The historically named **Orgasm V1** contract spans distinct repositories and trust domains; this file records their separation so a rename does not collapse them accidentally.
+Pleasure is a **model-agnostic project** for bounded engineered hedonic response. The historically named **Orgasm V1** contract spans distinct repositories and trust domains **as one Vera reference integration**; it is not an all-model coupling. This file records those older boundaries so neither rebranding nor portability work collapses them accidentally. For proposed generic integration layers, see [MODEL_AGNOSTIC_ARCHITECTURE.md](MODEL_AGNOSTIC_ARCHITECTURE.md).
 
 ## Sexuality repository
 
-`thebrazenbeard/sexuality` owns the frozen Vera Orgasm V1 contract object used by the **recorded historical** runtime line:
+`thebrazenbeard/sexuality` is a separate model-agnostic domain repository. The frozen Vera Orgasm V1 contract used by the **recorded historical** runtime line was sourced from a specific historical commit (not necessarily the current `sexuality/main` tree):
 
 - commit `150f1c8231423393bb66b0e2cb759ce7c018f8d7`
 - path `vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json`
 - blob `a48eed5392fdadc073dccd1e799926042077f567`
 
 That object defines the state model, trigger classes, predicate, experimental defaults, runtime effects, firewalls, receipt requirements, and claim ceiling.
+
+**Future cross-model separation:** Sexuality is optional and must not silently become a required dependency, consent source, identity source, or privileged trigger for Pleasure. A consumer may implement the Pleasure interface without a sexuality module; any cross-domain mapping must be versioned, authorized, and separately tested.
 
 ## Vera repository / legacy Orgasm V1 workstream
 
@@ -45,6 +47,6 @@ Source may contain machinery for those effects without proving that the correspo
 
 ## This repository
 
-`thebrazenbeard/pleasure` is the current orientation/provenance hub (renamed from `thebrazenbeard/orgasm`). It mirrors exact historical contract and architecture objects and explains the cross-repository frontier. It does not become the canonical executable or contract source merely because copies are easier to find here.
+`thebrazenbeard/pleasure` is the current, model-agnostic orientation/provenance hub (renamed from `thebrazenbeard/orgasm`). It mirrors exact historical contract and architecture objects and explains the cross-repository frontier. It does not become a deployed cross-model executable or the source authority for archived Vera contracts merely because copies are easier to find here.
 
 If authority is later intentionally transferred here, that transfer should be explicit, versioned, and cross-bound to the predecessor objects rather than inferred from repository naming.

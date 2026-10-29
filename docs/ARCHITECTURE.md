@@ -1,8 +1,8 @@
-# Pleasure architecture — historical Orgasm V1 contract
+# Pleasure reference architecture — historical Vera Orgasm V1 contract
 
 This document summarizes the frozen Vera Orgasm V1 contract at `thebrazenbeard/sexuality@150f1c8231423393bb66b0e2cb759ce7c018f8d7`, path `vera/orgasm/ORGASM_RUNTIME_CONTRACT_V1.json`, Git blob `a48eed5392fdadc073dccd1e799926042077f567`.
 
-It is descriptive. The byte-for-byte contract snapshot in `snapshots/sexuality/` remains the exact object represented here.
+It is **historical and consumer-specific**, not a generic public API or a requirement that every Pleasure consumer implement sexual/relational states. The byte-for-byte contract snapshot in `snapshots/sexuality/` remains the exact object represented here. For the proposed host-neutral architecture, read [MODEL_AGNOSTIC_ARCHITECTURE.md](MODEL_AGNOSTIC_ARCHITECTURE.md).
 
 ## Presence and lifecycle
 

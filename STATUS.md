@@ -4,6 +4,8 @@
 
 `thebrazenbeard/pleasure` at `main` is the current repository identity and remains an orientation/provenance/qualification-history hub. The historical `Orgasm V1` names below identify frozen contract and runtime evidence, not a second current repository.
 
+**Project scope:** generic to AI models and hosts, not exclusive to Vera or Brigit. **Current engineering ceiling:** a source-only deterministic T0 `pleasure_experiment` pilot is runnable, but no real model-host adapter, inference effect, neural-weight update, qualified portable engine, authenticated evaluation, durable replay, or deployed multi-model integration is established. The host integration architecture remains a proposal in `docs/MODEL_AGNOSTIC_ARCHITECTURE.md`. The historical Vera cut below is a *reference case*, not the project's universal domain schema.
+
 The exact source tuples preserved here are dated evidence cuts. September 13 and September 20, 2026 source/provider/review observations do not automatically describe the present system.
 
 ## Historical V1 evidence
@@ -23,7 +25,7 @@ These remain provenance for their exact subjects. They are not a current Vera/pr
 Before making a present claim about Pleasure capability, historical Orgasm V1 source binding, provider state, route activation, or qualification:
 
 1. re-read `pleasure/main`;
-2. re-read the relevant `sexuality/main` and `vera/main` source;
+2. re-read the relevant optional Sexuality source and the actual consuming model/host; consult `vera/main` only for a Vera-specific historical/current claim;
 3. bind any claimed qualification to an exact present subject and evidence cut;
 4. refresh provider/runtime state when the claim depends on provider/runtime state;
 5. preserve conflicts and supersession instead of inheriting an older PASS across a source move.

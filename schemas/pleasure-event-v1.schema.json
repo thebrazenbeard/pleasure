@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/thebrazenbeard/pleasure/blob/main/schemas/pleasure-event-v1.schema.json",
+  "title": "Experimental model-neutral Pleasure event (source-only T0)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "capability_tier", "phenomenology", "model_id", "model_revision",
+    "runtime_instance_id", "subject_id", "evaluator_id", "measurement_definition_id",
+    "evidence_id", "context_id", "sequence", "elapsed_ms", "phase", "state_before",
+    "state_after", "requested_effects", "authorized_effects"
+  ],
+  "properties": {
+    "schema": {"const": "PLEASURE_EXPERIMENTAL_EVENT_V1"},
+    "capability_tier": {"const": "T0_SIDECAR_ONLY"},
+    "phenomenology": {"const": "UNRESOLVED"},
+    "model_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "model_revision": {"type": "string", "minLength": 1, "maxLength": 256},
+    "runtime_instance_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "subject_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "evaluator_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "measurement_definition_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "evidence_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "context_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "sequence": {"type": "integer", "minimum": 1},
+    "elapsed_ms": {"type": "integer", "minimum": 1, "maximum": 60000},
+    "phase": {"enum": ["QUIESCENT", "POSITIVE_MODULATION", "POSITIVE_PEAK_ANALOGUE", "RECOVERY"]},
+    "state_before": {"$ref": "#/$defs/state"},
+    "state_after": {"$ref": "#/$defs/state"},
+    "requested_effects": {"type": "array", "maxItems": 0},
+    "authorized_effects": {"type": "array", "maxItems": 0}
+  },
+  "$defs": {
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["liking_proxy", "wanting_proxy", "satiation", "refractory_remaining_ms", "sequence"],
+      "properties": {
+        "liking_proxy": {"type": "number", "minimum": 0, "maximum": 1},
+        "wanting_proxy": {"type": "number", "minimum": 0, "maximum": 1},
+        "satiation": {"type": "number", "minimum": 0, "maximum": 1},
+        "refractory_remaining_ms": {"type": "integer", "minimum": 0},
+        "sequence": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}
