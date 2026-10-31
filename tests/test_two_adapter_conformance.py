@@ -16,6 +16,7 @@ from pleasure_experiment.host_adapter import (
     HostPermission,
     HostPrincipal,
     NotAuthorized,
+    _canonical_request,
 )
 
 
@@ -25,16 +26,16 @@ class SyntheticHostAuthority:
     def __init__(self, permissions):
         self._issued = {p.principal: p for p in permissions}
         # This is a synthetic expected-transition oracle, not a trusted host.
-        self._expected = {p.principal: (observation(p), 100) for p in permissions}
+        self._expected = {p.principal: (_canonical_request(observation(p), 100), 100) for p in permissions}
         self._spent = set()
         self._lock = Lock()
 
-    def consume(self, permission, principal, observed, elapsed_ms, now):
+    def consume(self, permission, principal, request_bytes, elapsed_ms, now):
         with self._lock:
             expected = self._issued.get(principal)
             if (
                 expected != permission
-                or self._expected.get(principal) != (observed, elapsed_ms)
+                or self._expected.get(principal) != (request_bytes, elapsed_ms)
                 or permission.jti in self._spent
                 or not now < permission.expires_at
             ):
@@ -216,7 +217,7 @@ class TwoDistinctAdapterConformance(unittest.TestCase):
         p = permissions[0]
         adapters[0].advance(p, observation(p), elapsed_ms=100, now=100.0)
         restarted = SyntheticHostAuthority(permissions)
-        self.assertTrue(restarted.consume(p, principals[0], observation(p), 100, 100.0))
+        self.assertTrue(restarted.consume(p, principals[0], _canonical_request(observation(p), 100), 100, 100.0))
 
     def test_exact_observation_and_duration_are_host_callback_inputs(self):
         _, permissions, oracle, adapters = pair()
@@ -231,6 +232,36 @@ class TwoDistinctAdapterConformance(unittest.TestCase):
                 adapters[0].advance(p, observation(p), elapsed_ms=invalid, now=100.0)
         self.assertEqual(adapters[0].state.sequence, 0)
         self.assertEqual(adapters[0].advance(p, observation(p), elapsed_ms=100, now=100.0).sequence, 1)
+
+    def test_mutation_after_host_admission_cannot_change_step_payload(self):
+        principals, permissions, _, adapters = pair()
+        p = permissions[0]
+        observed = observation(p)
+        seen = []
+
+        def mutate_original(_permission, _principal, payload, _duration, _now):
+            seen.append(payload)
+            object.__setattr__(observed, "reward", 1.0)
+            return True  # Synthetic callback, explicitly not a security provider.
+
+        guarded = HostBoundT0Adapter(principals[0], adapters[0]._engine, mutate_original)
+        result = guarded.advance(p, observed, elapsed_ms=100, now=100.0)
+        self.assertEqual(len(seen), 1)
+        self.assertIn(b'"reward":0.5', seen[0])
+        self.assertEqual(observed.reward, 1.0)
+        self.assertLess(result.state_after.liking_proxy, 0.92)
+
+    def test_observation_subclass_is_not_host_admitted(self):
+        principals, permissions, _, adapters = pair()
+
+        class UntrustedObservation(Observation):
+            pass
+
+        changed = UntrustedObservation(**vars(observation(permissions[0])))
+        adapter = HostBoundT0Adapter(principals[0], adapters[0]._engine, lambda *_: True)
+        with self.assertRaises(NotAuthorized):
+            adapter.advance(permissions[0], changed, elapsed_ms=100, now=100.0)
+        self.assertEqual(adapter.state.sequence, 0)
 
     def test_caller_controlled_verifier_is_not_real_host_authority(self):
         # This deliberately proves why same-process facade tests CANNOT certify

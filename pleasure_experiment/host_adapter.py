@@ -12,7 +12,8 @@ Its only admitted operation advances an isolated local T0 sidecar.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass, replace
+from json import dumps
 from math import isfinite
 from typing import Callable
 
@@ -80,12 +81,19 @@ class HostPermission:
 # The callback must be provisioned by a host outside model influence. A
 # process-local callback or dictionary is ONLY a unit-test double, never a
 # durable consent service or cross-reader replay defense.
-# The host must authenticate the *entire* intended T0 transition, including
-# the evaluator observation and elapsed duration, against an independently
-# admitted request. Merely consuming a principal/JTI would authorize an
-# arbitrarily substituted reward. Passing these fields is necessary but does
-# not by itself make an in-process callback trustworthy.
-HostAtomicConsume = Callable[[HostPermission, HostPrincipal, Observation, int, float], bool]
+# The host must authenticate an independently admitted, exact request. Pass
+# immutable canonical bytes instead of the mutable-by-ref Python observation:
+# even a frozen dataclass can be changed using object.__setattr__.
+HostAtomicConsume = Callable[[HostPermission, HostPrincipal, bytes, int, float], bool]
+
+
+def _canonical_request(observation: Observation, elapsed_ms: int) -> bytes:
+    return dumps(
+        {"schema": "pleasure.t0.request.v1", "observation": asdict(observation), "elapsed_ms": elapsed_ms},
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    ).encode("utf-8")
 
 
 class HostBoundT0Adapter:
@@ -140,27 +148,30 @@ class HostBoundT0Adapter:
         # The host is responsible for both caller authentication and the
         # timestamp; these Python arguments must not be model-controlled.
         now = _clock(now, "now")
-        if not isinstance(permission, HostPermission) or not isinstance(observation, Observation):
+        if not isinstance(permission, HostPermission) or type(observation) is not Observation:
             raise NotAuthorized("invalid admission evidence")
         if isinstance(elapsed_ms, bool) or not isinstance(elapsed_ms, int) or not 1 <= elapsed_ms <= 60000:
             raise NotAuthorized("invalid T0 elapsed duration")
+        # Copy once before calling external code. The callback receives only
+        # immutable request bytes; the sidecar steps the very same snapshot.
+        snapshot = replace(observation)
         if (
             permission.principal != self._binding
             or permission.capability_id != self.CAPABILITY_ID
             or permission.operation != self.OPERATION
             or permission.effect_scope != self.EFFECT_SCOPE
-            or observation.context_id != permission.context_id
-            or observation.subject_id != self._binding.subject_id
-            or observation.evaluator_id != self._engine.config.evaluator_id
+            or snapshot.context_id != permission.context_id
+            or snapshot.subject_id != self._binding.subject_id
+            or snapshot.evaluator_id != self._engine.config.evaluator_id
             or now >= permission.expires_at
         ):
             raise NotAuthorized("permission identity or scope mismatch")
 
         try:
-            authorized = self._consume(permission, self._binding, observation, elapsed_ms, now)
+            authorized = self._consume(permission, self._binding, _canonical_request(snapshot, elapsed_ms), elapsed_ms, now)
         except Exception:
             authorized = False
         if authorized is not True:
             raise NotAuthorized("host authorization not current or replayed")
 
-        return self._engine.step(observation, elapsed_ms)
+        return self._engine.step(snapshot, elapsed_ms)
