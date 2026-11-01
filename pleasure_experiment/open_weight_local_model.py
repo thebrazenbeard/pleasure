@@ -57,16 +57,19 @@ def _safe_local_directory(value: str | Path) -> Path:
     supplied = Path(value)
     if not supplied.is_absolute():
         raise ValueError("snapshot directory must be an absolute path")
+    if ".." in supplied.parts:
+        raise ValueError("snapshot directory must not contain parent traversal")
     # Reject symlinks in the selected path or an ancestor: a manifest cannot
     # pin an attacker-controlled resolution that changes between operations.
+    # On Windows, junctions are another form of redirecting filesystem entry.
+    # Raw Path equality with resolve() is not useful for this: drive spelling,
+    # canonical casing, and short-name expansion may legitimately change.
     for item in (supplied,) + tuple(supplied.parents):
-        if item.is_symlink():
-            raise ValueError("snapshot directory or ancestor is a symlink")
+        if item.is_symlink() or (hasattr(item, "is_junction") and item.is_junction()):
+            raise ValueError("snapshot directory or ancestor is a symlink or junction")
     if not supplied.is_dir():
         raise ValueError("snapshot directory must exist and be a directory")
     resolved = supplied.resolve(strict=True)
-    if resolved != supplied:
-        raise ValueError("snapshot path must not change through resolution")
     return resolved
 
 

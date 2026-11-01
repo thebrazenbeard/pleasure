@@ -65,6 +65,17 @@ class LocalSnapshotTests(TestCase):
             inspect_local_snapshot(self.directory, max_total_bytes=1)
         with self.assertRaises(ValueError):
             inspect_local_snapshot(self.directory, max_total_bytes=True)
+        traversal = self.directory / ".." / self.directory.name
+        with self.assertRaisesRegex(ValueError, "parent traversal"):
+            inspect_local_snapshot(traversal)
+
+    def test_rejects_junction_like_path_components(self):
+        # Windows can re-spell normal paths when resolving them, so the
+        # security gate must detect redirecting entries directly. On POSIX
+        # the synthetic predicate exercises the same cross-platform branch.
+        with patch.object(Path, "is_junction", return_value=True, create=True):
+            with self.assertRaisesRegex(ValueError, "symlink or junction"):
+                inspect_local_snapshot(self.directory)
 
     def test_rejects_unsafe_files_nested_directories_and_symlinks(self):
         unsafe = self.directory / "pytorch_model.bin"
