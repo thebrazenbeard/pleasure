@@ -200,6 +200,51 @@ def predict_appraisal(
     return _predict(checked_weights, checked_features)
 
 
+def single_outcome_step(
+    *,
+    base_weights: tuple[float, ...],
+    current_weights: tuple[float, ...],
+    chosen_features: tuple[float, ...],
+    observed_score: float,
+    policy: TrainingPolicy,
+) -> tuple[float, ...]:
+    """One pure, bounded SGD step for ONE observed action's feature vector.
+
+    The caller must have already matched the outcome to the actual pending
+    choice. This function cannot authenticate measurement provenance or infer
+    any unchosen/counterfactual outcome. The immutable baseline sets the
+    cumulative L2 budget across sequential online updates.
+    """
+    base = _vector(base_weights, "base_weights", maximum=MAX_ABS_WEIGHT)
+    current = _vector(current_weights, "current_weights", maximum=MAX_ABS_WEIGHT)
+    features = _vector(chosen_features, "chosen_features", maximum=1.0)
+    if not (len(base) == len(current) == len(features)):
+        raise ValueError("single outcome feature dimensionality mismatch")
+    if not isinstance(policy, TrainingPolicy):
+        raise TypeError("policy must be TrainingPolicy")
+    checked_policy = TrainingPolicy(**policy.__dict__)
+    observed = _real(observed_score, "observed_score", minimum=0.0, maximum=1.0)
+    if hypot(*(w - origin for origin, w in zip(base, current))) > (
+        checked_policy.max_delta_l2 * (1.0 + 1e-12)
+    ):
+        raise ValueError("current weights exceed cumulative policy max_delta_l2")
+    error = _predict(current, features) - observed
+    candidate = tuple(
+        max(-MAX_ABS_WEIGHT, min(MAX_ABS_WEIGHT, w - checked_policy.learning_rate * error * x))
+        for w, x in zip(current, features)
+    )
+    displacement = tuple(w - origin for origin, w in zip(base, candidate))
+    norm = hypot(*displacement)
+    if norm > checked_policy.max_delta_l2:
+        factor = checked_policy.max_delta_l2 / norm
+        candidate = tuple(
+            max(-MAX_ABS_WEIGHT, min(MAX_ABS_WEIGHT, origin + factor * d))
+            for origin, d in zip(base, displacement)
+        )
+    digest_weights(candidate)  # Revalidate the admitted effective-weight domain.
+    return candidate
+
+
 def fit_delta(
     base_weights: tuple[float, ...],
     training_cases: tuple[OutcomeCase, ...],
