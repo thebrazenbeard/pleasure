@@ -206,7 +206,9 @@ class LocalSnapshotTests(TestCase):
         self.assertFalse(loaded.externally_authenticated)
         self.assertEqual([entry[0] for entry in called], ["tokenizer", "model"])
         for _, root, kwargs in called:
-            self.assertEqual(root, str(self.directory))
+            # Windows temporary directories can use 8.3 aliases (RUNNER~1),
+            # while the verified loader passes the canonical resolved path.
+            self.assertEqual(root, str(self.directory.resolve(strict=True)))
             self.assertTrue(kwargs["local_files_only"])
             self.assertIs(kwargs["trust_remote_code"], False)
         self.assertIs(called[1][2]["use_safetensors"], True)
