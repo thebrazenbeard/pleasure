@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from hashlib import sha256
+from dataclasses import replace
 import importlib.util
 from types import SimpleNamespace
 from unittest import TestCase, skipUnless, mock
@@ -193,3 +194,88 @@ class HiddenAppraisalTests(TestCase):
             self.probe.observe_chosen(
                 another, measured_quality=0.8, evidence_id=_evidence("once"),
             )
+
+    def test_deferred_stochastic_choice_updates_the_sampled_not_greedy_feature(self):
+        # The frozen LM favours A, but the external behavior policy drew B.
+        # A chosen-only bandit update must therefore use B's hidden activation.
+        preview = self.probe.score((1,), partition="TRAIN", defer_choice=True)
+        self.assertEqual(preview.chosen_action, "UNBOUND")
+        self.assertFalse(preview.choice_bound)
+        self.assertGreater(preview.prob_a, preview.prob_b)
+        self.assertEqual(preview.head_digest, self.probe.head_digest)
+        with self.assertRaisesRegex(ValueError, "committed TRAIN"):
+            self.probe.observe_chosen(
+                preview, measured_quality=1.0, evidence_id=_evidence("premature"),
+            )
+        original = self.probe.export_tensors()
+        bound = self.probe.bind_choice(preview, "B")
+        self.assertEqual(bound.chosen_action, "B")
+        self.assertTrue(bound.choice_bound)
+        self.assertEqual(bound.decision_id, preview.decision_id)
+        self.assertIsNot(bound, preview)
+        self.assertEqual(bound.prob_a, preview.prob_a)
+        self.assertEqual(bound.prob_b, preview.prob_b)
+        self.assertEqual(bound.head_digest, preview.head_digest)
+        with self.assertRaisesRegex(ValueError, "pending"):
+            self.probe.score((1,), partition="TRAIN", defer_choice=True)
+        with self.assertRaisesRegex(ValueError, "unbound"):
+            self.probe.bind_choice(preview, "A")
+        with self.assertRaisesRegex(ValueError, "pending"):
+            self.probe.import_tensors(original, expected_digest=preview.head_digest)
+        updated = self.probe.observe_chosen(
+            bound, measured_quality=1.0, evidence_id=_evidence("sampled-b"),
+        )
+        self.assertTrue(updated.changed)
+        learned = self.probe.export_tensors()
+        self.assertEqual(learned["weight"][0, 0].item(), original["weight"][0, 0].item())
+        self.assertNotEqual(learned["weight"][0, 1].item(), original["weight"][0, 1].item())
+        with self.assertRaisesRegex(ValueError, "pending"):
+            self.probe.observe_chosen(
+                bound, measured_quality=1.0, evidence_id=_evidence("sampled-b-again"),
+            )
+
+    def test_unbound_proposal_is_exclusive_and_identity_guarded(self):
+        from pleasure_experiment.open_weight_appraisal import TorchHiddenAppraisal
+
+        with self.assertRaisesRegex(ValueError, "defer_choice"):
+            self.probe.score((1,), partition="EVAL", defer_choice=True)
+        with self.assertRaisesRegex(ValueError, "defer_choice"):
+            self.probe.score((1,), partition="TRAIN", defer_choice=1)
+        preview = self.probe.score((1,), partition="TRAIN", defer_choice=True)
+        with self.assertRaisesRegex(ValueError, "pending"):
+            self.probe.score((1,), partition="EVAL")
+        with self.assertRaisesRegex(ValueError, "pending"):
+            self.probe.import_tensors(
+                self.probe.export_tensors(), expected_digest=self.probe.head_digest,
+            )
+        with self.assertRaisesRegex(ValueError, "chosen_action"):
+            self.probe.bind_choice(preview, "C")
+        with self.assertRaisesRegex(ValueError, "chosen_action"):
+            self.probe.bind_choice(preview, 1)
+        with self.assertRaisesRegex(ValueError, "unbound"):
+            self.probe.bind_choice(replace(preview), "B")
+        alien = TorchHiddenAppraisal(
+            self.model, action_token_ids=(3, 4), hidden_size=2,
+            learning_rate=1.0, allow_training=True,
+        )
+        with self.assertRaisesRegex(ValueError, "unbound"):
+            alien.bind_choice(preview, "A")
+        self.probe.abandon_unbound(preview)
+        with self.assertRaisesRegex(ValueError, "unbound"):
+            self.probe.abandon_unbound(preview)
+        with self.assertRaisesRegex(ValueError, "unbound"):
+            self.probe.bind_choice(preview, "B")
+        choice = self.probe.score((1,), partition="TRAIN", defer_choice=True)
+        self.assertNotEqual(choice.decision_id, preview.decision_id)
+        bound = self.probe.bind_choice(choice, "A")
+        self.probe.observe_chosen(
+            bound, measured_quality=0.8, evidence_id=_evidence("after-abandon"),
+        )
+
+    def test_deferred_choice_fails_if_head_changes_between_score_and_bind(self):
+        preview = self.probe.score((1,), partition="TRAIN", defer_choice=True)
+        with self.torch.no_grad():
+            self.probe._head.bias.add_(0.1)
+        with self.assertRaisesRegex(ValueError, "head changed"):
+            self.probe.bind_choice(preview, "B")
+        self.probe.abandon_unbound(preview)
