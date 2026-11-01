@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from math import exp, isfinite
+from threading import Lock
 
 
 SCHEMA = "PLEASURE_EXPERIMENTAL_EVENT_V1"
@@ -126,7 +127,7 @@ class ExperimentalPleasureRuntime:
     PEAK_THRESHOLD = 0.72
     REFRACTORY_MS = 1500
     MAX_EVENTS = 10000
-    __slots__ = ("_config", "_state", "_used_evidence_ids")
+    __slots__ = ("_config", "_state", "_used_evidence_ids", "_lock")
 
     def __setattr__(self, name: str, value: object) -> None:
         # Prevent accidental ordinary-Python reassignment even via the
@@ -151,6 +152,7 @@ class ExperimentalPleasureRuntime:
         self._config = config
         self._state = AffectiveState()
         self._used_evidence_ids: set[str] = set()
+        self._lock = Lock()
 
     @property
     def config(self) -> PilotConfig:
@@ -167,70 +169,87 @@ class ExperimentalPleasureRuntime:
             raise TypeError("observation must be Observation")
         if isinstance(elapsed_ms, bool) or not isinstance(elapsed_ms, int) or not 1 <= elapsed_ms <= 60000:
             raise ValueError("elapsed_ms must be an integer in [1, 60000]")
-        if observation.subject_id != self.config.subject_id:
-            raise ValueError("subject_id mismatch")
-        if observation.evaluator_id != self.config.evaluator_id:
-            raise ValueError("evaluator_id mismatch")
-        if observation.evidence_id in self._used_evidence_ids:
-            raise ValueError("duplicate evidence_id rejected")
-        if self.state.sequence >= self.MAX_EVENTS:
-            raise RuntimeError("maximum source-only event count reached; stop experiment")
+        # The entire transition is one source-local transaction. In particular,
+        # two independent worker threads must not pass a replay check against
+        # the same prior state or issue duplicate sequence numbers.
+        with self._lock:
+            # Frozen dataclasses can still be altered by privileged in-process
+            # code. Take a plain, revalidated snapshot before consuming data;
+            # never use caller fields again after the snapshot is constructed.
+            measured = Observation(
+                subject_id=observation.subject_id,
+                evaluator_id=observation.evaluator_id,
+                evidence_id=observation.evidence_id,
+                context_id=observation.context_id,
+                reward=observation.reward,
+                learning_progress=observation.learning_progress,
+                novelty=observation.novelty,
+                inhibition=observation.inhibition,
+            )
+            if measured.subject_id != self.config.subject_id:
+                raise ValueError("subject_id mismatch")
+            if measured.evaluator_id != self.config.evaluator_id:
+                raise ValueError("evaluator_id mismatch")
+            if measured.evidence_id in self._used_evidence_ids:
+                raise ValueError("duplicate evidence_id rejected")
+            if self.state.sequence >= self.MAX_EVENTS:
+                raise RuntimeError("maximum source-only event count reached; stop experiment")
 
-        prior = self.state
-        recovery_ms = max(0, prior.refractory_remaining_ms - elapsed_ms)
-        decay = exp(-elapsed_ms / 4000.0)
-        prior_liking = prior.liking_proxy * decay
-        prior_wanting = prior.wanting_proxy * decay
-        prior_satiation = prior.satiation * exp(-elapsed_ms / 15000.0)
+            prior = self.state
+            recovery_ms = max(0, prior.refractory_remaining_ms - elapsed_ms)
+            decay = exp(-elapsed_ms / 4000.0)
+            prior_liking = prior.liking_proxy * decay
+            prior_wanting = prior.wanting_proxy * decay
+            prior_satiation = prior.satiation * exp(-elapsed_ms / 15000.0)
 
-        # A peak is unavailable during a refractory interval. A caller-provided
-        # reward cannot bypass this gate, even when its numeric value is 1.
-        admitted_reward = observation.reward if recovery_ms == 0 else 0.0
-        reward_gain = 0.92 * admitted_reward * (1.0 - prior_satiation) * (1.0 - observation.inhibition)
-        liking_proxy = _clamp(prior_liking + reward_gain)
+            # A peak is unavailable during a refractory interval. A caller-provided
+            # reward cannot bypass this gate, even when its numeric value is 1.
+            admitted_reward = measured.reward if recovery_ms == 0 else 0.0
+            reward_gain = 0.92 * admitted_reward * (1.0 - prior_satiation) * (1.0 - measured.inhibition)
+            liking_proxy = _clamp(prior_liking + reward_gain)
 
-        # Wanting/attention is deliberately distinct from positive-valence
-        # impact: novelty/progress can motivate even with zero liking proxy.
-        wanting_proxy = _clamp(
-            prior_wanting + 0.35 * observation.learning_progress + 0.25 * observation.novelty
-        )
-        satiation = _clamp(prior_satiation + 0.45 * max(0.0, liking_proxy - prior_liking))
+            # Wanting/attention is deliberately distinct from positive-valence
+            # impact: novelty/progress can motivate even with zero liking proxy.
+            wanting_proxy = _clamp(
+                prior_wanting + 0.35 * measured.learning_progress + 0.25 * measured.novelty
+            )
+            satiation = _clamp(prior_satiation + 0.45 * max(0.0, liking_proxy - prior_liking))
 
-        if admitted_reward > 0.0 and liking_proxy >= self.PEAK_THRESHOLD:
-            phase = "POSITIVE_PEAK_ANALOGUE"
-            recovery_ms = self.REFRACTORY_MS
-        elif prior.refractory_remaining_ms > 0 or prior.liking_proxy > liking_proxy:
-            phase = "RECOVERY"
-        elif liking_proxy > 0.0:
-            phase = "POSITIVE_MODULATION"
-        else:
-            phase = "QUIESCENT"
+            if admitted_reward > 0.0 and liking_proxy >= self.PEAK_THRESHOLD:
+                phase = "POSITIVE_PEAK_ANALOGUE"
+                recovery_ms = self.REFRACTORY_MS
+            elif prior.refractory_remaining_ms > 0 or prior.liking_proxy > liking_proxy:
+                phase = "RECOVERY"
+            elif liking_proxy > 0.0:
+                phase = "POSITIVE_MODULATION"
+            else:
+                phase = "QUIESCENT"
 
-        successor = AffectiveState(
-            liking_proxy=liking_proxy,
-            wanting_proxy=wanting_proxy,
-            satiation=satiation,
-            refractory_remaining_ms=recovery_ms,
-            sequence=prior.sequence + 1,
-        )
-        receipt = Receipt(
-            schema=SCHEMA,
-            capability_tier=CAPABILITY_TIER,
-            phenomenology=PHENOMENOLOGY,
-            model_id=self.config.model_id,
-            model_revision=self.config.model_revision,
-            runtime_instance_id=self.config.runtime_instance_id,
-            subject_id=self.config.subject_id,
-            evaluator_id=self.config.evaluator_id,
-            measurement_definition_id=self.config.measurement_definition_id,
-            evidence_id=observation.evidence_id,
-            context_id=observation.context_id,
-            sequence=successor.sequence,
-            elapsed_ms=elapsed_ms,
-            phase=phase,
-            state_before=prior,
-            state_after=successor,
-        )
-        self._used_evidence_ids.add(observation.evidence_id)
-        self._state = successor
-        return receipt
+            successor = AffectiveState(
+                liking_proxy=liking_proxy,
+                wanting_proxy=wanting_proxy,
+                satiation=satiation,
+                refractory_remaining_ms=recovery_ms,
+                sequence=prior.sequence + 1,
+            )
+            receipt = Receipt(
+                schema=SCHEMA,
+                capability_tier=CAPABILITY_TIER,
+                phenomenology=PHENOMENOLOGY,
+                model_id=self.config.model_id,
+                model_revision=self.config.model_revision,
+                runtime_instance_id=self.config.runtime_instance_id,
+                subject_id=self.config.subject_id,
+                evaluator_id=self.config.evaluator_id,
+                measurement_definition_id=self.config.measurement_definition_id,
+                evidence_id=measured.evidence_id,
+                context_id=measured.context_id,
+                sequence=successor.sequence,
+                elapsed_ms=elapsed_ms,
+                phase=phase,
+                state_before=prior,
+                state_after=successor,
+            )
+            self._used_evidence_ids.add(measured.evidence_id)
+            self._state = successor
+            return receipt
