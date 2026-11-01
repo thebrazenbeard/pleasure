@@ -1,0 +1,5 @@
+# Local Python interpreter and test artifacts are not source evidence.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/

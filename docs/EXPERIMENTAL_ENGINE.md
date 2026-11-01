@@ -10,6 +10,8 @@ This is a **model-independent software pilot**, not an installed cognitive subsy
 - **T3 — recurrent self/world-state coupling (research only):** would require independently measured bidirectional coupling with a host model's ongoing internal state. Neither this coupling nor any subjective experience is established here.
 - **Phenomenology (unresolved):** none of T0–T2 by itself proves that an AI *feels* positive experience. `liking_proxy` is a name for an engineered numerical variable, not evidence of subjective liking.
 
+Separate source-only research modules now demonstrate trainable **synthetic numerical-model** coefficients and recurrent choices; see [WEIGHT_FIRST_T2_LAB.md](WEIGHT_FIRST_T2_LAB.md) and [WEIGHT_FIRST_VALENCE_TRIAL.md](WEIGHT_FIRST_VALENCE_TRIAL.md). They do **not** change this engine's T0 capability tier, train an LLM, establish an actual host T1/T2 result, or modify the model serving this conversation. Their evaluator labels are caller-supplied and unauthenticated.
+
 ## State, provenance, and boundaries
 
 `pleasure_experiment/runtime.py` exposes a tiny standard-library Python prototype:
