@@ -13,6 +13,7 @@ from pleasure_experiment.weight_delta_lab import (
     digest_weights,
     evaluate_heldout,
     fit_delta,
+    single_outcome_step,
 )
 
 
@@ -159,6 +160,38 @@ class WeightDeltaLabTests(unittest.TestCase):
         )
         with self.assertRaisesRegex(ValueError, "delta exceeds policy max_delta_l2"):
             apply_delta(BASE, forged, binding())
+
+    def test_pure_single_outcome_step_only_updates_chosen_features(self):
+        changed = single_outcome_step(
+            base_weights=BASE, current_weights=BASE, chosen_features=(0.0, 1.0),
+            observed_score=0.0, policy=POLICY,
+        )
+        self.assertEqual(changed, (0.0, -0.2))
+        self.assertEqual(BASE, (0.0, 0.0))
+        zero = TrainingPolicy(0.0, POLICY.max_delta_l2,
+                              POLICY.maximum_examples, POLICY.maximum_steps)
+        self.assertEqual(single_outcome_step(
+            base_weights=BASE, current_weights=BASE, chosen_features=(0.0, 1.0),
+            observed_score=0.0, policy=zero,
+        ), BASE)
+
+    def test_single_outcome_step_rejects_overbudget_current_and_invalid_labels(self):
+        with self.assertRaisesRegex(ValueError, "current weights exceed cumulative"):
+            single_outcome_step(
+                base_weights=BASE, current_weights=(1.0, 0.0),
+                chosen_features=(1.0, 0.0), observed_score=0.0, policy=POLICY,
+            )
+        with self.assertRaisesRegex(ValueError, "single outcome feature dimensionality"):
+            single_outcome_step(
+                base_weights=BASE, current_weights=BASE, chosen_features=(1.0,),
+                observed_score=0.0, policy=POLICY,
+            )
+        for bad in (math.nan, math.inf, True, -0.1, 1.1):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                single_outcome_step(
+                    base_weights=BASE, current_weights=BASE,
+                    chosen_features=(0.0, 1.0), observed_score=bad, policy=POLICY,
+                )
 
     def test_effective_weights_remain_in_admitted_domain_at_boundary(self):
         nearly_saturated = (10.0, 0.0)
