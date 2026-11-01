@@ -3,7 +3,9 @@
 import json
 import math
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from threading import Barrier, BrokenBarrierError
 
 from pleasure_experiment import ExperimentalPleasureRuntime, Observation, PilotConfig
 
@@ -55,6 +57,66 @@ class ExperimentalEngineTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "duplicate evidence_id"):
             engine.step(observation(reward=1), 100)
         self.assertEqual(prior, engine.state)
+
+    def test_concurrent_evidence_transitions_are_atomic(self):
+        class PausingObservation(Observation):
+            def __getattribute__(self, name):
+                if name == "reward":
+                    try:
+                        gate = object.__getattribute__(self, "_race_gate")
+                    except AttributeError:
+                        gate = None
+                    if gate is not None:
+                        try:
+                            gate.wait(timeout=0.2)
+                        except BrokenBarrierError:
+                            pass  # Correct serialization leaves only one caller here at once.
+                return super().__getattribute__(name)
+
+        def race(evidence_ids):
+            engine = ExperimentalPleasureRuntime(config())
+            gate = Barrier(2)
+            inputs = []
+            for evidence_id in evidence_ids:
+                item = PausingObservation(**vars(observation(evidence_id, reward=0.5)))
+                object.__setattr__(item, "_race_gate", gate)
+                inputs.append(item)
+
+            def advance(item):
+                try:
+                    return engine.step(item, 100)
+                except Exception as exc:
+                    return exc
+
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                outputs = list(pool.map(advance, inputs))
+            return engine, outputs
+
+        same, same_outputs = race(("same", "same"))
+        self.assertEqual(sum(isinstance(v, ValueError) for v in same_outputs), 1)
+        self.assertEqual(sum(hasattr(v, "sequence") for v in same_outputs), 1)
+        self.assertEqual(same.state.sequence, 1)
+
+        distinct, distinct_outputs = race(("first", "second"))
+        self.assertEqual(sorted(v.sequence for v in distinct_outputs), [1, 2])
+        self.assertEqual(distinct.state.sequence, 2)
+
+    def test_mutated_observation_is_revalidated_at_step(self):
+        for invalid in (math.inf, math.nan, -math.inf, True, 1.01, -0.01):
+            with self.subTest(value=invalid):
+                engine = ExperimentalPleasureRuntime(config())
+                measured = observation("mutated", reward=0.0)
+                object.__setattr__(measured, "reward", invalid)
+                with self.assertRaisesRegex(ValueError, "reward must be a finite number"):
+                    engine.step(measured, 100)
+                self.assertEqual(engine.state.sequence, 0)
+
+        engine = ExperimentalPleasureRuntime(config())
+        measured = observation("mutated-id", reward=0.0)
+        object.__setattr__(measured, "evidence_id", "x" * 257)
+        with self.assertRaisesRegex(ValueError, "evidence_id exceeds 256"):
+            engine.step(measured, 100)
+        self.assertEqual(engine.state.sequence, 0)
 
     def test_wrong_subject_rejected(self):
         engine = ExperimentalPleasureRuntime(config())
