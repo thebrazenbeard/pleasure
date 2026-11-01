@@ -94,12 +94,14 @@ def _run_constructed_arm(
     training_pairs: int,
     heldout_pairs: int,
     evaluator_id: str,
+    on_learned_weights: Callable[[str], None] | None = None,
 ) -> OpenWeightTrialReport:
     try:
         runner = OpenWeightTrialRunner(
             adapter=adapter, encode_offer=encode_offer,
             seed=seed, training_pairs=training_pairs,
             heldout_pairs=heldout_pairs, evaluator_id=evaluator_id,
+            on_learned_weights=on_learned_weights,
         )
     except Exception:
         _restore_failed_initialization(adapter)
@@ -118,6 +120,7 @@ def run_matched_open_weight_controls(
     training_pairs: int = 8,
     heldout_pairs: int = 8,
     evaluator_id: str = "source-local-open-weight-oracle",
+    on_learned_weights: Callable[[str], None] | None = None,
 ) -> MatchedOpenWeightControlsReport:
     """Compare a bounded SGD arm to a *separate* zero-LR arm, sequentially.
 
@@ -129,6 +132,8 @@ def run_matched_open_weight_controls(
     """
     if not callable(adapter_factory) or not callable(encode_offer):
         raise TypeError("adapter_factory and encode_offer must be callables")
+    if on_learned_weights is not None and not callable(on_learned_weights):
+        raise TypeError("on_learned_weights must be callable")
     if type(learning_rate) not in (int, float):
         raise ValueError("learning_rate must be finite and positive")
     try:
@@ -157,6 +162,7 @@ def run_matched_open_weight_controls(
         treatment_adapter, encode_offer=encode_offer,
         seed=seed, training_pairs=training_pairs, heldout_pairs=heldout_pairs,
         evaluator_id=evaluator_id,
+        on_learned_weights=on_learned_weights,
     )
     if (
         treatment.binding != treatment_binding

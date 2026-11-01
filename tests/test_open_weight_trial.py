@@ -180,6 +180,47 @@ def _encode(offer):
 
 
 class OpenWeightTrialRunnerTests(TestCase):
+    def test_capture_learned_weights_after_eval_before_exact_restoration(self):
+        fake = _FakeTokenPolicy()
+        seen = []
+
+        def capture(digest):
+            seen.append((digest, fake.weights_digest, fake.step_index,
+                         len([item for item in fake.history if item[1] == "EVAL"]),
+                         fake.closed))
+
+        report = OpenWeightTrialRunner(
+            adapter=fake, encode_offer=_encode,
+            training_pairs=2, heldout_pairs=2,
+            on_learned_weights=capture,
+        ).run()
+        self.assertEqual(seen, [(report.learned_weights_digest,
+                                 report.learned_weights_digest, 2, 4, False)])
+        self.assertTrue(report.restored)
+        self.assertEqual(fake.weights_digest, report.initial_weights_digest)
+
+    def test_failed_or_mutating_capture_aborts_and_restores(self):
+        for action in ("raise", "mutate"):
+            with self.subTest(action=action):
+                fake = _FakeTokenPolicy()
+
+                def capture(_digest):
+                    if action == "raise":
+                        raise OSError("simulated storage failure")
+                    fake.digest = "f" * 64
+
+                with self.assertRaisesRegex(
+                    OpenWeightTrialAborted, "CAPTURE_TRAINED_WEIGHTS"
+                ) as caught:
+                    OpenWeightTrialRunner(
+                        adapter=fake, encode_offer=_encode,
+                        training_pairs=2, heldout_pairs=1,
+                        on_learned_weights=capture,
+                    ).run()
+                self.assertTrue(caught.exception.restoration_succeeded)
+                self.assertTrue(fake.closed)
+                self.assertEqual(fake.weights_digest, fake.base)
+
     def test_action_then_chosen_outcome_then_update_and_readonly_eval(self):
         fake = _FakeTokenPolicy()
         report = OpenWeightTrialRunner(

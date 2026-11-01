@@ -283,11 +283,14 @@ class OpenWeightTrialRunner:
         encode_offer: Callable[[TaskOffer], tuple[int, ...]],
         seed: int = 12345, training_pairs: int = 8, heldout_pairs: int = 8,
         evaluator_id: str = "source-local-open-weight-oracle",
+        on_learned_weights: Callable[[str], None] | None = None,
     ) -> None:
         train_n = _pair_count(training_pairs, "training_pairs", MAX_TRAINING_PAIRS)
         eval_n = _pair_count(heldout_pairs, "heldout_pairs", MAX_HELDOUT_PAIRS)
         if not callable(encode_offer):
             raise TypeError("encode_offer must be callable")
+        if on_learned_weights is not None and not callable(on_learned_weights):
+            raise TypeError("on_learned_weights must be callable")
         binding = adapter.binding
         if type(binding) is not OpenWeightBinding:
             raise TypeError("adapter must bind an OpenWeightBinding")
@@ -318,6 +321,7 @@ class OpenWeightTrialRunner:
         self._seed, self._evaluator = seed, evaluator_id
         self._train_n, self._eval_n = train_n, eval_n
         self._eval_offers = eval_offers
+        self._on_learned_weights = on_learned_weights
         self._spent = False
 
     def run(self) -> OpenWeightTrialReport:
@@ -460,6 +464,18 @@ class OpenWeightTrialRunner:
                     offer, _input_digest(ids), choice, ticket, outcome,
                 ))
             learned_digest = self._adapter.weights_digest
+            if self._on_learned_weights is not None:
+                # Capture only *after* all heldout inference and *before*
+                # mandatory exact restoration; never persist a restored base.
+                phase = "CAPTURE_TRAINED_WEIGHTS"
+                self._on_learned_weights(learned_digest)
+                if (
+                    self._adapter.weights_digest != learned_digest
+                    or self._adapter.frozen_backbone_digest != self._frozen_backbone
+                    or self._adapter.pending
+                    or self._adapter.step_index != len(train)
+                ):
+                    raise RuntimeError("trained-weight capture mutated trial state")
         except Exception as exc:
             error = exc
         finally:

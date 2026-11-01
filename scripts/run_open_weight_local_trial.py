@@ -12,10 +12,12 @@ This is not a hosted GPT intervention or evidence of subjective pleasure.
 from __future__ import annotations
 
 import argparse
+from contextlib import nullcontext
 import importlib
 import json
 import re
 import sys
+import tempfile
 from pathlib import Path
 
 # Both `python -m scripts.run_open_weight_local_trial` and direct invocation of
@@ -63,6 +65,14 @@ def build_parser() -> argparse.ArgumentParser:
         "--allow-in-place-training", action="store_true",
         help="explicit permission for temporary LoRA tensor changes in RAM",
     )
+    parser.add_argument(
+        "--save-adapter-dir",
+        help="new absolute artifact directory outside this repository; never overwritten",
+    )
+    parser.add_argument(
+        "--allow-persistent-export", action="store_true",
+        help="separate explicit consent to persist learned LoRA tensors on disk",
+    )
     return parser
 
 
@@ -86,6 +96,27 @@ def run(args: argparse.Namespace) -> dict[str, object]:
         raise ValueError("--revision must be an immutable 40-hex commit ID")
     if type(args.seed) is not int or not 0 <= args.seed <= 2**32 - 1:
         raise ValueError("--seed must be an integer in [0, 2**32 - 1]")
+    requested_artifact = getattr(args, "save_adapter_dir", None)
+    allow_export = getattr(args, "allow_persistent_export", False)
+    if (requested_artifact is None) != (allow_export is False):
+        raise PermissionError(
+            "persisting LoRA requires both --save-adapter-dir and --allow-persistent-export"
+        )
+    artifact_destination = None
+    if requested_artifact is not None:
+        destination = Path(requested_artifact)
+        if not destination.is_absolute() or ".." in destination.parts:
+            raise ValueError("LoRA destination must be absolute without parent traversal")
+        source_root = Path(__file__).resolve().parents[1]
+        if destination == source_root or source_root in destination.parents:
+            raise ValueError("LoRA weights must be saved outside the source repository")
+        for component in (destination,) + tuple(destination.parents):
+            if (component.is_symlink() or
+                (hasattr(component, "is_junction") and component.is_junction())):
+                raise ValueError("LoRA destination path contains a link or junction")
+        if destination.exists() or not destination.parent.is_dir():
+            raise ValueError("LoRA destination must be new with an existing parent")
+        artifact_destination = destination
 
     loaded = load_verified_local_causal_model(
         args.snapshot, model_id=args.model_id, model_revision=args.revision,
@@ -133,15 +164,50 @@ def run(args: argparse.Namespace) -> dict[str, object]:
             max_frozen_parameter_bytes=args.max_frozen_bytes,
         )
 
-    report = run_matched_open_weight_controls(
-        adapter_factory=adapter_factory,
-        encode_offer=encode_offer,
-        learning_rate=args.learning_rate,
-        seed=args.seed,
-        training_pairs=args.training_pairs,
-        heldout_pairs=args.heldout_pairs,
-        evaluator_id=EVALUATOR,
+    # The treatment capture occurs before exact tensor restoration, but the
+    # two-arm study is not valid until the frozen control succeeds. Export to
+    # private provisional storage and promote only after all study checks.
+    staging_context = (
+        tempfile.TemporaryDirectory(prefix="pleasure-lora-pending-",
+                                    dir=artifact_destination.parent)
+        if artifact_destination is not None else nullcontext(None)
     )
+    saved_artifact = None
+    with staging_context as staging:
+        staged_candidate = Path(staging) / "candidate" if staging else None
+
+        def capture_learned(digest: str) -> None:
+            nonlocal saved_artifact
+            from pleasure_experiment.open_weight_persistence import (
+                save_versioned_lora_adapter,
+            )
+            saved_artifact = save_versioned_lora_adapter(
+                prepared, snapshot_manifest=loaded.manifest,
+                destination_directory=staged_candidate,
+                expected_trainable_sha256=digest,
+                allow_persistent_export=True,
+            )
+
+        report = run_matched_open_weight_controls(
+            adapter_factory=adapter_factory,
+            encode_offer=encode_offer,
+            learning_rate=args.learning_rate,
+            seed=args.seed,
+            training_pairs=args.training_pairs,
+            heldout_pairs=args.heldout_pairs,
+            evaluator_id=EVALUATOR,
+            on_learned_weights=(capture_learned if staged_candidate else None),
+        )
+        if staged_candidate is not None:
+            if (saved_artifact is None or
+                saved_artifact.trainable_weights_sha256 !=
+                    report.outcome_weighted.learned_weights_digest or
+                saved_artifact.frozen_backbone_sha256 !=
+                    report.outcome_weighted.frozen_backbone_digest):
+                raise RuntimeError("persisted LoRA artifact does not match validated study")
+            if artifact_destination.exists() or artifact_destination.is_symlink():
+                raise FileExistsError("LoRA destination became occupied during study")
+            staged_candidate.rename(artifact_destination)
     treatment = report.outcome_weighted
     control = report.zero_learning_rate
 
@@ -204,6 +270,17 @@ def run(args: argparse.Namespace) -> dict[str, object]:
         "hosted_gpt_modified": False,
         "externally_authenticated": False,
         "subjective_pleasure_proven": False,
+        "persisted_adapter": (
+            {
+                "directory": str(artifact_destination),
+                "format_version": saved_artifact.format_version,
+                "manifest_sha256": saved_artifact.manifest_sha256,
+                "safetensors_sha256": saved_artifact.safetensors_sha256,
+                "trainable_weights_sha256": saved_artifact.trainable_weights_sha256,
+                "frozen_backbone_sha256": saved_artifact.frozen_backbone_sha256,
+                "fresh_process_reload_verified": False,
+            } if saved_artifact is not None else None
+        ),
     }
 
 
@@ -212,7 +289,8 @@ def main() -> None:
     args = parser.parse_args()
     try:
         result = run(args)
-    except (ValueError, TypeError, RuntimeError, PermissionError, ImportError) as exc:
+    except (ValueError, TypeError, RuntimeError, PermissionError,
+            ImportError, OSError) as exc:
         parser.exit(2, f"open-weight trial rejected: {exc}\n")
     print(json.dumps(result, indent=2, sort_keys=True))
 

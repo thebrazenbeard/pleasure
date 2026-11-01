@@ -50,6 +50,32 @@ class LocalOpenWeightCLIContractTests(TestCase):
         with self.assertRaisesRegex(ValueError, "immutable 40-hex"):
             run(args)
 
+    def test_persistent_export_requires_separate_explicit_consent(self):
+        base = (
+            "--snapshot", "/does-not-exist/never-read",
+            "--model-id", "public-test",
+            "--revision", "0" * 40,
+            "--allow-in-place-training",
+        )
+        for extras in (
+            ("--save-adapter-dir", "/tmp/persist-does-not-exist"),
+            ("--allow-persistent-export",),
+        ):
+            with self.subTest(extras=extras):
+                with self.assertRaisesRegex(PermissionError, "both"):
+                    run(build_parser().parse_args(base + extras))
+
+    def test_persistent_export_outside_repository_only(self):
+        args = build_parser().parse_args((
+            "--snapshot", "/does-not-exist/never-read",
+            "--model-id", "public-test",
+            "--revision", "0" * 40,
+            "--allow-in-place-training", "--allow-persistent-export",
+            "--save-adapter-dir", str(ROOT / "accidental-adapter"),
+        ))
+        with self.assertRaisesRegex(ValueError, "outside the source repository"):
+            run(args)
+
     def test_prompt_contains_only_public_features_and_fixed_action_suffix(self):
         offer = OutcomeArena(seed=11, evaluator_id="source-local-test-oracle").issue(
             partition="TRAIN", family_id="demo", pair_index=0, side=0

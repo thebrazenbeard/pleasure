@@ -3,3 +3,7 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
+
+# Model/adaptation artifacts are local runtime data, not source control payloads.
+*.safetensors
+adapter-artifacts/

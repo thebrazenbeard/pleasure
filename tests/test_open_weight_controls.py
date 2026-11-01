@@ -130,6 +130,30 @@ def _encode(offer):
 
 
 class MatchedOpenWeightControlsTests(TestCase):
+    def test_capture_callback_observes_treatment_only_before_both_restores(self):
+        adapters = []
+        captures = []
+
+        def factory(lr):
+            adapter = _FakePolicy(lr)
+            adapters.append(adapter)
+            return adapter
+
+        def capture(digest):
+            captures.append((digest, adapters[0].weights_digest,
+                             adapters[0].closed, len(adapters)))
+
+        report = run_matched_open_weight_controls(
+            adapter_factory=factory, encode_offer=_encode,
+            learning_rate=0.5, seed=11, training_pairs=2, heldout_pairs=2,
+            on_learned_weights=capture,
+        )
+        self.assertEqual(captures, [(report.outcome_weighted.learned_weights_digest,
+                                     report.outcome_weighted.learned_weights_digest,
+                                     False, 1)])
+        self.assertEqual(len(adapters), 2)
+        self.assertTrue(all(adapter.closed for adapter in adapters))
+
     def test_matched_two_arm_source_local_contrast(self):
         adapters = []
 
