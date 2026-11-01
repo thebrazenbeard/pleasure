@@ -18,7 +18,7 @@ serialization by a separate artifact writer (never use pickle/torch.save).
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from hashlib import sha256
 import importlib
 import json
@@ -76,6 +76,7 @@ class AppraisalDecision:
     predicted_quality_a: float
     predicted_quality_b: float
     head_digest: str
+    choice_bound: bool = True
     evidence_class: str = EVIDENCE_CLASS
     phenomenology: str = PHENOMENOLOGY
 
@@ -147,6 +148,7 @@ class TorchHiddenAppraisal:
         self._rate, self._consent, self._max_updates = rate, allow_training, max_updates
         self._grad_cap, self._delta_cap = grad, delta
         self._pending: tuple[AppraisalDecision, Any] | None = None
+        self._unbound: tuple[AppraisalDecision, Any, Any] | None = None
         self._seen_evidence: set[str] = set()
         self._updates = 0
 
@@ -215,13 +217,16 @@ class TorchHiddenAppraisal:
         *,
         gain: float = 0.0,
         partition: str = "EVAL",
+        defer_choice: bool = False,
     ) -> AppraisalDecision:
         ids = _ids(input_ids)
         strength = _bounded_float(gain, "gain", -16.0, 16.0)
         if partition not in ("TRAIN", "EVAL") or type(partition) is not str:
             raise ValueError("partition must be TRAIN or EVAL")
+        if type(defer_choice) is not bool or (defer_choice and partition != "TRAIN"):
+            raise ValueError("defer_choice requires a TRAIN decision and explicit boolean")
         with self._lock:
-            if self._pending is not None:
+            if self._pending is not None or self._unbound is not None:
                 raise ValueError("another TRAIN decision remains pending")
             if partition == "TRAIN":
                 if not self._consent:
@@ -241,17 +246,66 @@ class TorchHiddenAppraisal:
                 decision_id=sha256((token_hex(16) + _digest_ids(ids)).encode("ascii")).hexdigest(),
                 input_ids_sha256=_digest_ids(ids),
                 partition=partition,
-                chosen_action="A" if float(probs[0]) > float(probs[1]) else "B",
+                chosen_action=(
+                    "UNBOUND" if defer_choice
+                    else "A" if float(probs[0]) > float(probs[1]) else "B"
+                ),
                 gain=strength,
                 base_prob_a=float(base_prob[0]), base_prob_b=float(base_prob[1]),
                 prob_a=float(probs[0]), prob_b=float(probs[1]),
                 predicted_quality_a=float(pred_a), predicted_quality_b=float(pred_b),
                 head_digest=self._digest(),
+                choice_bound=not defer_choice,
             )
             if partition == "TRAIN":
-                selected = feat_a if decision.chosen_action == "A" else feat_b
-                self._pending = (decision, selected)
+                if defer_choice:
+                    self._unbound = (decision, feat_a, feat_b)
+                else:
+                    selected = feat_a if decision.chosen_action == "A" else feat_b
+                    self._pending = (decision, selected)
             return decision
+
+    def bind_choice(
+        self, decision: AppraisalDecision, chosen_action: str,
+    ) -> AppraisalDecision:
+        """Bind an externally sampled TRAIN action to its pre-outcome feature.
+
+        `score(..., defer_choice=True)` exposes action probabilities without
+        selecting an action. A caller can use a seeded stochastic policy to
+        draw from those probabilities, record the draw and propensity, then
+        bind exactly one of A/B here. No feedback or state import is permitted
+        while the decision is unbound; only the returned bound decision can
+        receive chosen-action feedback. Probability provenance and stochastic
+        draw correctness must be checked by the experiment orchestrator.
+        """
+        if type(chosen_action) is not str or chosen_action not in ("A", "B"):
+            raise ValueError("chosen_action must be exactly A or B")
+        with self._lock:
+            if (
+                type(decision) is not AppraisalDecision
+                or decision.partition != "TRAIN" or decision.choice_bound
+                or self._pending is not None or self._unbound is None
+                or self._unbound[0] is not decision
+            ):
+                raise ValueError("no matching unbound TRAIN decision")
+            if self._digest() != decision.head_digest:
+                raise ValueError("appraisal head changed before choice binding")
+            bound = replace(decision, chosen_action=chosen_action, choice_bound=True)
+            feature = self._unbound[1] if chosen_action == "A" else self._unbound[2]
+            self._pending = (bound, feature)
+            self._unbound = None
+            return bound
+
+    def abandon_unbound(self, decision: AppraisalDecision) -> None:
+        """Release an unbound TRAIN proposal without recording an outcome.
+
+        A benchmark must treat abandoned proposals as a failed arm and should
+        never quietly drop them from its denominators.
+        """
+        with self._lock:
+            if self._unbound is None or self._unbound[0] is not decision:
+                raise ValueError("no matching unbound TRAIN decision")
+            self._unbound = None
 
     def observe_chosen(
         self,
@@ -264,7 +318,10 @@ class TorchHiddenAppraisal:
         if type(evidence_id) is not str or _SHA.fullmatch(evidence_id) is None:
             raise ValueError("evidence_id must be a SHA-256 digest")
         with self._lock:
-            if type(decision) is not AppraisalDecision or decision.partition != "TRAIN":
+            if (
+                type(decision) is not AppraisalDecision
+                or decision.partition != "TRAIN" or not decision.choice_bound
+            ):
                 raise ValueError("only a committed TRAIN decision can receive feedback")
             if self._pending is None or decision is not self._pending[0]:
                 raise ValueError("outcome does not match one pending TRAIN decision")
@@ -330,7 +387,7 @@ class TorchHiddenAppraisal:
         if type(expected_digest) is not str or _SHA.fullmatch(expected_digest) is None:
             raise ValueError("expected_digest must be SHA-256")
         with self._lock:
-            if self._pending is not None:
+            if self._pending is not None or self._unbound is not None:
                 raise ValueError("cannot import appraisal tensors while TRAIN pending")
             current = dict(self._head.named_parameters())
             if type(tensors) is not dict or set(tensors) != set(current):
