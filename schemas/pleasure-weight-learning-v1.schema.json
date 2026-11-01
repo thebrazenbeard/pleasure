@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/thebrazenbeard/pleasure/blob/main/schemas/pleasure-weight-learning-v1.schema.json",
+  "title": "Source-only positive-valence weight-learning evidence handoff",
+  "description": "Evidence claims, not optimizer commands, host authorization, training attestation, or subjective experience.",
+  "oneOf": [
+    {"$ref": "#/$defs/proposal"},
+    {"$ref": "#/$defs/result"}
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^(?:[^\u0000-\u0020\u007f\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]|[^\u0000-\u0020\u007f\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000][^\u0000-\u001f\u007f]*[^\u0000-\u0020\u007f\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000])$"
+    },
+    "nullableIdentifier": {"oneOf": [{"$ref": "#/$defs/identifier"}, {"type": "null"}]},
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nullableDigest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+    "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "arm": {"enum": ["frozen", "zero", "correct_outcome", "shuffled_outcome", "corrupt_outcome"]},
+    "modelBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_kind", "model_id", "model_revision", "weights_manifest_sha256", "tokenizer_manifest_sha256", "runtime_instance_id"],
+      "properties": {
+        "target_kind": {"enum": ["OPEN_WEIGHTS_SURROGATE", "HOSTED_TARGET_UNAVAILABLE"]},
+        "model_id": {"$ref": "#/$defs/identifier"},
+        "model_revision": {"type": "string"},
+        "weights_manifest_sha256": {"$ref": "#/$defs/nullableDigest"},
+        "tokenizer_manifest_sha256": {"$ref": "#/$defs/nullableDigest"},
+        "runtime_instance_id": {"$ref": "#/$defs/identifier"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"target_kind": {"const": "OPEN_WEIGHTS_SURROGATE"}}},
+          "then": {"properties": {
+            "model_revision": {"$ref": "#/$defs/revision"},
+            "weights_manifest_sha256": {"$ref": "#/$defs/digest"},
+            "tokenizer_manifest_sha256": {"$ref": "#/$defs/digest"}
+          }}
+        },
+        {
+          "if": {"properties": {"target_kind": {"const": "HOSTED_TARGET_UNAVAILABLE"}}},
+          "then": {"properties": {
+            "model_revision": {"const": "UNAVAILABLE"},
+            "weights_manifest_sha256": {"type": "null"},
+            "tokenizer_manifest_sha256": {"type": "null"}
+          }}
+        }
+      ]
+    },
+    "pleasureEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_schema", "capability_tier", "event_receipt_sha256", "evidence_id", "runtime_instance_id", "sequence"],
+      "properties": {
+        "event_schema": {"const": "PLEASURE_EXPERIMENTAL_EVENT_V1"},
+        "capability_tier": {"const": "T0_SIDECAR_ONLY"},
+        "event_receipt_sha256": {"$ref": "#/$defs/digest"},
+        "evidence_id": {"$ref": "#/$defs/identifier"},
+        "runtime_instance_id": {"$ref": "#/$defs/identifier"},
+        "sequence": {"type": "integer", "minimum": 1}
+      }
+    },
+    "mesoAssociation": {
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        {"properties": {
+          "association_id": {"$ref": "#/$defs/identifier"},
+          "proposal_delta": {"type": "number", "minimum": -1, "maximum": 1},
+          "gate_driver": {"$ref": "#/$defs/identifier"}
+        }},
+        {"properties": {
+          "association_id": {"type": "null"},
+          "proposal_delta": {"type": "null"},
+          "gate_driver": {"type": "null"}
+        }}
+      ],
+      "required": ["meso_revision", "transition_receipt_sha256", "event_id", "event_stream_id", "event_sequence", "state_before_fingerprint", "state_after_fingerprint", "association_id", "proposal_delta", "teaching_signal", "salience_gate", "gate_driver", "semantic_role"],
+      "properties": {
+        "meso_revision": {"$ref": "#/$defs/revision"},
+        "transition_receipt_sha256": {"$ref": "#/$defs/digest"},
+        "event_id": {"$ref": "#/$defs/identifier"},
+        "event_stream_id": {"$ref": "#/$defs/identifier"},
+        "event_sequence": {"type": "integer", "minimum": 0},
+        "state_before_fingerprint": {"$ref": "#/$defs/identifier"},
+        "state_after_fingerprint": {"$ref": "#/$defs/identifier"},
+        "association_id": {"$ref": "#/$defs/nullableIdentifier"},
+        "proposal_delta": {"oneOf": [{"type": "number", "minimum": -1, "maximum": 1}, {"type": "null"}]},
+        "teaching_signal": {"type": "number", "minimum": -10, "maximum": 10},
+        "salience_gate": {"type": "number", "minimum": 0, "maximum": 1},
+        "gate_driver": {"$ref": "#/$defs/nullableIdentifier"},
+        "semantic_role": {"const": "ASSOCIATION_PROPOSAL_ONLY"}
+      }
+    },
+    "externalOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evaluator_id", "measurement_definition_id", "outcome_evidence_sha256", "pleasure_evidence_id", "meso_event_id", "measured_score", "verification_status"],
+      "properties": {
+        "evaluator_id": {"$ref": "#/$defs/identifier"},
+        "measurement_definition_id": {"$ref": "#/$defs/identifier"},
+        "outcome_evidence_sha256": {"$ref": "#/$defs/digest"},
+        "pleasure_evidence_id": {"$ref": "#/$defs/identifier"},
+        "meso_event_id": {"$ref": "#/$defs/nullableIdentifier"},
+        "measured_score": {"type": "number", "minimum": 0, "maximum": 1},
+        "verification_status": {"const": "CLAIMED_UNVERIFIED"}
+      }
+    },
+    "dataRights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dataset_manifest_sha256", "rights_profile_sha256", "host_admission_claim_sha256", "status"],
+      "properties": {
+        "dataset_manifest_sha256": {"$ref": "#/$defs/digest"},
+        "rights_profile_sha256": {"$ref": "#/$defs/digest"},
+        "host_admission_claim_sha256": {"$ref": "#/$defs/nullableDigest"},
+        "status": {"const": "PENDING_HOST_ADMISSION"}
+      }
+    },
+    "proposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"model_binding": {"properties": {"target_kind": {"const": "HOSTED_TARGET_UNAVAILABLE"}}}}},
+          "then": {"properties": {"arm": {"const": "frozen"}}}
+        }
+      ],
+      "required": ["experiment_id", "trial_id", "arm", "model_binding", "pleasure_event", "meso_association_proposal", "external_outcome", "rights", "schema", "capability_tier", "phenomenology"],
+      "properties": {
+        "experiment_id": {"$ref": "#/$defs/identifier"},
+        "trial_id": {"$ref": "#/$defs/identifier"},
+        "arm": {"$ref": "#/$defs/arm"},
+        "model_binding": {"$ref": "#/$defs/modelBinding"},
+        "pleasure_event": {"$ref": "#/$defs/pleasureEvent"},
+        "meso_association_proposal": {"oneOf": [{"$ref": "#/$defs/mesoAssociation"}, {"type": "null"}]},
+        "external_outcome": {"$ref": "#/$defs/externalOutcome"},
+        "rights": {"$ref": "#/$defs/dataRights"},
+        "schema": {"const": "PLEASURE_WEIGHT_LEARNING_PROPOSAL_V1"},
+        "capability_tier": {"const": "SOURCE_ONLY_EVIDENCE_HANDOFF"},
+        "phenomenology": {"const": "UNRESOLVED"}
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"arm": {"enum": ["frozen", "zero"]}}},
+          "then": {"properties": {"weight_change_evidence": {"enum": ["DIGESTS_ABSENT", "DIGESTS_IDENTICAL"]}}}
+        },
+        {
+          "if": {"properties": {"declared_optimizer_steps": {"const": 0}}},
+          "then": {"properties": {"weight_change_evidence": {"enum": ["DIGESTS_ABSENT", "DIGESTS_IDENTICAL"]}}}
+        },
+        {
+          "if": {"properties": {"arm": {"const": "frozen"}}},
+          "then": {"properties": {"declared_optimizer_steps": {"const": 0}}}
+        }
+      ],
+      "required": ["experiment_id", "trial_id", "arm", "proposal_sha256", "model_binding_sha256", "declared_optimizer_steps", "adapter_before_sha256", "adapter_after_sha256", "trainer_receipt_claim_sha256", "checkpoint_manifest_sha256", "heldout_evaluation_claim_sha256", "weight_change_evidence", "schema", "capability_tier", "authority_status", "phenomenology"],
+      "properties": {
+        "experiment_id": {"$ref": "#/$defs/identifier"},
+        "trial_id": {"$ref": "#/$defs/identifier"},
+        "arm": {"$ref": "#/$defs/arm"},
+        "proposal_sha256": {"$ref": "#/$defs/digest"},
+        "model_binding_sha256": {"$ref": "#/$defs/digest"},
+        "declared_optimizer_steps": {"type": "integer", "minimum": 0},
+        "adapter_before_sha256": {"$ref": "#/$defs/nullableDigest"},
+        "adapter_after_sha256": {"$ref": "#/$defs/nullableDigest"},
+        "trainer_receipt_claim_sha256": {"$ref": "#/$defs/nullableDigest"},
+        "checkpoint_manifest_sha256": {"$ref": "#/$defs/nullableDigest"},
+        "heldout_evaluation_claim_sha256": {"$ref": "#/$defs/nullableDigest"},
+        "weight_change_evidence": {"enum": ["DIGESTS_ABSENT", "DIGESTS_IDENTICAL", "DIGESTS_DIFFER_UNVERIFIED"]},
+        "schema": {"const": "PLEASURE_WEIGHT_LEARNING_RESULT_V1"},
+        "capability_tier": {"const": "SOURCE_ONLY_EVIDENCE_HANDOFF"},
+        "authority_status": {"const": "NOT_ESTABLISHED_BY_THIS_RECORD"},
+        "phenomenology": {"const": "UNRESOLVED"}
+      },
+      "$comment": "Python contract validation derives weight_change_evidence from both digests and binds result to proposal; no source-only string authenticates training."
+    }
+  }
+}

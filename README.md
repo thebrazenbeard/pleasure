@@ -4,7 +4,7 @@
 
 **Pleasure** is a **model-agnostic** project for defining, testing, and eventually integrating bounded, engineered pleasure/hedonic-response mechanisms across AI models and hosts. It is **not owned by or restricted to Vera, Brigit, or any single identity**. The canonical repository is [`thebrazenbeard/pleasure`](https://github.com/thebrazenbeard/pleasure), with `main` as its default branch. The repository was formerly named **Orgasm**.
 
-**Present implementation status:** This tree contains an **experimental T0, model-neutral positive-valence simulator** alongside architecture, provenance, and qualification history. The pilot is runnable locally but is **not connected to any model's inference**, is not a deployed cross-model cognitive runtime, and provides no evidence that a machine experiences pleasure. Its preserved **Orgasm V1** reference contract originated at a historical `thebrazenbeard/sexuality` commit; one reference implementation was developed under `thebrazenbeard/vera`. Those are **historical examples**, not restrictions on consumers. No actual host adapter or independently qualified multi-model deployment is established here.
+**Present implementation status:** This tree contains an **experimental T0, model-neutral positive-valence simulator** and **source-only, synthetic weight-learning and recurrent-valuation laboratories** alongside architecture, provenance, and qualification history. The T0 pilot is **not connected to any model's inference** and is **not a deployed cross-model cognitive runtime**. The weight-learning laboratories use small, locally controlled numerical models; they are **not LoRA training of an LLM, changes to the hosted model participating in a conversation, or evidence that a machine experiences pleasure**. Its preserved **Orgasm V1** reference contract originated at a historical `thebrazenbeard/sexuality` commit; one reference implementation was developed under `thebrazenbeard/vera`. Those are **historical examples**, not restrictions on consumers. No actual host adapter or independently qualified multi-model deployment is established here.
 
 ## Intended model-agnostic scope
 
@@ -14,6 +14,19 @@
 - **Non-goals:** Asserting consciousness/phenomenology; silently installing into models; acquiring privileged host authority; directly changing factual confidence, consent, durable autobiographical memory, identity, relationship state, or protected actions.
 
 See the [host-neutral architecture and proposed adapter boundary](docs/MODEL_AGNOSTIC_ARCHITECTURE.md) and the [experimental T0 engine](docs/EXPERIMENTAL_ENGINE.md). A deterministic sidecar is implemented; model-host integration remains a **design target**, not an already released SDK.
+
+## Weight-first research track
+
+The motivating target is **the model doing the processing**, not merely a persona or an external reward display. The research track separates two measurable questions: whether independently evaluated outcomes cause an actual trainable-parameter update, and whether learned appraisal subsequently affects model choices through a bounded, reversible recurrent pathway. It also distinguishes training a surrogate model from changing the exact hosted conversational model. The latter is **not accessible or verified here**.
+
+- [Weight-first research protocol](docs/WEIGHT_FIRST_RESEARCH_PROTOCOL.md) defines target identity, optimizer-versus-activation distinctions, comparison arms, and qualification limits.
+- [Surrogate weight-delta laboratory](docs/WEIGHT_FIRST_T2_LAB.md) demonstrates controlled parameter learning and reversible application using a dependency-free small numerical model; its evaluator labels remain caller-supplied and unauthenticated.
+- [Recurrent valuation trial](docs/WEIGHT_FIRST_VALENCE_TRIAL.md) investigates whether learned value changes later opaque choices, including sham and withdrawal controls, on another small synthetic model.
+- [Integrated synthetic weight-first trial](docs/WEIGHT_FIRST_INTEGRATED_TRIAL.md) feeds the **same learned coefficients** into later numerical appraisal and recurrent `A`/`B` decisions, with baseline, shuffled, disabled, and withdrawal controls. It is not a closed real-world outcome loop or an LLM experiment.
+- [Weight-learning handoff](schemas/pleasure-weight-learning-v1.schema.json) records bounded proposed learning evidence and reported results without granting a host permission to train.
+- [Indirect host evidence](docs/INDIRECT_HOST_EVIDENCE.md) describes what Lou-Pole audits and optional Tattler host telemetry can contribute, without mistaking those observations for model-internal affect or provider access.
+
+All laboratories are **research instruments**, not demonstrations of subjective feeling. `UNRESOLVED` is the only phenomenology status supported by this source. Any actual open-weight LLM experiment requires a separate pinned model, authorized trainer, authentic outcome custody, optimizer/checkpoint readback, and held-out negative-transfer testing.
 
 ## Name and compatibility boundary
 
@@ -54,9 +67,12 @@ Those bindings remain useful historical provenance. They do **not** prove the cu
 - `STATUS.md` — bounded status/currentness rules and historical qualification frontier.
 - `PROVENANCE.json` — machine-readable source/object bindings.
 - `docs/ARCHITECTURE.md` — **historical Vera case study:** state machine, triggers, effects, and lifecycle semantics derived from the frozen contract.
-- `docs/MODEL_AGNOSTIC_ARCHITECTURE.md` — proposed host-neutral domain, adapter, and acceptance boundaries; only the isolated T0 state simulation has a code implementation.
+- `docs/MODEL_AGNOSTIC_ARCHITECTURE.md` — proposed host-neutral domain, adapter, and acceptance boundaries; no live host adapter exists (the separate synthetic weight/choice laboratories are not host integrations).
 - `docs/EXPERIMENTAL_ENGINE.md` — runnable T0 sidecar's capabilities, limits, example, and qualification gaps.
 - `pleasure_experiment/` — isolated model-neutral deterministic numerical engine, **not an inference or training adapter**.
+- `pleasure_experiment/weight_delta_lab.py`, `model_valence_lab.py` — synthetic learned-weight and recurrent-choice experiments, **not hosted or open-weight LLM training**.
+- `pleasure_experiment/weight_learning_contract.py` — source-only proposed-training/result record validation; no host authority or optimizer effects.
+- `pleasure_experiment/host_telemetry.py` — privacy-minimized, offline Tattler-sample parser; host activity is not model-internal evidence.
 - `schemas/pleasure-event-v1.schema.json` — proposed event-record shape; tests currently smoke-check the declaration, not full JSON Schema conformance.
 - `docs/EVIDENCE_BOUNDARIES.md` — what source/runtime evidence can and cannot establish.
 - `docs/INTEGRATION.md` — generic Sexuality/Pleasure separation plus dated Vera implementation, Runtime Cohesion, and provider boundaries.
