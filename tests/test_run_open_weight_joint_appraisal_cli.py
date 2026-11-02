@@ -59,9 +59,10 @@ class JointBenchmarkCLITests(unittest.TestCase):
                     load.assert_not_called()
 
     def test_verified_local_model_factory_and_tokenizer_wiring(self):
-        # Keep optional torch registered before patch.dict captures and
-        # restores sys.modules: PyTorch refuses a second interpreter import.
-        import torch  # noqa: F401
+        # This is a standard-library wiring test, also run on CI hosts that
+        # intentionally do not install the optional PyTorch training stack.
+        fake_torch = ModuleType("torch")
+        fake_torch.set_num_threads = lambda _count: None
 
         correct_record = SimpleNamespace(
             name="model.safetensors", sha256=cli.MODEL_SAFETENSORS_SHA256,
@@ -92,7 +93,10 @@ class JointBenchmarkCLITests(unittest.TestCase):
         with (mock.patch.object(cli, "load_verified_local_causal_model", side_effect=fake_load),
               mock.patch.object(cli, "public_prompt", return_value="prompt:"),
               mock.patch.object(cli, "validate_single_token_actions", return_value=(330, 389)),
-              mock.patch.dict(sys.modules, {benchmark_module.__name__: benchmark_module})):
+              mock.patch.dict(sys.modules, {
+                  benchmark_module.__name__: benchmark_module,
+                  "torch": fake_torch,
+              })):
             outcome = cli.run(_args("--allow-joint-training", "--allow-persistent-export"))
         self.assertEqual(outcome, {"result": "source-only-stub"})
         self.assertEqual(called, ["offline-joint-appraisal-v3-20261102", "fresh-arm-process"])
@@ -103,7 +107,10 @@ class JointBenchmarkCLITests(unittest.TestCase):
                 name="model.safetensors", sha256="0" * 64,
             ),)),
         )
-        with mock.patch.object(cli, "load_verified_local_causal_model", return_value=wrong):
+        fake_torch = ModuleType("torch")
+        fake_torch.set_num_threads = lambda _count: None
+        with (mock.patch.dict(sys.modules, {"torch": fake_torch}),
+              mock.patch.object(cli, "load_verified_local_causal_model", return_value=wrong)):
             with self.assertRaisesRegex(ValueError, "exact pinned safetensors"):
                 cli.run(_args("--allow-joint-training", "--allow-persistent-export"))
 

@@ -7,9 +7,10 @@ from pathlib import Path
 import json
 import os
 import subprocess
+import sys
 import tempfile
 import unittest
-from types import SimpleNamespace
+from types import ModuleType, SimpleNamespace
 from unittest.mock import patch
 
 from scripts import verify_saved_open_weight_joint_appraisal as verifier
@@ -325,7 +326,10 @@ class FreshJointReloadTests(unittest.TestCase):
             return "s" * 64 if Path(path) == self.source else "t" * 64
 
         self_case = self
-        with (patch.object(verifier, "_artifact_sha256", side_effect=fake_hash),
+        fake_torch = ModuleType("torch")
+        fake_torch.set_num_threads = lambda _count: None
+        with (patch.dict(sys.modules, {"torch": fake_torch}),
+              patch.object(verifier, "_artifact_sha256", side_effect=fake_hash),
               patch.object(verifier, "load_verified_local_causal_model", return_value=loaded),
               patch.object(verifier, "prepare_explicit_lora", return_value=object()),
               patch.object(verifier, "TorchJointLoRAAppraisal", return_value=probe),
