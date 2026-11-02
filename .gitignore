@@ -7,3 +7,5 @@ __pycache__/
 # Model/adaptation artifacts are local runtime data, not source control payloads.
 *.safetensors
 adapter-artifacts/
+config.bat
+node_modules
