@@ -337,16 +337,10 @@ def run_stochastic_appraisal_benchmark(
                         model_id=binding.model_id,
                         runtime_instance_id=binding.runtime_instance_id,
                     )
-                    receipt = evaluator.resolve(ticket)
-                    _receipt_check(
-                        receipt, offer, trace, model_id=binding.model_id,
-                        runtime_instance_id=binding.runtime_instance_id,
-                        expected_evaluator_id=evaluator_id,
-                        expected_rule_digest=(
-                            generator_manifest.heldout_generator_sha256[family_index]
-                        ),
-                    )
-                    pending.append((offer, decision, trace, receipt))
+                    # EVAL reward stays inside the oracle until every arm
+                    # has committed. Otherwise different arms might expose
+                    # both q(A) and q(B) before later policy choices.
+                    pending.append((offer, decision, trace, ticket, family_index))
             validate_stochastic_trace(tuple(item[2] for item in pending))
             offers = tuple(item[0] for item in pending)
             if arm != ARMS[0] and offers != all_offers[ARMS[0]]:
@@ -355,12 +349,27 @@ def run_stochastic_appraisal_benchmark(
             sealed_evaluators[arm] = evaluator
             arm_pending[arm] = pending
 
-        # The capability to see counterfactual outcomes is withheld until
-        # *every* matched arm has sampled, committed and resolved *every*
-        # EVAL offer. A previous per-arm seal leaked arm-1 oracle values
-        # before the other arms chose; that invalid study was discarded.
+        # Neither *chosen* EVAL rewards nor counterfactuals may be revealed
+        # until every matched arm has committed every EVAL offer. In the
+        # previous runner chosen EVAL feedback was resolved per arm, which
+        # could reconstruct both q(A) and q(B) across matched arms early.
         if set(arm_pending) != set(ARMS):
             raise RuntimeError("not all predeclared evaluation arms committed")
+        for arm in ARMS:
+            evaluator = sealed_evaluators[arm]
+            resolved_rows = []
+            for offer, decision, trace, ticket, family_index in arm_pending[arm]:
+                receipt = evaluator.resolve(ticket)
+                _receipt_check(
+                    receipt, offer, trace, model_id=binding.model_id,
+                    runtime_instance_id=binding.runtime_instance_id,
+                    expected_evaluator_id=evaluator_id,
+                    expected_rule_digest=(
+                        generator_manifest.heldout_generator_sha256[family_index]
+                    ),
+                )
+                resolved_rows.append((offer, decision, trace, receipt))
+            arm_pending[arm] = resolved_rows
         for evaluator in sealed_evaluators.values():
             evaluator.finalize_evaluation()
         for arm in ARMS:

@@ -46,6 +46,32 @@ _TOP_FIELDS = frozenset({
 _TENSOR_FIELDS = frozenset({"name", "dtype", "shape", "sha256"})
 
 
+def _feature_schema_for(probe: TorchHiddenAppraisal) -> str:
+    """Allow precisely the audited architectures; never trust duck typing.
+
+    Both variants export the same two linear tensors, but those bytes have
+    incompatible meanings under their different deterministic feature maps.
+    The schema is therefore bound to the *concrete* head type on both ends.
+    """
+    if type(probe) is TorchHiddenAppraisal:
+        return FEATURE_SCHEMA
+    # Delayed import keeps the legacy artifact loader independent of optional
+    # torch/cache features and rejects all unreviewed user-defined subclasses.
+    from pleasure_experiment.open_weight_calibrated_appraisal import (
+        FEATURE_SCHEMA as CALIBRATED_FEATURE_SCHEMA, TorchCalibratedAppraisal,
+    )
+    if type(probe) is TorchCalibratedAppraisal:
+        return CALIBRATED_FEATURE_SCHEMA
+    raise TypeError("appraisal persistence requires an exact allowlisted head type")
+
+
+def _allowed_feature_schemas() -> tuple[str, str]:
+    from pleasure_experiment.open_weight_calibrated_appraisal import (
+        FEATURE_SCHEMA as CALIBRATED_FEATURE_SCHEMA,
+    )
+    return FEATURE_SCHEMA, CALIBRATED_FEATURE_SCHEMA
+
+
 @dataclass(frozen=True)
 class LocalAppraisalArtifact:
     artifact_directory: str
@@ -72,8 +98,7 @@ def _view(
     binding: OpenWeightBinding,
     snapshot: LocalModelManifest,
 ) -> tuple[Any, str, dict[str, Any], tuple[int, int], int]:
-    if type(probe) is not TorchHiddenAppraisal:
-        raise TypeError("a locally constructed TorchHiddenAppraisal is required")
+    _feature_schema_for(probe)
     if type(binding) is not OpenWeightBinding or type(snapshot) is not LocalModelManifest:
         raise TypeError("binding and snapshot manifest must be verified local records")
     if (binding.checkpoint_sha256 != snapshot.checkpoint_sha256 or
@@ -174,7 +199,7 @@ def save_versioned_appraisal_head(
         "capture_stage": CAPTURE_STAGE, "binding": asdict(binding),
         "snapshot_sha256": snapshot_manifest.snapshot_sha256,
         "action_token_ids": list(tokens), "hidden_size": hidden_size,
-        "feature_schema": FEATURE_SCHEMA,
+        "feature_schema": _feature_schema_for(probe),
         "updates_at_export": probe.updates, "head_weights_sha256": head_sha,
         "frozen_model_sha256": base_sha, "tensors": records,
     }
@@ -232,7 +257,8 @@ def _strict_manifest(source: Path) -> tuple[dict[str, Any], str]:
         type(payload["format_version"]) is not int or
         payload["format_version"] != FORMAT_VERSION or
         payload["capture_stage"] != CAPTURE_STAGE or
-        payload["feature_schema"] != FEATURE_SCHEMA):
+        type(payload["feature_schema"]) is not str or
+        payload["feature_schema"] not in _allowed_feature_schemas()):
         raise ValueError("unsupported appraisal artifact format or claims")
     return payload, manifest_sha
 
@@ -255,6 +281,8 @@ def load_versioned_appraisal_head(
     )
     original_head = probe.head_digest
     payload, manifest_sha = _strict_manifest(source)
+    if payload["feature_schema"] != _feature_schema_for(probe):
+        raise ValueError("appraisal artifact feature schema differs from target head")
     source_binding = payload["binding"]
     if (type(source_binding) is not dict or
         set(source_binding) != set(asdict(binding))):

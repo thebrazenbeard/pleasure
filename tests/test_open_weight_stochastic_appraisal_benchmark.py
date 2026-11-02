@@ -189,6 +189,7 @@ class StochasticAppraisalStudyTests(unittest.TestCase):
 
         commits = []
         original_commit = WithheldPayoffArena.commit
+        original_resolve = WithheldPayoffArena.resolve
         original_posthoc = WithheldPayoffArena.posthoc_evaluate
 
         def observe_commit(arena, offer, *args, **kwargs):
@@ -203,7 +204,15 @@ class StochasticAppraisalStudyTests(unittest.TestCase):
             self.assertIn(len(commits), (30, 60))
             return original_posthoc(arena, offer)
 
+        def guarded_resolve(arena, ticket):
+            # An EVAL chosen receipt is as sensitive as a counterfactual:
+            # different matched arms can expose both actions' outcomes.
+            if ticket.episode_id in {id for id, _ in commits}:
+                self.assertIn(len(commits), (30, 60))
+            return original_resolve(arena, ticket)
+
         with mock.patch.object(WithheldPayoffArena, "commit", observe_commit), \
+                mock.patch.object(WithheldPayoffArena, "resolve", guarded_resolve), \
                 mock.patch.object(WithheldPayoffArena, "posthoc_evaluate", guarded_posthoc):
             report = self._run()
         self.assertEqual(len(commits), 60)
