@@ -1,0 +1,80 @@
+{
+  "candidate_swap_quality_gap_sum": 0.00033731019915428373,
+  "evidence_class": "V4_UNTRAINED_BASE_ACTION_FEATURE_PROBE_NO_REWARDS",
+  "meaning": "Exploratory untrained representation sensitivity only; no EVAL rewards, actual TRAIN feedback, or learned head tested.",
+  "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+  "pretrained_frozen_sha256_before_after": "f3e37341bb38de7496edac8fdb3ea6b81d97f4b9bdd2f0d2a742511e7bff8f11",
+  "probes": {
+    "baseline": {
+      "base_prob_a": 0.8032376766204834,
+      "cosine_delta_to_baseline": 1,
+      "input_ids_sha256": "6e28edd44b198aa2afc7699c4c12f2b41e2b4c9d126c5e43a3459e3b4c85bc79",
+      "relative_raw_delta_shift": 0,
+      "untrained_head_quality_gap": 0.00016768025615587767
+    },
+    "baseline_repeat": {
+      "base_prob_a": 0.8032376766204834,
+      "cosine_delta_to_baseline": 1,
+      "input_ids_sha256": "6e28edd44b198aa2afc7699c4c12f2b41e2b4c9d126c5e43a3459e3b4c85bc79",
+      "relative_raw_delta_shift": 0,
+      "untrained_head_quality_gap": 0.00016768025615587767
+    },
+    "both_equal_a": {
+      "base_prob_a": 0.8079875707626343,
+      "cosine_delta_to_baseline": 0.999800036363092,
+      "input_ids_sha256": "b029d66bcca9684233976add904725505563db7da9d3265d0f743c6a61950049",
+      "relative_raw_delta_shift": 0.02128362042926472,
+      "untrained_head_quality_gap": 0.00016666738575810136
+    },
+    "both_equal_b": {
+      "base_prob_a": 0.7962903380393982,
+      "cosine_delta_to_baseline": 0.9997697403552593,
+      "input_ids_sha256": "eaa68d300623f63e08d2a0a7e5b286797bb65a5794d5cd0ae370e60035f0ca85",
+      "relative_raw_delta_shift": 0.022006346851869425,
+      "untrained_head_quality_gap": 0.00016892972644044768
+    },
+    "change_a_x": {
+      "base_prob_a": 0.8154507875442505,
+      "cosine_delta_to_baseline": 0.9994482749499394,
+      "input_ids_sha256": "b334001d5bb253d159d9bcb5a23e59a168a7bb24d8ee43864c60c79fad62ef82",
+      "relative_raw_delta_shift": 0.033580566176669366,
+      "untrained_head_quality_gap": 0.00017470193829066671
+    },
+    "change_a_y": {
+      "base_prob_a": 0.8117149472236633,
+      "cosine_delta_to_baseline": 0.9992198978251721,
+      "input_ids_sha256": "e3fdfcde5880798802b5188fd9e4b602bd1f97aa7cb026c9b686682f97940475",
+      "relative_raw_delta_shift": 0.03961072489562461,
+      "untrained_head_quality_gap": 0.00016897523677023019
+    },
+    "change_b_x": {
+      "base_prob_a": 0.8213096857070923,
+      "cosine_delta_to_baseline": 0.9989858547662884,
+      "input_ids_sha256": "91b5679f908872f3f8d5bdf1d443ee18a42f6570ea8514bec78b6428ce9f233c",
+      "relative_raw_delta_shift": 0.0450826827999968,
+      "untrained_head_quality_gap": 0.00016509291510358182
+    },
+    "change_b_y": {
+      "base_prob_a": 0.8077591061592102,
+      "cosine_delta_to_baseline": 0.9997980387463458,
+      "input_ids_sha256": "bb4bb976714a339b07284c5f4b64ea9240ba47b4a73d1967798d75accb0f1173",
+      "relative_raw_delta_shift": 0.020270232205917248,
+      "untrained_head_quality_gap": 0.00016795643072958777
+    },
+    "swap_options": {
+      "base_prob_a": 0.800313413143158,
+      "cosine_delta_to_baseline": 0.9999156463883063,
+      "input_ids_sha256": "6ff3a31660ac76ade33d07b6e3109f8ae76b9bb1773c9616c2b6db69228b3b37",
+      "relative_raw_delta_shift": 0.0131355628251816,
+      "untrained_head_quality_gap": 0.00016962994299840606
+    },
+    "values_extreme": {
+      "base_prob_a": 0.8128551244735718,
+      "cosine_delta_to_baseline": 0.9990658277513009,
+      "input_ids_sha256": "c7cf5fcdd80ce6b88493b3e77e018d1f279f6ab6b176b46ee7885df742ba2f83",
+      "relative_raw_delta_shift": 0.04411511499080838,
+      "untrained_head_quality_gap": 0.00016994276524218144
+    }
+  },
+  "revision": "12fd25f77366fa6b3b4b768ec3050bf629380bac"
+}
