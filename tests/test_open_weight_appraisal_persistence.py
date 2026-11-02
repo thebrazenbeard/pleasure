@@ -143,6 +143,74 @@ class AppraisalPersistenceTests(unittest.TestCase):
         self.assertEqual(set(x.name for x in self.location.iterdir()),
                          {"head.safetensors", "manifest.json"})
 
+    def test_calibrated_head_schema_is_persisted_and_rejected_by_legacy(self):
+        from pleasure_experiment.open_weight_calibrated_appraisal import (
+            FEATURE_SCHEMA as CALIBRATED_SCHEMA, TorchCalibratedAppraisal,
+        )
+        from pleasure_experiment.open_weight_appraisal_persistence import (
+            FEATURE_SCHEMA as LEGACY_SCHEMA,
+            load_versioned_appraisal_head, save_versioned_appraisal_head,
+        )
+
+        calibrated = TorchCalibratedAppraisal(
+            self.model, action_token_ids=(3, 4), hidden_size=2,
+            learning_rate=0.1, allow_training=True,
+        )
+        decision = calibrated.score((1,), partition="TRAIN", defer_choice=True)
+        calibrated.observe_chosen(
+            calibrated.bind_choice(decision, "A"), measured_quality=0.95,
+            evidence_id=sha256(b"calibrated-persistence-training").hexdigest(),
+        )
+        saved = save_versioned_appraisal_head(
+            calibrated, binding=self.binding, snapshot_manifest=self.snapshot,
+            destination_directory=self.location, allow_persistent_export=True,
+        )
+        self.assertEqual(json.loads((self.location / "manifest.json").read_text())
+                         ["feature_schema"], CALIBRATED_SCHEMA)
+        self.assertNotEqual(CALIBRATED_SCHEMA, LEGACY_SCHEMA)
+
+        _, fresh_model, _, fresh_binding = self._fresh()
+        fresh = TorchCalibratedAppraisal(
+            fresh_model, action_token_ids=(3, 4), hidden_size=2,
+            learning_rate=0.0, allow_training=False,
+        )
+        imported = load_versioned_appraisal_head(
+            fresh, binding=fresh_binding, snapshot_manifest=self.snapshot,
+            source_directory=self.location, allow_in_place_mutation=True,
+        )
+        self.assertEqual(imported.head_weights_sha256, saved.head_weights_sha256)
+        self.assertEqual(fresh.head_digest, calibrated.head_digest)
+        self.assertEqual(fresh.score((1,), gain=4).prob_a,
+                         calibrated.score((1,), gain=4).prob_a)
+
+        _, _, legacy, legacy_binding = self._fresh()
+        legacy_before = legacy.head_digest
+        with self.assertRaisesRegex(ValueError, "feature schema"):
+            load_versioned_appraisal_head(
+                legacy, binding=legacy_binding, snapshot_manifest=self.snapshot,
+                source_directory=self.location, allow_in_place_mutation=True,
+            )
+        self.assertEqual(legacy.head_digest, legacy_before)
+
+    def test_legacy_head_schema_is_rejected_by_calibrated_target(self):
+        from pleasure_experiment.open_weight_calibrated_appraisal import TorchCalibratedAppraisal
+        from pleasure_experiment.open_weight_appraisal_persistence import load_versioned_appraisal_head
+
+        self._train()
+        self._save()
+        _, model, _, binding = self._fresh()
+        calibrated = TorchCalibratedAppraisal(
+            model, action_token_ids=(3, 4), hidden_size=2,
+            learning_rate=0.0, allow_training=False,
+        )
+        before = calibrated.head_digest
+        with self.assertRaisesRegex(ValueError, "feature schema"):
+            load_versioned_appraisal_head(
+                calibrated, binding=binding, snapshot_manifest=self.snapshot,
+                source_directory=self.location, allow_in_place_mutation=True,
+            )
+        self.assertEqual(calibrated.head_digest, before)
+
     def test_strict_export_gates_and_no_overwrite(self):
         from pleasure_experiment.open_weight_appraisal_persistence import (
             save_versioned_appraisal_head,
