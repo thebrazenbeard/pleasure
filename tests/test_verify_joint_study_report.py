@@ -350,16 +350,16 @@ def _fixture(root):
     }
     raw = _json(report) + b"\n"
     (root / "study-report.json").write_bytes(raw)
-    (root / "COMPLETE.sha256").write_text(
-        sha256(raw).hexdigest() + "  study-report.json\n", encoding="ascii")
+    (root / "COMPLETE.sha256").write_bytes(
+        (sha256(raw).hexdigest() + "  study-report.json\n").encode("ascii"))
     return report
 
 
 def _reseal(root, report):
     raw = _json(report) + b"\n"
     (root / "study-report.json").write_bytes(raw)
-    (root / "COMPLETE.sha256").write_text(
-        sha256(raw).hexdigest() + "  study-report.json\n", encoding="ascii")
+    (root / "COMPLETE.sha256").write_bytes(
+        (sha256(raw).hexdigest() + "  study-report.json\n").encode("ascii"))
 
 
 class VerifyJointStudyReportTests(unittest.TestCase):
@@ -386,7 +386,7 @@ class VerifyJointStudyReportTests(unittest.TestCase):
             verify.verify_complete_study(self.root)
 
     def test_failed_marker_rejected_even_if_complete_marker_exists(self):
-        (self.root / "FAILED.json").write_text('{"status":"FAILED"}\n')
+        (self.root / "FAILED.json").write_bytes(b'{"status":"FAILED"}\n')
         with self.assertRaisesRegex(ValueError, "incomplete|unexpected"):
             verify.verify_complete_study(self.root)
 

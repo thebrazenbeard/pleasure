@@ -76,7 +76,11 @@ def _write_complete(study: Path, report: dict[str, object]) -> str:
     data = json.dumps(report, sort_keys=True, separators=(",", ":")).encode("utf-8") + b"\n"
     (study / "study-report.json").write_bytes(data)
     digest = sha256(data).hexdigest()
-    (study / "COMPLETE.sha256").write_text(digest + "  study-report.json\n", encoding="ascii")
+    # The production checksum marker is byte-exact LF, including on Windows.
+    # Text-mode newline translation would silently turn it into CRLF.
+    (study / "COMPLETE.sha256").write_bytes(
+        (digest + "  study-report.json\n").encode("ascii")
+    )
     return digest
 
 
