@@ -1,0 +1,20 @@
+{
+  "schema": "MODEL_NEUTRAL_SYNTHETIC_PREFERENCE_V2_PRIVATE_RECEIPTS_PIN",
+  "custody": "POSTHOC_CHECKSUM_MANIFEST_NOT_INDEPENDENT_EVALUATOR",
+  "preseed_git_commit": "53a4f402a104cc1d4f227f79b829e98a55995b3a",
+  "protocol_sha256": "8378b00e42c378cad5fdee9adb0032ca073fc3d3d30ab213496a2286ae773207",
+  "source_sha256": "b8b1dad278f80da5dc2b6a0637ad35bf70684671b6bbfbfcfee6935c0ee18734",
+  "parent_v1_source_sha256": "e0ca181c67ca0681cd8f5e6aa5a46a1c4a238323873883c794bf2f2aeb024fd6",
+  "parent_v1_train_sha256": "74c13b9ef07095921893d599103a9fb2a0de4fef363c0aa9b560b874c508ac76",
+  "seed": 914829221,
+  "expected_attempts": 68,
+  "pins": {
+    "plan.json": "ac5accac627c3b3095a2a728aeb4f3cc7aa486712129b00795d6179b3c1a0f00",
+    "run.jsonl": "c323a0e4a7ea6eb4d0a456d90b63fcd81969899b47d3f481bb97465561f6fba8",
+    "audit.json": "ecba23586225cb102b1f6d8d6e2fc52c299fdacc088711be73d842302eb8c294"
+  },
+  "status": "GATE_FAILED",
+  "independent_evaluator": false,
+  "model_weights_changed": false,
+  "notice": "Posthoc checksum custody detects drift, not deliberate joint tampering; raw receipts private on VN2."
+}
