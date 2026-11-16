@@ -1,0 +1,21 @@
+{
+  "schema": "SYNTHETIC_PREFERENCE_V1_PINNED_RECEIPTS",
+  "evidence_scope": "SOURCE_LOCAL_SYNTHETIC_NOT_CONFIRMATORY",
+  "source_git_commit": "409c652a5cbe8a575fbd2395bd1605a96fbc68d6",
+  "source_pleasure_pr31_head": "d77bdea2f949cca226729fc097d034037eeb2bf2",
+  "runner_sha256": "e0ca181c67ca0681cd8f5e6aa5a46a1c4a238323873883c794bf2f2aeb024fd6",
+  "head_sha256": "ddf97b14e3a1561da83c3bf64fedfa4ab06767f369f09904abebe75e810ba46e",
+  "seed": 791744981,
+  "expected_attempts": 50,
+  "model_pins": {
+    "granite": "555b91485955bc96eb445b57dd4bbf8809aa7d8cce7c313f4f8bc5b2340896b4",
+    "smollm": "fab954d296aa25885960ed771a005343c220ac93ef78a53454e667e334935fe9"
+  },
+  "files": {
+    "train.json": "74c13b9ef07095921893d599103a9fb2a0de4fef363c0aa9b560b874c508ac76",
+    "run.jsonl": "b57b4101b5ac94837c15d7f31a7742d059e8f81236198df6208d3de6f29189f9",
+    "audit.json": "12ad24a2a5a527a9abf9dfd7439b6a25b8571db98306efc84c30b02350237168",
+    "posthoc_diagnostic.json": "8cc26fa2618609195eed82a148276ff4a95c60bf75ed02953625c61b9e5f8783"
+  },
+  "notes": "Manifest created after model evaluation; separate trusted custody required for tamper resistance. No independent heldout or phenomenal claims."
+}
