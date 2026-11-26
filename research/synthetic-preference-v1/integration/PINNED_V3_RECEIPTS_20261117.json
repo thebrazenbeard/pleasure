@@ -1,0 +1,22 @@
+{
+  "schema": "SYNTHETIC_PREFERENCE_V3_POSTHOC_PIN_V1",
+  "evidence": "SOURCE_LOCAL_SYNTHETIC_UNBLINDED",
+  "custody": "POSTHOC_CHECKSUM_MANIFEST_NOT_EXTERNAL_SIGNED_CUSTODY",
+  "preseed_git_commit": "d8486f918be081cfeab953abd84fb3181568fe04",
+  "runner_sha256": "080b347c21dd4725217320db287913264efbf4f905cf090791158a22cef910a4",
+  "protocol_sha256": "66b29a3062eca55228dbbb896e9cc641e387f69678d7dbfbf77e73d1ea219a7e",
+  "prior_train_sha256": "74c13b9ef07095921893d599103a9fb2a0de4fef363c0aa9b560b874c508ac76",
+  "seed": 212039734,
+  "expected_attempts": 68,
+  "pins": {
+    "plan.json": "d5bbe50dab9f679e4538a8c94ab2b930dd15d3c6b2b68b0ba5dc21e571bffade",
+    "run.jsonl": "9c41547203b600e8424d1b34b62e471519b5398fe7582ab96424956aa8b1629c",
+    "audit.json": "395577fc234b7340250b9212f6701a280d53bb61da7dfbe3da437ec44cf7a5fa"
+  },
+  "model_pins": {
+    "granite": "555b91485955bc96eb445b57dd4bbf8809aa7d8cce7c313f4f8bc5b2340896b4",
+    "smollm": "fab954d296aa25885960ed771a005343c220ac93ef78a53454e667e334935fe9"
+  },
+  "failed_two_model_gate": true,
+  "note": "No private results included; checksum/runner same worker, not independent blinded qualification. Both models froze weights."
+}
